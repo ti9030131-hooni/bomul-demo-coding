@@ -43,6 +43,7 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="login/find" element={<FindAccountPage />} />
           <Route path="login/naver" element={<NaverCallbackPage />} />
+          <Route path="login/google" element={<NaverCallbackPage />} />
           <Route path="signup" element={<SignupPage />} />
         </Route>
       </Routes>

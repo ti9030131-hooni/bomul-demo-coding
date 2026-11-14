@@ -9,53 +9,6 @@ function storedToken() {
   return localStorage.getItem('token') || sessionStorage.getItem('token');
 }
 
-function openAddedWindow() {
-  const popup = window.open('', 'cartAdded', 'popup,width=420,height=320');
-  if (!popup) return null;
-
-  popup.document.title = '장바구니';
-  const style = popup.document.createElement('style');
-  style.textContent = [
-    'body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:sans-serif;background:#f7f4ff;color:#2a2150}',
-    '.box{display:grid;justify-items:center;gap:22px;padding:24px}',
-    'p{margin:0;font-size:20px;font-weight:700}',
-    'a{display:grid;justify-items:center;gap:6px;color:#5b2fd6;font-size:15px;font-weight:800;text-decoration:none}',
-    'a:hover{color:#4b2ad4}',
-  ].join('');
-  popup.document.head.replaceChildren(style);
-  popup.document.body.replaceChildren();
-  return popup;
-}
-
-function showAddedMessage(popup) {
-  const text = '장바구니에 추가 되었습니다.';
-  if (!popup || popup.closed) {
-    window.alert(text);
-    return;
-  }
-
-  const box = popup.document.createElement('div');
-  box.className = 'box';
-  const message = popup.document.createElement('p');
-  message.textContent = text;
-  const link = popup.document.createElement('a');
-  link.href = `${window.location.origin}/order`;
-  link.setAttribute('aria-label', '주문 페이지로 이동');
-  link.innerHTML = '<svg viewBox="0 0 48 48" width="54" height="54" aria-hidden="true"><rect x="10" y="8" width="28" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M16 8.5v-2.2a8 8 0 0 1 16 0v2.2" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M17 22h14M17 28h10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
-  const label = popup.document.createElement('span');
-  label.textContent = '주문';
-  link.append(label);
-  link.addEventListener('click', (event) => {
-    event.preventDefault();
-    const opener = popup.opener;
-    if (opener && !opener.closed) opener.location.href = link.href;
-    else popup.location.href = link.href;
-    popup.close();
-  });
-  box.append(message, link);
-  popup.document.body.replaceChildren(box);
-}
-
 function CourseDetail({ course, listTo, paidId }) {
   const navigate = useNavigate();
   const [reward, setReward] = useState('');
@@ -70,23 +23,23 @@ function CourseDetail({ course, listTo, paidId }) {
       return;
     }
 
-    const popup = openAddedWindow();
     setCartState('pending');
     setCartMessage('');
     try {
+      const bodyPayload = paidId
+        ? { course: paidId, quantity: 1 }
+        : { legend_id: course.id, quantity: 1 };
       const response = await fetch(`${API_BASE}/api/carts`, {
         method: 'POST',
         headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
-        body: JSON.stringify({ course: paidId, quantity: 1 }),
+        body: JSON.stringify(bodyPayload),
       });
       if (response.status === 401) {
-        popup?.close();
         navigate('/login');
         return;
       }
       const body = await response.json().catch(() => ({}));
       if (!response.ok) {
-        popup?.close();
         setCartState('');
         setCartMessage(body.message || '장바구니에 담지 못했습니다.');
         return;
@@ -94,9 +47,8 @@ function CourseDetail({ course, listTo, paidId }) {
       setCartState('');
       setCartMessage('');
       window.dispatchEvent(new Event('cart-updated'));
-      showAddedMessage(popup);
+      navigate('/cart');
     } catch {
-      popup?.close();
       setCartState('');
       setCartMessage('서버에 연결하지 못했습니다.');
     }
@@ -211,14 +163,9 @@ function CourseDetail({ course, listTo, paidId }) {
         </div>
 
         <div className="detail-cta">
-          {paidId ? (
-            <button className="btn btn-primary" type="button" onClick={addToCart} disabled={cartState === 'pending'}>
-              {cartState === 'pending' ? '담는 중' : '장바구니 담기'}
-            </button>
-          ) : null}
-          <Link className="btn btn-primary" to="/apply">
-            이 코스 신청하기
-          </Link>
+          <button className="btn btn-primary" type="button" onClick={addToCart} disabled={cartState === 'pending'}>
+            {cartState === 'pending' ? '담는 중' : '장바구니 담기'}
+          </button>
           <Link className="btn btn-ghost" to={listTo}>
             다른 코스 보기
           </Link>

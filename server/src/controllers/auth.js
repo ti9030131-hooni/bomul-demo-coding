@@ -44,7 +44,7 @@ export async function findUserId(req, res) {
   const email = text(req.body.email).toLowerCase();
   if (!name || !email) throw httpError(400, '이름과 이메일을 입력해 주세요.');
 
-  const user = await User.findOne({ name, email, provider: { $ne: 'naver' } });
+  const user = await User.findOne({ name, email, provider: { $nin: ['naver', 'google'] } });
   if (!user) throw httpError(404, '입력한 정보와 일치하는 회원이 없습니다.');
 
   res.json({ message: '아이디를 찾았습니다.', user_id: maskUserId(user.user_id) });
@@ -65,7 +65,7 @@ export async function resetPassword(req, res) {
     throw httpError(400, '비밀번호는 8자 이상이고 영문과 숫자를 함께 써야 합니다.');
   }
 
-  const user = await User.findOne({ user_id, name, email, provider: { $ne: 'naver' } });
+  const user = await User.findOne({ user_id, name, email, provider: { $nin: ['naver', 'google'] } });
   if (!user || digits(user.phone) !== phone) throw httpError(404, '입력한 정보와 일치하는 회원이 없습니다.');
 
   user.password = password;

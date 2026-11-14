@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import SocialAccounts from '../components/SocialAccounts.jsx';
 import { API_BASE } from '../apiBase.js';
 
 const initialForm = {
@@ -62,13 +63,13 @@ function SignupPage() {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          user_id: form.user_id,
+          user_id: form.user_id.trim(),
           password: form.password,
           password_confirm: form.password_confirm,
-          name: form.name,
-          nickname: form.nickname,
-          phone: form.phone,
-          email: form.email,
+          name: form.name.trim(),
+          nickname: form.nickname.trim(),
+          phone: form.phone.trim(),
+          email: form.email.trim(),
         }),
       });
       const data = await response.json().catch(() => ({}));
@@ -88,9 +89,9 @@ function SignupPage() {
     return (
       <section className="signup-done">
         <h2>가입되었습니다</h2>
-        <p>{form.user_id} 계정으로 회원가입이 완료되었습니다.</p>
-        <Link className="submit-button home-signup" to="/">
-          메인으로
+        <p>{form.user_id.trim()} 계정으로 회원가입이 완료되었습니다. 아이디로 로그인해 주세요.</p>
+        <Link className="submit-button home-signup" to="/login" state={{ user_id: form.user_id.trim() }}>
+          로그인하기
         </Link>
       </section>
     );
@@ -216,6 +217,7 @@ function SignupPage() {
       <button className="submit-button" type="submit" disabled={pending}>
         {pending ? '가입 중' : '회원가입'}
       </button>
+      <SocialAccounts mode="signup" />
 
       {policy ? (
         <div className="policy-modal" role="presentation" onClick={() => setPolicy(null)}>

@@ -80,7 +80,6 @@ function SiteNav({ onToggleTheme }) {
             홈
           </NavLink>
           <NavLink to="/courses">전체 코스</NavLink>
-          <NavLink to="/apply">신청·문의</NavLink>
           <BoardNavLink />
         </nav>
         <div className="nav-tools">
@@ -101,9 +100,6 @@ function SiteNav({ onToggleTheme }) {
         </NavLink>
         <NavLink to="/courses" onClick={closeMenu}>
           전체 코스
-        </NavLink>
-        <NavLink to="/apply" onClick={closeMenu}>
-          신청·문의
         </NavLink>
         <NavLink to="/cart" onClick={closeMenu}>
           장바구니

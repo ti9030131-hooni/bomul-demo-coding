@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import SocialAccounts from '../components/SocialAccounts.jsx';
 import { API_BASE } from '../apiBase.js';
 
 function storedToken() {
@@ -9,7 +10,11 @@ function storedToken() {
 function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [form, setForm] = useState({ user_id: '', password: '', remember: false });
+  const [form, setForm] = useState({
+    user_id: typeof location.state?.user_id === 'string' ? location.state.user_id : '',
+    password: '',
+    remember: false,
+  });
   const [error, setError] = useState(() => location.state?.error ?? '');
   const [pending, setPending] = useState(false);
   const [checking, setChecking] = useState(() => Boolean(storedToken()));
@@ -52,7 +57,7 @@ function LoginPage() {
       const response = await fetch(`${API_BASE}/api/login`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ user_id: form.user_id, password: form.password }),
+        body: JSON.stringify({ user_id: form.user_id.trim(), password: form.password }),
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
@@ -63,7 +68,7 @@ function LoginPage() {
       const other = form.remember ? sessionStorage : localStorage;
       storage.setItem('token', data.token);
       other.removeItem('token');
-      navigate('/', { replace: true });
+      window.location.replace('/bomul.html');
     } catch {
       setError('서버에 연결하지 못했습니다. 서버가 실행 중인지 확인해 주세요.');
     } finally {
@@ -75,6 +80,7 @@ function LoginPage() {
 
   return (
     <section className="login-page">
+      <div className="login-stack">
       <form className="login-card" onSubmit={onSubmit}>
         <h1>로그인</h1>
         <p className="login-switch">
@@ -132,6 +138,8 @@ function LoginPage() {
           </Link>
         </div>
       </form>
+      <SocialAccounts mode="login" />
+      </div>
     </section>
   );
 }

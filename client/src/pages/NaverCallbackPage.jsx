@@ -8,11 +8,12 @@ function NaverCallbackPage() {
     return {
       token: params.get('token'),
       error: params.get('error'),
-      remember: sessionStorage.getItem('naver_remember') === '1',
+      remember: sessionStorage.getItem('social_remember') === '1' || sessionStorage.getItem('naver_remember') === '1',
     };
   });
 
   useEffect(() => {
+    sessionStorage.removeItem('social_remember');
     sessionStorage.removeItem('naver_remember');
     if (result.token) {
       const storage = result.remember ? localStorage : sessionStorage;
@@ -27,7 +28,7 @@ function NaverCallbackPage() {
 
   return (
     <section className="login-page">
-      <p className="login-notice">네이버 로그인 중입니다.</p>
+      <p className="login-notice">로그인 중입니다.</p>
     </section>
   );
 }

@@ -7,7 +7,7 @@
 <meta name="description" data-i18n-attr="content:meta.description" content="역사와 설화를 찾아 떠나는 전설여행 — 코스 소개와 신청">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Batang:wght@400;700&family=Anton&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap">
 <style>
   /* Layout concept: 전통 세련 — 묵청(먹빛 청록)+금, 명조 디스플레이. 랜딩→코스 목록→코스 상세(해시 라우팅) */
   :root{
@@ -59,7 +59,7 @@
   .brand{display:flex;align-items:center;gap:8px;min-width:0;flex:1;font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--feature-blue);cursor:pointer;white-space:nowrap}
   .brand .chest{width:26px;height:22px;flex:none;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
   .lang-tabs{display:flex;flex:none;align-items:center;gap:4px}
-  .lang-tab{height:28px;padding:0 8px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:transparent;color:var(--ink);font-family:var(--body);font-size:.78rem;font-weight:700;line-height:26px;cursor:pointer}
+  .lang-tab{height:28px;padding:0 10px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:transparent;color:var(--ink);font-family:var(--body);font-size:.78rem;font-weight:700;line-height:26px;cursor:pointer;white-space:nowrap}
   .lang-tab[aria-pressed="true"]{background:#c9a15b;color:#1a1408;border-color:#c9a15b}
   .nav-toggle{
     display:inline-flex;
@@ -165,8 +165,8 @@
   .ccard:hover{transform:translateY(-3px)}
   .ccard .thumb{aspect-ratio:4/3;width:100%;object-fit:cover;border:none;border-bottom:1px dashed var(--line);border-radius:0}
   .ccard .body{padding:18px;display:flex;flex-direction:column;gap:8px}
-  .ccard .top{display:flex;align-items:center;gap:8px}
-  .badge{font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--primary);background:var(--primary-soft);padding:4px 10px;border-radius:3px}
+  .ccard .top{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px}
+  .badge{font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--primary);background:var(--primary-soft);padding:4px 10px;border-radius:3px;white-space:nowrap;flex:0 0 auto}
 .badge-ar{color:#1E2233;background:linear-gradient(135deg,#F3D58A,#C49A4A)}
 .badge-new{color:#fff;background:#B3372A}
 .ar-cta-box{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center;justify-content:space-between;margin:22px 0 4px;padding:18px 20px;border-radius:8px;
@@ -174,9 +174,9 @@
 .ar-cta-box b{font-size:1.05rem}
 .ar-cta-box p{margin:4px 0 0;font-size:.9rem;opacity:.85;max-width:520px}
 .ar-cta-box .btn{white-space:nowrap}
-  .ccard .theme{font-size:.74rem;color:var(--muted)}
-  .ccard h3{font-size:1.2rem}
-  .ccard p{color:var(--muted);font-size:.92rem}
+  .ccard .theme{font-size:.74rem;color:var(--muted);white-space:nowrap;line-height:1.3}
+  .ccard h3{font-size:1.2rem;line-height:1.35;word-break:keep-all}
+  .ccard p{color:var(--muted);font-size:.92rem;line-height:1.55;word-break:keep-all}
   .ccard .more{margin-top:2px;color:var(--accent);font-weight:700;font-size:.85rem}
 
   .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
@@ -330,6 +330,27 @@
   .ms-start:hover{filter:brightness(1.05)}
   .ms-start:disabled{opacity:.6;cursor:wait}
   .ms-msg{min-height:1.2em;margin-top:8px;font-size:.86rem;text-align:center}
+  .pay{max-width:440px;margin:8px auto 0;background:#fff;color:#1c1c1c;border-radius:22px;padding:22px 18px 18px;box-shadow:0 18px 40px rgba(0,0,0,.28)}
+  .pay h2{font-family:var(--body);font-size:1.35rem;font-weight:800;letter-spacing:-.03em}
+  .pay h3{margin:18px 0 8px;font-size:.95rem;font-weight:800}
+  .pay-course{margin-top:6px;color:#666;font-size:.92rem}
+  .pay-opt{display:flex;align-items:center;gap:12px;border:1.5px solid #ececec;border-radius:16px;padding:14px;margin-top:8px;cursor:pointer;background:#fff}
+  .pay-opt:has(input:checked){border-color:#ff4fa2;box-shadow:inset 0 0 0 1px #ff4fa2}
+  .pay-opt input{width:18px;height:18px;margin:0;accent-color:#ff2f86;flex:none}
+  .pay-name{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .pay-name b{font-size:.98rem}
+  .pay-name small{color:#8b8b8b;font-size:.78rem}
+  .pay-amt{margin-left:auto;color:#e01278;font-weight:800;white-space:nowrap}
+  .pay-total{display:flex;align-items:baseline;justify-content:space-between;gap:12px;background:#f4f5f7;border-radius:16px;padding:16px}
+  .pay-total span{font-weight:800}
+  .pay-total strong{color:#e01278;font-size:1.7rem;letter-spacing:-.03em}
+  .pay-total em{font-style:normal;color:#e01278;font-weight:800}
+  .pay-agree{display:flex;align-items:flex-start;gap:8px;margin-top:10px;font-size:.88rem;line-height:1.45}
+  .pay-agree a{color:#e01278;font-weight:700}
+  .pay-go{display:flex;align-items:center;justify-content:center;width:100%;margin-top:14px;border:0;border-radius:14px;padding:15px 16px;background:linear-gradient(90deg,#ff5aa8,#ff2d78);color:#fff;font:inherit;font-size:1.05rem;font-weight:800;cursor:pointer}
+  .pay-go:hover{filter:brightness(1.05)}
+  .pay-go:disabled{opacity:.45;cursor:not-allowed;filter:none}
+  .pay-msg{min-height:1.2em;margin-top:8px;text-align:center;font-size:.86rem}
   footer{border-top:1px solid var(--line);padding-block:28px 22px;color:var(--muted);font-size:.86rem}
   footer .wrap{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
   .legal{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 28px;margin:22px 0 0;padding:0}
@@ -566,12 +587,240 @@
     .hero-media img,.hero-media video{width:100%}
     .wrap,.hero .wrap{max-width:100%}
   }
+  /* ===== 프로모션형 디자인 (검정·빨강·금) — 이 블록이 위의 기본 색·글꼴을 덮어씁니다 ===== */
+  :root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+    --bg:#070707; --surface:#121212; --surface-2:#1a1a1a;
+    --ink:#f4f1ea; --muted:#a7a29a; --line:#2a2a2a;
+    --primary:#e3201b; --primary-soft:#2a0d0c;
+    --accent:#f4b63f; --accent-soft:#2b210d;
+    --feature-blue:#ffd27a;
+    --red:#d90f12; --red-2:#ff4a1c; --gold:#ffcf5a;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 18px 40px -22px rgba(0,0,0,.8);
+    --display:"Noto Sans KR",system-ui,sans-serif;
+    --body:"Noto Sans KR",system-ui,sans-serif;
+    --latin:"Anton","Black Han Sans",Impact,sans-serif;
+    color-scheme:dark;
+  }
+  body{background:var(--bg)}
+  h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  /* 맨 위 띠 */
+  .promo-bar{position:relative;z-index:31;background:linear-gradient(90deg,#b80d10,#ff4a1c 55%,#ff7a1a);color:#fff;text-align:center;font-size:.78rem;font-weight:700;letter-spacing:.02em;padding:7px 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* 상단 메뉴 */
+  .nav{background:rgba(0,0,0,.92);border-bottom:1px solid #1d1d1d}
+  .brand{color:#fff}
+  .nav nav a{color:#bdb7ad}
+  .nav nav a:hover,.nav nav a.on{color:#fff;background:#1c1c1c}
+  @media (min-width:769px){.nav nav a{font-size:1rem}.brand{font-size:1.6rem;font-weight:900}.brand .chest{width:44px;height:38px}}
+  .btn{border-radius:2px}
+  .btn-primary{background:var(--red);color:#fff}
+  .btn-ghost{color:var(--ink);border-color:#3a3a3a}
+  .btn-ghost:hover{background:#1c1c1c}
+
+  /* 공통 */
+  .bf-sec{padding:clamp(56px,8vw,96px) 20px;text-align:center}
+  .bf-black{background:transparent}
+  .bf-ink{background:rgba(14,14,16,.55)}
+  .bf-red{background:var(--red)}
+  .bf-h2{font-size:clamp(1.55rem,3.6vw,2.2rem);font-weight:900;color:#fff;letter-spacing:-.03em;line-height:1.3}
+  .bf-h2 em{font-style:normal;color:#ff4b3a}
+  .bf-red .bf-h2 em{color:#ffe08a}
+  .bf-h2.left{text-align:left}
+  .bf-lead{margin:12px auto 0;color:#a7a29a;font-size:.98rem;max-width:52ch}
+  .bf-kicker2{color:rgba(255,255,255,.72);font-size:.86rem;font-weight:500;margin-bottom:10px;letter-spacing:.02em}
+  .bf-black .bf-kicker2,.bf-ink .bf-kicker2{color:#ff6a4d;font-weight:700;letter-spacing:.12em}
+  .bf-p{color:#d9d4cb;margin-top:16px;line-height:1.8;text-align:left;font-size:1rem}
+  .bf-p.dim{color:#9c968d;font-size:.93rem}
+  .bf-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .bf-btn{font:inherit;font-weight:800;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 26px;border-radius:2px;cursor:pointer;border:1px solid transparent;transition:filter .15s,background .15s}
+  .bf-btn-red{background:linear-gradient(180deg,#ff3b1f,#d90f12);color:#fff;box-shadow:0 10px 26px -10px rgba(255,59,31,.7)}
+  .bf-btn-red:hover{filter:brightness(1.1)}
+  .bf-btn-line{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+  .bf-btn-line:hover{background:rgba(255,255,255,.08)}
+  .bf-wide{display:flex;align-items:center;justify-content:center;width:min(100%,300px);min-height:46px;margin:40px auto 0;background:#fff;color:#111;font:inherit;font-weight:800;font-size:.95rem;border:0;border-radius:1px;cursor:pointer;transition:background .15s}
+  .bf-wide:hover{background:#ffe7c2}
+
+  /* 히어로 */
+  .bf-hero{position:relative;overflow:hidden;padding:clamp(34px,5vw,56px) 0 clamp(36px,5vw,56px);text-align:center;isolation:isolate;background:transparent}
+  .bf-hero-bg{position:absolute;inset:0;z-index:-2;background:
+      radial-gradient(60% 55% at 50% 78%,rgba(255,92,28,.95),rgba(214,24,14,.75) 38%,rgba(110,8,6,.55) 62%,transparent 80%),
+      radial-gradient(90% 60% at 50% 100%,rgba(94,7,5,.85),transparent 72%)}
+  .bf-hero-bg::after{content:"";position:absolute;inset:0;opacity:.28;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+  .bf-rays{position:absolute;left:50%;top:58%;width:140vmax;height:140vmax;transform:translate(-50%,-50%);z-index:-1;opacity:.22;background:repeating-conic-gradient(from 0deg,rgba(255,210,120,.55) 0 2deg,transparent 2deg 11deg);-webkit-mask:radial-gradient(closest-side,#000 10%,transparent 70%);mask:radial-gradient(closest-side,#000 10%,transparent 70%);animation:bfSpin 90s linear infinite}
+  @keyframes bfSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  .bf-kicker{display:inline-flex;align-items:center;gap:12px;color:#fff;font-size:clamp(.78rem,1.4vw,.92rem);font-weight:700;letter-spacing:.01em}
+  .bf-kicker i{width:1px;height:12px;background:#ff4a1c}
+  .bf-title{margin:clamp(10px,2vw,18px) 0 0;line-height:.86}
+  .bf-title-en{display:block;font-family:"Black Han Sans","Noto Sans KR",sans-serif;font-weight:400;font-size:clamp(3rem,13.4vw,10.8rem);letter-spacing:-.01em;line-height:1.02;white-space:nowrap;padding-bottom:.04em;
+      background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.4 1.05'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+        linear-gradient(180deg,#fffaf0 0%,#ffe9a6 28%,#ffc23d 48%,#ff7a1a 70%,#e01e1e 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 26px rgba(255,90,30,.35))}
+  .bf-stage{position:relative;height:clamp(250px,40vw,470px);margin-top:clamp(-84px,-6vw,-30px)}
+  .bf-chest{position:absolute;left:50%;bottom:6%;width:clamp(210px,32vw,400px);height:auto;transform:translateX(-50%) rotate(-4deg);z-index:2;filter:drop-shadow(0 30px 40px rgba(0,0,0,.75)) drop-shadow(0 0 40px rgba(255,170,60,.35)) saturate(1.12) contrast(1.06);animation:bfFloat 5s ease-in-out infinite}
+  @keyframes bfFloat{50%{transform:translateX(-50%) translateY(-10px) rotate(-3deg)}}
+  .bf-glow{position:absolute;left:50%;top:44%;width:clamp(220px,34vw,420px);aspect-ratio:1.4;transform:translate(-50%,-50%);z-index:1;background:radial-gradient(closest-side,rgba(255,236,160,.95),rgba(255,170,40,.55) 40%,transparent 75%);filter:blur(8px)}
+  .bf-sparks{position:absolute;inset:0;z-index:3;pointer-events:none}
+  .bf-sparks i{position:absolute;left:50%;top:46%;width:4px;height:4px;border-radius:50%;background:#ffe9a6;box-shadow:0 0 10px 2px rgba(255,200,90,.9);opacity:0;animation:bfSpark 3.4s ease-out infinite}
+  .bf-sparks i:nth-child(1){--x:-210px;--y:-150px;animation-delay:.1s}.bf-sparks i:nth-child(2){--x:180px;--y:-170px;animation-delay:.5s}
+  .bf-sparks i:nth-child(3){--x:-120px;--y:-220px;animation-delay:.9s}.bf-sparks i:nth-child(4){--x:240px;--y:-90px;animation-delay:1.3s}
+  .bf-sparks i:nth-child(5){--x:-260px;--y:-60px;animation-delay:1.7s}.bf-sparks i:nth-child(6){--x:90px;--y:-240px;animation-delay:2.1s}
+  .bf-sparks i:nth-child(7){--x:-40px;--y:-260px;animation-delay:2.5s}.bf-sparks i:nth-child(8){--x:300px;--y:-200px;animation-delay:.3s}
+  .bf-sparks i:nth-child(9){--x:-320px;--y:-190px;animation-delay:1.1s}.bf-sparks i:nth-child(10){--x:150px;--y:-60px;animation-delay:1.9s}
+  .bf-sparks i:nth-child(11){--x:-170px;--y:-30px;animation-delay:2.7s}.bf-sparks i:nth-child(12){--x:20px;--y:-180px;animation-delay:3s}
+  @keyframes bfSpark{0%{opacity:0;transform:translate(0,0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(.2)}}
+  .bf-tape{position:absolute;left:-10%;width:120%;overflow:hidden;white-space:nowrap;font-family:var(--latin);text-transform:uppercase;letter-spacing:.04em}
+  .bf-track{display:inline-flex;animation:bfMarquee 38s linear infinite}
+  .bf-track span{padding-right:.4em}
+  @keyframes bfMarquee{to{transform:translateX(-50%)}}
+  .bf-tape-back{top:30%;transform:rotate(7deg);z-index:0;background:linear-gradient(90deg,rgba(120,10,8,.55),rgba(190,30,20,.75),rgba(120,10,8,.55));color:rgba(255,215,190,.55);font-size:clamp(.72rem,1.4vw,1rem);padding:7px 0;filter:blur(.6px)}
+  .bf-tape-back .bf-track{animation-direction:reverse;animation-duration:46s}
+  .bf-tape-front{top:62%;transform:rotate(-5deg);z-index:4;background:linear-gradient(90deg,#9e0d0b,#e3201b 50%,#9e0d0b);color:#fff2e2;font-family:"Noto Sans KR",sans-serif;font-weight:800;font-size:clamp(.78rem,1.5vw,1.04rem);padding:9px 0;box-shadow:0 12px 30px rgba(0,0,0,.55)}
+  .bf-hero-cta{position:relative;z-index:5;display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:clamp(4px,1vw,12px);padding-inline:20px}
+
+  /* 카운트다운 */
+  .bf-count{text-align:center;margin:30px auto 0;padding:0}
+  .bf-count h3{font-size:clamp(1.05rem,2.2vw,1.3rem);font-weight:700;color:#fff}
+  .cd{display:flex;align-items:center;justify-content:center;gap:clamp(6px,1.6vw,14px);margin-top:26px}
+  .cd-box{background:#1c1c1c;border:1px solid #262626;border-radius:3px;min-width:clamp(62px,9vw,86px);padding:10px 12px 8px;display:flex;flex-direction:column;align-items:center}
+  .cd-box b{font-family:"Noto Sans KR",sans-serif;font-variant-numeric:tabular-nums;font-size:clamp(1.7rem,4.4vw,2.6rem);font-weight:700;color:#fff;line-height:1.1;letter-spacing:.02em}
+  .cd-box small{font-size:.62rem;color:#8a8a8a;letter-spacing:.08em;margin-top:6px}
+  .cd-sep{color:#777;font-size:1.4rem;font-weight:700}
+
+  /* 구역 바로가기 */
+  .bf-tabs{position:sticky;top:var(--nav-h,60px);z-index:25;background:#2a2a2a;border-top:1px solid #333;border-bottom:1px solid #1a1a1a}
+  .bf-tabs-in{display:flex;justify-content:flex-start;gap:clamp(4px,1.6vw,22px);overflow-x:auto;scrollbar-width:none;padding:0 12px}
+  .bf-tabs-in::-webkit-scrollbar{display:none}
+  .bf-tabs-in>button:first-child{margin-left:auto}.bf-tabs-in>button:last-child{margin-right:auto}
+  .bf-tabs button{flex:none;font:inherit;font-size:.86rem;color:#c9c3b9;background:none;border:0;padding:14px 10px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}
+  .bf-tabs button:hover{color:#fff}
+  .bf-tabs button.on{color:#fff;border-bottom-color:#ff3b1f}
+
+  /* 완주 보상 티켓 */
+  .tickets{display:flex;justify-content:center;gap:clamp(8px,1.6vw,14px);margin-top:36px;flex-wrap:wrap}
+  .ticket{--n:9px;width:clamp(150px,22vw,180px);background:linear-gradient(180deg,#e3201b,#c70f12);color:#fff;border-radius:2px;position:relative;
+      -webkit-mask:radial-gradient(circle var(--n) at 0 72%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle var(--n) at 100% 72%,transparent 98%,#000) right/51% 100% no-repeat;
+      mask:radial-gradient(circle var(--n) at 0 72%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle var(--n) at 100% 72%,transparent 98%,#000) right/51% 100% no-repeat;
+      transition:transform .2s}
+  .ticket:hover{transform:translateY(-4px)}
+  .t-top{height:72%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 10px 14px;gap:2px;border-bottom:1px dashed rgba(255,255,255,.45)}
+  .t-top small{font-size:.72rem;font-weight:700;opacity:.92}
+  .t-top b{font-size:.9rem;font-weight:800;margin-top:6px}
+  .t-top strong{font-size:clamp(2rem,4.2vw,2.5rem);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+  .t-top strong span{font-size:.45em;font-weight:700;margin-left:2px}
+  .t-top em{font-style:normal;font-size:.7rem;opacity:.85;margin-top:4px}
+  .t-bot{display:grid;place-items:center;padding:12px 0 14px}
+  .t-bot svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+  /* 한눈에 보기 */
+  .glance{display:grid;grid-template-columns:repeat(3,minmax(0,212px));justify-content:center;gap:14px;margin-top:40px}
+  .g-card{background:#fff;color:#111;border-radius:4px;overflow:hidden;box-shadow:0 18px 40px -20px rgba(0,0,0,.6);transition:transform .2s}
+  .g-card:hover{transform:translateY(-4px)}
+  .g-card header{background:#000;color:#fff;font-size:.78rem;font-weight:700;padding:9px 0}
+  .g-art{height:118px;display:grid;place-items:center;margin-top:10px}
+  .g-art img{height:104px;width:auto;filter:drop-shadow(0 10px 12px rgba(0,0,0,.35))}
+  .num3d{font-family:var(--latin);font-size:96px;line-height:1;letter-spacing:-.04em;color:#151515;
+      background:radial-gradient(60% 35% at 34% 26%,rgba(255,255,255,.55),transparent 60%),linear-gradient(180deg,#4a4a4a,#0b0b0b 58%,#2b2b2b);
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+      filter:drop-shadow(2px 3px 0 #000) drop-shadow(5px 7px 6px rgba(0,0,0,.35));-webkit-text-stroke:1px rgba(255,255,255,.08)}
+  .g-card h3{font-size:1rem;font-weight:800;margin-top:6px;color:#111}
+  .g-card p{font-size:.76rem;color:#777;padding:4px 14px 20px}
+  button.g-card{display:block;width:100%;margin:0;padding:0;border:0;font:inherit;color:inherit;text-align:inherit;cursor:pointer}
+
+  /* 사진 배너 */
+  .bf-banner{position:relative;display:block;background:#e8ecec;overflow:hidden;padding:0;min-height:0}
+  .bf-banner-slides{position:relative;aspect-ratio:2880/936;background:#e8ecec}
+  .bf-banner-slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;-webkit-mask:none;mask:none;opacity:0;transition:opacity 1.05s ease}
+  .bf-banner-slides img.is-on{opacity:1}
+  .bf-banner-txt{display:none}
+  .bf-banner .w1,.bf-banner .w3{font-family:var(--latin);color:#e3171b;font-size:clamp(3rem,8.4vw,6.6rem);letter-spacing:-.01em}
+  .bf-banner .w2{font-family:"Noto Sans KR",sans-serif;font-style:italic;font-weight:900;color:#111;font-size:clamp(1rem,2.4vw,1.8rem);letter-spacing:-.03em;margin:4px 0 6px;align-self:center}
+
+  /* AR 소개 */
+  .bf-split{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(24px,4vw,52px);align-items:center;text-align:left}
+  .bf-split-media{border-radius:4px;overflow:hidden;border:1px solid #2a2a2a;box-shadow:0 30px 60px -30px rgba(255,60,30,.45)}
+  .bf-split-media video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+
+  /* 코스 카드 (어두운 바탕) */
+  #bf-featured .course-grid{margin-top:34px;text-align:left}
+  .ccard{background:#141414;border:1px solid #242424;border-radius:4px;transition:transform .2s,border-color .2s}
+  .ccard:hover{border-color:#e3201b;transform:translateY(-4px)}
+  .ccard .thumb{border-bottom:0}
+  .ccard h3{color:#fff;font-weight:800}
+  .ccard .more{color:#ff6a4d}
+  .badge{color:#fff;background:#2a2a2a}
+  .badge-ar{color:#1a1206;background:linear-gradient(135deg,#ffe08a,#f4b63f)}
+  .badge-new{background:#e3201b}
+  .badge-free{color:#14301f;background:#b6f3c8}
+
+  /* 이용 방법 */
+  .steps3{list-style:none;margin:36px auto 0;padding:0;max-width:1080px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:left}
+  .steps3 li{background:#121212;border:1px solid #232323;border-top:3px solid #e3201b;border-radius:3px;padding:20px 18px}
+  .steps3 b{font-family:var(--latin);font-weight:400;color:#ff4b3a;font-size:1.6rem}
+  .steps3 h3{font-size:1.02rem;color:#fff;margin-top:6px}
+  .steps3 p{font-size:.86rem;color:#9c968d;margin-top:6px}
+  .bf-previews{margin-top:22px;text-align:left}
+  .media-card{background:#121212;border-color:#232323}
+
+  /* 다음 시즌 */
+  .bf-next-card{max-width:860px;margin:34px auto 0;border-radius:4px;overflow:hidden;border:1px solid #2a2a2a;box-shadow:0 30px 70px -30px rgba(139,92,246,.45)}
+  .bf-next-card img{width:100%}
+  #bf-next .bf-lead{color:#ffcf5a;font-weight:700}
+
+  /* 유의사항 */
+  .bf-notice-sec{padding-top:24px;text-align:left}
+  .bf-notice{max-width:860px;margin:0 auto;border-top:1px solid #2a2a2a;border-bottom:1px solid #2a2a2a}
+  .bf-notice summary{cursor:pointer;list-style:none;padding:16px 0;font-weight:800;color:#fff;display:flex;justify-content:space-between}
+  .bf-notice summary::after{content:"+";color:#777}
+  .bf-notice[open] summary::after{content:"−"}
+  .bf-notice ul{margin:0 0 18px;padding-left:18px;color:#8f8a82;font-size:.86rem;display:grid;gap:6px}
+  .bf-notice a{color:#ff6a4d;text-decoration:underline}
+
+  /* 다른 화면(코스 목록·상세·신청)도 같은 톤 */
+  #view-courses,#view-course,#view-apply{background:transparent}
+  .sec-kicker{color:#ff6a4d}
+  .sec-head h2::after,.band h2::after{background:#e3201b}
+  .chip{background:#141414;border-color:#2a2a2a}
+  .chip[aria-pressed="true"]{background:#e3201b;border-color:#e3201b}
+  footer{background:rgba(0,0,0,.55);border-top:1px solid #1d1d1d}
+
+  @media (min-width:769px){
+    .nav .nav-links a{font-size:1.02rem;padding:8px 12px}
+    .nav .brand{font-size:1.55rem;font-weight:900}
+    .nav .brand .chest{width:42px;height:36px}
+  }
+  @media (max-width:768px){
+    .bf-tabs{top:56px}
+    .bf-stage{margin-top:-6px;height:clamp(250px,72vw,330px)}
+    .bf-chest{width:min(62vw,280px)}
+    .bf-glow{width:70vw}
+    .bf-banner{min-height:0}
+    .bf-banner-slides img{height:100%;-webkit-mask:none;mask:none}
+    .bf-p{font-size:.95rem}
+    .glance{grid-template-columns:1fr;max-width:320px;margin-inline:auto}
+    .g-card,button.g-card{display:grid;grid-template-columns:110px 1fr;text-align:left;align-items:center}
+    .g-card header{grid-column:1/-1;text-align:center}
+    .g-art{grid-row:2/4;height:110px;margin:0}
+    .g-art img{height:80px}.num3d{font-size:68px}
+    .g-card h3{margin-top:16px}
+    .g-card p{padding:2px 14px 16px 0}
+    .tickets{gap:8px}
+    .ticket{width:calc((100% - 16px)/3);max-width:150px}
+    .t-top{padding:14px 4px 10px}
+    .bf-split{grid-template-columns:1fr}
+    .steps3{grid-template-columns:1fr 1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .bf-rays,.bf-chest,.bf-track,.bf-sparks i,.bf-banner-slides img{animation:none;transition:none}
+    .bf-sparks{display:none}
+  }
 </style>
-<script src="/i18n/i18n.js"></script>
-<script src="/i18n/ui-site.js"></script>
+<script src="/i18n/i18n.js?v=lang"></script>
+<script src="/i18n/ui-site.js?v=cart"></script>
 </head>
 <body>
 <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
+<div class="promo-bar">보물 여행 시즌 1 · 전국 37개 전설 코스 오픈 · 총 완주 보상</div>
 <header class="nav">
   <div class="wrap nav-bar">
     <div class="brand" data-go="home"><svg class="chest" viewBox="0 0 80 68" aria-hidden="true"><path d="M18 36 10 12c16-10 44-10 60 0L62 36c-12-6-32-6-44 0z" fill="#f6d36a"/><path d="M16 18c14-6 38-6 50 0" fill="none" stroke="#7a4a0e" stroke-width="2.2" stroke-linecap="round"/><path d="M14 34h52v8c-8 4-44 4-52 0v-8z" fill="#5c3a12"/><ellipse cx="40" cy="38" rx="18" ry="5" fill="#ffe9ad"/><circle cx="29" cy="36" r="4" fill="#ffd56a" stroke="#8a5410" stroke-width="1.1"/><circle cx="40" cy="34" r="4.5" fill="#fff6d0" stroke="#8a5410" stroke-width="1.1"/><circle cx="51" cy="37" r="3.5" fill="#f0c14a" stroke="#8a5410" stroke-width="1.1"/><path d="M12 42h56v14c0 6-5 8-10 8H22c-5 0-10-2-10-8V42z" fill="#e2a52e"/><path d="M12 42h56v6H12z" fill="#c4841c"/><rect x="35" y="50" width="10" height="8" rx="1.6" fill="#6b3f10"/><circle cx="40" cy="54" r="1.6" fill="#ffe9ad"/></svg><span data-i18n="nav.brand">보물 여행</span></div>
@@ -580,7 +829,6 @@
     <nav class="nav-links" id="siteNav">
       <a data-go="home" data-i18n="nav.home">홈</a>
       <a data-go="courses" data-i18n="nav.courses">전체 코스</a>
-      <a data-go="apply" data-i18n="nav.apply">신청·문의</a>
       <a href="/ar/course.html?id=seoul-gyeongbok-ar" data-i18n="nav.ar">AR 탁본 체험</a>
       <a href="/board" id="boardLink" hidden data-i18n="nav.board">게시판</a>
       <a href="/cart"><span data-i18n="nav.cart">장바구니</span> <span id="cartCount"></span></a>
@@ -592,110 +840,140 @@
 </header>
 
 <main>
-  <!-- ===== 홈 (랜딩) ===== -->
+  <!-- ===== 홈 (랜딩) — 프로모션형 레이아웃 ===== -->
   <div id="view-home">
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <div class="eyebrow" data-i18n="home.eyebrow">보물 여행</div>
-          <h1 data-i18n-html="home.h1">역사와 설화를<br>찾아 떠나는<br><span class="hl">여행</span></h1>
-          <p class="lede" data-i18n="home.lede">전국에 잠든 전설·설화·역사를 코스로 엮어, 이야기를 따라 걷는 새로운 여행을 제안합니다.</p>
-          <div class="cta-row">
-            <button class="btn btn-primary" data-go="courses" data-i18n="nav.courses">전체 코스</button>
-            <button class="btn btn-ghost" data-go="apply" data-i18n="nav.apply">신청·문의</button>
+    <!-- 히어로 -->
+    <section class="bf-hero" aria-label="보물 여행">
+      <div class="bf-hero-bg" aria-hidden="true"></div>
+      <div class="bf-rays" aria-hidden="true"></div>
+      <p class="bf-kicker">보물 여행 시즌 1<i aria-hidden="true"></i>전국 37개 전설 코스 · AR 탁본</p>
+      <h1 class="bf-title"><span class="bf-title-en">보물을 찾아라</span></h1>
+      <div class="bf-stage">
+        <div class="bf-tape bf-tape-back" aria-hidden="true"><div class="bf-track"><span>BOMUL TRAVEL ✦ AR 탁본 ✦ 총 완주 보상 ✦ 전설 코스 37 ✦ </span><span>BOMUL TRAVEL ✦ AR 탁본 ✦ 총 완주 보상 ✦ 전설 코스 37 ✦ </span></div></div>
+        <div class="bf-glow" aria-hidden="true"></div>
+        <img class="bf-chest" src="img/hero-chest.webp" width="681" height="720" alt="금화와 보석이 가득한 열린 보물 상자">
+        <div class="bf-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="bf-tape bf-tape-front" aria-hidden="true"><div class="bf-track"><span>보물 여행 ✦ 역사와 설화를 찾아 떠나는 여행 ✦ 보물을 찾아라 ✦ AR 탁본 체험 ✦ </span><span>보물 여행 ✦ 역사와 설화를 찾아 떠나는 여행 ✦ 보물을 찾아라 ✦ AR 탁본 체험 ✦ </span></div></div>
           </div>
-        </div>
-        <div class="hero-media"><video src="seoul-intro.mp4" poster="img/seoul-poster.jpg" controls playsinline preload="metadata"></video></div>
+      <div class="bf-hero-cta">
+        <a class="bf-btn bf-btn-red" href="/ar/course.html?id=seoul-gyeongbok-ar">AR 탁본 시작하기</a>
+        <button class="bf-btn bf-btn-line" data-go="courses">전체 코스 보기</button>
       </div>
     </section>
 
-    <section>
-      <div class="wrap">
-        <div class="sec-head intro-lead">
-          <div class="sec-kicker" data-i18n="home.whatKicker">무엇을 하나요</div>
-          <h2 data-i18n="home.whatTitle">이야기가 있는 여행</h2>
-          <p class="intro-big" data-i18n-html="home.whatLead">전설이 살아 숨 쉬는 곳, 보물을 찾아 여행을 떠나요!<br>모든 사람에게 지식과 공부가 되는 특별한 여행.</p>
-        </div>
-        <div class="vals">
-          <div class="val"><div class="n" data-i18n="home.val1n">탐험</div><h3 data-i18n="home.val1h">전설이 된 코스</h3><p data-i18n="home.val1p">흩어진 이야기를 지역·테마별 코스로 묶어, 길을 따라 전설을 만납니다.</p></div>
-          <div class="val"><div class="n" data-i18n="home.val2n">이야기</div><h3 data-i18n="home.val2h">깊이 있는 경험</h3><p data-i18n="home.val2p">각 코스에 담긴 설화와 역사를 안내해, 오래 기억에 남는 하루를 만듭니다.</p></div>
-          <div class="val"><div class="n" data-i18n="home.val3n">가족과 함께</div><h3 data-i18n="home.val3h">아이와 떠나는 역사</h3><p data-i18n="home.val3p">아이들과 함께 떠나는 신비로운 역사여행. 이야기를 따라 걸으며 온 가족이 함께 배우고 즐깁니다.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap">
-        <div class="sec-head">
-          <div class="sec-kicker" data-i18n="home.previewKicker">미리보기</div>
-          <h2 data-i18n="home.previewTitle">이렇게 즐겨요</h2>
-          <p data-i18n="home.previewLead">소개 영상과 '보물 코스' 앱 화면을 미리 만나 보세요. 지도를 따라 보물을 찾고, 미션을 수행하며 이야기를 완성합니다.</p>
-        </div>
-        <div class="preview-grid">
-          <div class="media-card"><div class="frame"><img src="img/intro-autumn.jpg" alt="가을 고궁에서 보물 지도 앱을 든 여행자" data-i18n-attr="alt:home.card1alt"></div><div class="cap"><h4 data-i18n="home.card1h">보물 여행</h4><p data-i18n="home.card1p">역사를 여행하는 가장 즐거운 방법.</p></div></div>
-          <div class="media-card"><div class="frame play-frame"><video id="actionPreview" src="seoul-action.mp4?v=2" playsinline preload="none"></video><button class="play-poster" type="button" data-play="actionPreview" aria-label="15초 액션 예고 재생" data-i18n-attr="aria-label:home.card2play"><img src="img/action-poster.jpg" alt="안개 낀 호수 위 누각" data-i18n-attr="alt:home.card2alt"><span class="play-icon" aria-hidden="true">▶</span></button></div><div class="cap"><h4 data-i18n="home.card2h">15초 액션 예고 · 서울</h4><p data-i18n="home.card2p">귀신에게 쫓기며 보물을 찾는 짧은 액션 예고 영상입니다. (소리를 켜고 보세요)</p></div></div>
-          <div class="media-card"><div class="frame"><video src="intro.mp4" poster="img/intro-poster.jpg" controls playsinline preload="metadata"></video></div><div class="cap"><h4 data-i18n="home.card3h">가을, 보물을 찾아</h4><p data-i18n="home.card3p">단풍 든 고궁에서 보물 지도를 따라 떠나는 가을 여행.</p></div></div>
-          <div class="media-card"><div class="frame"><img src="img/app-course.jpg" alt="보물 코스 미션 앱 화면" data-i18n-attr="alt:home.card4alt"></div><div class="cap"><h4 data-i18n="home.card4h">미션으로 즐기기</h4><p data-i18n="home.card4p">코스를 따라 미션을 수행하며 이야기를 모읍니다.</p></div></div>
-          <div class="media-card"><div class="frame"><img src="img/region-culture.jpg" alt="부여·공주·익산으로 이어지는 지역 문화 여행 일러스트" data-i18n-attr="alt:home.card5alt"></div><div class="cap"><h4 data-i18n="home.card5h">지역과 함께</h4><p data-i18n="home.card5p">부여·공주·익산으로 넓어지는 길에서 지역의 문화를 만납니다.</p></div></div>
-          <div class="media-card"><div class="frame"><img src="img/app-buyeo.jpg" alt="부여 보물 코스 지도 앱 화면" data-i18n-attr="alt:home.card6alt"></div><div class="cap"><h4 data-i18n="home.card6h">보물 코스 지도</h4><p data-i18n="home.card6p">지역의 숨은 보물 지점을 지도에서 한눈에.</p></div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== AR 탁본 체험 (경복궁 프로토타입) ===== -->
-    <section id="ar-takbon">
-      <div class="wrap band">
-        <div class="fig"><img src="img/seoul-poster.jpg" alt="경복궁 근정전 앞에서 휴대폰으로 보물 지도를 보는 여행자" data-i18n-attr="alt:ar.alt" loading="lazy"></div>
+    <!-- AR 탁본 -->
+    <section class="bf-sec bf-black" id="ar-takbon">
+      <div class="bf-split">
+        <div class="bf-split-media"><video src="seoul-intro.mp4" poster="img/seoul-poster.jpg" controls playsinline preload="metadata"></video></div>
         <div>
-          <div class="sec-kicker" data-i18n="ar.kicker">AR 탁본 체험 · 모든 코스</div>
-          <h2 data-i18n="ar.title">비석을 탁본하고, 3D 보물을 줍다</h2>
-          <p data-i18n="ar.lead">이제 보물 여행의 모든 코스에서 AR 탁본을 즐길 수 있어요. 휴대폰 카메라 속에 비석이 세워지면 한지를 붙이고 손가락으로 문질러 탁본을 뜹니다. 탁본에 드러난 수수께끼를 풀면 그 자리에 3D 보물이 나타나고, 코스를 완주하면 보물 상자가 열려 완주 증명서와 적립금을 받습니다.</p>
-          <p style="font-size:.95em;opacity:.8" data-i18n="ar.note">적립금은 모든 코스에서 함께 쌓여 1~5등 포인트 상품으로 바꿀 수 있습니다. 현장 밖에서도 데모 모드로 체험할 수 있어요.</p>
-          <div class="cta-row"><a class="btn btn-primary" href="/ar/course.html?id=seoul-gyeongbok-ar" data-i18n="ar.start">경복궁 AR 탁본 시작하기</a><button class="btn btn-ghost" data-go="courses" data-i18n="ar.pick">전체 코스에서 고르기</button></div>
+          <p class="bf-kicker2">AR 탁본 체험 · 모든 코스</p>
+          <h2 class="bf-h2 left">비석을 탁본하고,<br><em>3D 보물</em>을 줍다</h2>
+          <p class="bf-p">휴대폰 카메라 속에 비석이 세워지면 한지를 붙이고 손가락으로 문질러 탁본을 뜹니다. 탁본에 드러난 수수께끼를 풀면 그 자리에 3D 보물이 나타나고, 코스를 완주하면 보물 상자가 열려 완주 증명서와 적립금을 받습니다.</p>
+          <p class="bf-p dim">적립금은 모든 코스에서 함께 쌓여 1~5등 포인트 상품으로 바꿀 수 있습니다. 현장 밖에서도 데모 모드로 체험할 수 있어요.</p>
+          <div class="bf-row"><a class="bf-btn bf-btn-red" href="/ar/course.html?id=seoul-gyeongbok-ar">경복궁 AR 탁본 시작하기</a><button class="bf-btn bf-btn-line" data-go="courses">전체 코스에서 고르기</button></div>
         </div>
       </div>
     </section>
 
-    <section style="background:var(--surface-2)">
+    <!-- 구역 바로가기 -->
+    <nav class="bf-tabs" aria-label="홈 구역 바로가기">
+      <div class="bf-tabs-in">
+        <button data-scroll="ar-takbon">AR 탁본</button>
+        <button data-scroll="bf-reward">완주 보상</button>
+        <button data-scroll="bf-glance">한눈에 보기</button>
+        <button data-scroll="bf-featured">추천 코스</button>
+        <button data-scroll="bf-how">이용 방법</button>
+        <button data-scroll="bf-next">다음 시즌</button>
+        <button data-scroll="bf-notice">유의사항</button>
+        </div>
+    </nav>
+
+    <!-- 완주 보상 (쿠폰형 카드) -->
+    <section class="bf-sec bf-black" id="bf-reward">
+      <h2 class="bf-h2">총 <em>완주 보상</em></h2>
+      <p class="bf-lead">코스를 완주하면 완주 증명서와 함께 추첨에 응모됩니다.</p>
+      <div class="tickets">
+        <div class="ticket"><div class="t-top"><small>완주 보상</small><b>1등</b><strong>300<span>만 원</span></strong><em>+ 완주 증명서</em></div><div class="t-bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0z M7 6H4a3 3 0 0 0 3 4 M17 6h3a3 3 0 0 1-3 4 M12 13v4 M8 20h8"/></svg></div></div>
+        <div class="ticket"><div class="t-top"><small>완주 보상</small><b>2등</b><strong>200<span>만 원</span></strong><em>+ 완주 증명서</em></div><div class="t-bot" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 7.5 21 12 18.5 16.5 21 15 13.5"/></svg></div></div>
+        <div class="ticket"><div class="t-top"><small>완주 보상</small><b>3등</b><strong>100<span>만 원</span></strong><em>+ 완주 증명서</em></div><div class="t-bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h12v14l-6-3-6 3z M9 8h6 M9 11h4"/></svg></div></div>
+        </div>
+      <a class="bf-wide" href="/ar/course.html?id=seoul-gyeongbok-ar">경복궁 AR 탁본으로 도전하기</a>
+    </section>
+
+    <!-- 한눈에 보기 (빨간 띠) -->
+    <section class="bf-sec bf-red" id="bf-glance">
+      <p class="bf-kicker2">전국 37개 전설 코스</p>
+      <h2 class="bf-h2">보물 여행 한눈에 보기</h2>
+      <div class="glance">
+        <button class="g-card" type="button" data-all-courses><header>혜택 01</header><div class="g-art"><span class="num3d" aria-hidden="true">37</span></div><h3>전설 코스 37개</h3><p>서울에서 제주까지, 이야기를 따라 걷는 길</p></button>
+        <article class="g-card"><header>혜택 02</header><div class="g-art"><span class="num3d" aria-hidden="true">AR</span></div><h3>AR 탁본 · 3D 보물</h3><p>휴대폰 카메라 속 비석을 문질러 탁본</p></article>
+        <article class="g-card"><header>혜택 03</header><div class="g-art"><img src="img/hero-chest.webp" alt="" loading="lazy" width="681" height="720"></div><h3>적립금 100,000P</h3><p>완주하면 1~5등 포인트 상품으로 교환</p></article>
+      </div>
+    </section>
+
+    <!-- 사진 배너 -->
+    <section class="bf-banner" aria-roledescription="carousel" aria-label="보물 여행">
+      <div class="bf-banner-slides">
+        <img class="is-on" src="img/banner-1.jpg?v=sharp" width="2880" height="936" alt="경복궁 근정전 앞에서 휴대폰으로 보물 지도를 보는 여행자">
+        <img src="img/banner-2.jpg?v=sharp" width="2880" height="936" alt="단풍 고궁에서 보물 지도를 보는 여행자" aria-hidden="true">
+        <img src="img/banner-3.jpg?v=sharp" width="2880" height="936" alt="석탑 앞에서 보물 지도가 켜진 휴대폰을 든 여행자" aria-hidden="true">
+      </div>
+    </section>
+
+    <!-- 추천 코스 -->
+    <section class="bf-sec bf-ink" id="bf-featured">
+      <h2 class="bf-h2">추천 <em>전설 코스</em></h2>
+      <p class="bf-lead">경복궁은 무료체험입니다. 한양 도성 보물길을 비롯한 다른 코스는 회원가입 후 결제하면 도전할 수 있어요.</p>
+      <div class="wrap"><div class="course-grid" id="featured"></div></div>
+      <button class="bf-wide" data-go="courses">코스 전체 보기</button>
+    </section>
+
+    <!-- 이용 방법 -->
+    <section class="bf-sec bf-black" id="bf-how">
+      <h2 class="bf-h2">이렇게 <em>즐겨요</em></h2>
+      <ol class="steps3">
+        <li><b>01</b><h3>코스 고르기</h3><p>지역·테마별 전설 코스에서 떠날 길을 고릅니다.</p></li>
+        <li><b>02</b><h3>현장에서 탁본</h3><p>장소에서 AR 카메라를 켜고 비석을 문질러 탁본을 뜹니다.</p></li>
+        <li><b>03</b><h3>수수께끼 · 3D 보물</h3><p>탁본에 드러난 수수께끼를 풀면 3D 보물이 나타납니다.</p></li>
+        <li><b>04</b><h3>보물 상자 열기</h3><p>완주하면 증명서와 적립금, 완주 보상 추첨 응모까지.</p></li>
+      </ol>
+      <div class="wrap"><div class="preview-grid bf-previews">
+        <div class="media-card"><div class="frame play-frame"><video id="actionPreview" src="seoul-action.mp4?v=2" playsinline preload="none"></video><button class="play-poster" type="button" data-play="actionPreview" aria-label="15초 액션 예고 재생"><img src="img/action-poster.jpg" alt="안개 낀 호수 위 누각"><span class="play-icon" aria-hidden="true">▶</span></button></div><div class="cap"><h4>15초 액션 예고 · 서울</h4><p>귀신에게 쫓기며 보물을 찾는 짧은 예고 영상 (소리를 켜고 보세요)</p></div></div>
+        <div class="media-card"><div class="frame"><img src="img/app-course.jpg" alt="보물 코스 미션 앱 화면" loading="lazy"></div><div class="cap"><h4>미션으로 즐기기</h4><p>코스를 따라 미션을 수행하며 이야기를 모읍니다.</p></div></div>
+        <div class="media-card"><div class="frame"><img src="img/map-nation-treasure.jpg?v=3" alt="전국으로 넓어지는 보물 여행 지도" loading="lazy"></div><div class="cap"><h4>전국으로 넓어집니다</h4><p>서울에서 부여·공주·익산 등 전국의 역사 도시로.</p></div></div>
+      </div></div>
+    </section>
+
+    <!-- 다음 시즌 -->
+    <section class="bf-sec bf-ink" id="bf-next">
+      <p class="bf-kicker2">COMING SOON</p>
+      <h2 class="bf-h2">다음엔 <em>유럽</em>, 개봉 박두</h2>
+      <p class="bf-lead">완주 보상 5천만 원 예정</p>
+      <div class="bf-count">
+        <h3 id="cdTitle">유럽 편 공개까지 남은 시간</h3>
+        <div class="cd" id="countdown" role="timer" aria-live="off">
+        <div class="cd-box"><b id="cdD">000</b><small>DAYS</small></div><span class="cd-sep" aria-hidden="true">:</span>
+        <div class="cd-box"><b id="cdH">00</b><small>HRS</small></div><span class="cd-sep" aria-hidden="true">:</span>
+        <div class="cd-box"><b id="cdM">00</b><small>MINS</small></div><span class="cd-sep" aria-hidden="true">:</span>
+        <div class="cd-box"><b id="cdS">00</b><small>SECS</small></div>
+        </div>
+      </div>
+      <div class="wrap"><div class="bf-next-card"><img src="img/coming-greek.jpg" alt="개봉박두 — 그리스 신화" loading="lazy"></div></div>
+    </section>
+
+    <!-- 유의사항 -->
+    <section class="bf-sec bf-black bf-notice-sec" id="bf-notice">
       <div class="wrap">
-        <div class="sec-head">
-          <div class="sec-kicker" data-i18n="featured.kicker">먼저 둘러보기</div>
-          <h2 data-i18n="featured.title">추천 전설 코스</h2>
-          <p data-i18n="featured.lead">추천 코스는 누구나 볼 수 있습니다. 카드를 누르면 상세 페이지로 이동합니다. 전체 코스는 회원가입 후 로그인하면 볼 수 있습니다.</p>
-        </div>
-        <div class="course-grid" id="featured"></div>
-        <div style="margin-top:24px"><button class="btn btn-ghost" data-go="courses" data-i18n="featured.all">코스 전체 보기</button></div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap band">
-        <div class="fig"><img src="img/map-nation-treasure.jpg?v=3" alt="전국으로 넓어지는 보물 여행 지도" data-i18n-attr="alt:expand.alt"></div>
-        <div>
-          <div class="sec-kicker" data-i18n="expand.kicker">확장 계획</div>
-          <h2 data-i18n="expand.title">전국으로 넓어집니다</h2>
-          <p data-i18n="expand.lead">서울에서 시작해 부여·공주·익산 등 전국의 역사 도시로 코스를 넓혀 갑니다. 지역의 이야기와 상점을 잇는 길이 전국으로 이어집니다.</p>
-        </div>
-      </div>
-    </section>
-
-    <section style="background:var(--surface-2)">
-      <div class="wrap band">
-        <div>
-          <div class="sec-kicker" data-i18n="reward.kicker">보물 여행</div>
-          <h2 data-i18n="reward.title">역사를 여행하는 가장 즐거운 방법</h2>
-          <p data-i18n="reward.lead">이야기를 따라 걷는 여행, 지금 함께 시작해요.</p>
-          <div class="prize">
-            <h3 data-i18n="reward.h">완주 보상 상품 내역</h3>
-            <ul>
-              <li data-i18n-html="reward.1"><b>1등</b><span>300만 원과 완주 증명서</span></li>
-              <li data-i18n-html="reward.2"><b>2등</b><span>200만 원과 완주 증명서</span></li>
-              <li data-i18n-html="reward.3"><b>3등</b><span>100만 원과 완주 증명서</span></li>
-            </ul>
-          </div>
-          <div class="cta-row"><button class="btn btn-primary" data-go="apply" data-i18n="nav.apply">신청·문의</button><button class="btn btn-ghost" data-go="courses" data-i18n="nav.courses">전체 코스</button></div>
-        </div>
-        <div class="fig"><img src="img/traveler-lake.jpg" alt="새벽 호숫가에서 보물 지도를 보는 여행자" data-i18n-attr="alt:reward.alt"></div>
+        <details class="bf-notice" open>
+          <summary>유의사항</summary>
+          <ul>
+            <li>완주 보상 상품 구성과 받는 방법은 운영 안내에 따라 달라질 수 있습니다.</li>
+            <li>AR 탁본은 휴대폰에서 카메라·위치·동작 센서 권한을 허용해야 합니다. 현장 밖에서도 데모 모드로 체험할 수 있습니다.</li>
+            <li>적립금은 모든 코스에서 함께 쌓이며 코스마다 한 번만 지급됩니다.</li>
+            <li>맛집 별점은 구글 지도 기준이며 바뀔 수 있어, 방문 전 영업시간 확인을 권합니다.</li>
+            <li>문의: <a href="#apply" data-go="apply">신청·문의</a></li>
+          </ul>
+        </details>
       </div>
     </section>
   </div>
@@ -707,7 +985,7 @@
         <div class="sec-head">
           <div class="sec-kicker" data-i18n="courses.kicker">전체 코스</div>
           <h2 data-i18n="courses.title">전설 코스 도전하기</h2>
-          <p data-i18n="courses.lead">회원이라면 모든 전설 코스를 무료로 볼 수 있습니다. 코스를 누르면 상세 페이지로 이동합니다.</p>
+          <p data-i18n="courses.lead">회원가입 후 도전권을 결제하면 코스에 도전할 수 있습니다. 경복궁은 무료체험입니다.</p>
         </div>
         <div class="filters" id="filters"></div>
         <div class="course-grid" id="allCourses"></div>
@@ -756,21 +1034,6 @@
   </div>
 </main>
 
-<section class="coming">
-  <div class="wrap">
-    <div class="coming-head">
-      <span class="coming-tag">COMING SOON</span>
-      <div class="coming-line">
-        <div class="coming-big" data-i18n="coming.line">다음엔 유럽.... 개봉 박두..!</div>
-        <span class="coming-prize" data-i18n="coming.prize">완주 보상 5천만원 예정</span>
-      </div>
-    </div>
-    <div class="coming-card">
-      <img src="img/coming-greek.jpg" alt="개봉박두 — 그리스 신화" data-i18n-attr="alt:coming.alt">
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="wrap">
     <div data-i18n="footer.line">보물 여행 · 역사와 설화를 찾아 떠나는 여행</div>
@@ -789,6 +1052,21 @@ const API_BASE = (location.hostname === "localhost" || location.hostname === "12
   ? "http://localhost:4000"
   : "";
 function storedToken(){ return localStorage.getItem("token") || sessionStorage.getItem("token"); }
+let paymentsEnabledCache=null;
+let paymentsStatusMessage="결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.";
+async function ensurePaymentsEnabled(){
+  if(paymentsEnabledCache===true) return true;
+  if(paymentsEnabledCache===false) return false;
+  try{
+    const response=await fetch(API_BASE+"/api/payments/status");
+    const body=await response.json().catch(()=>({}));
+    paymentsEnabledCache=body.enabled===true;
+    if(typeof body.message==="string" && body.message) paymentsStatusMessage=body.message;
+  }catch{
+    paymentsEnabledCache=false;
+  }
+  return paymentsEnabledCache;
+}
 /* =========================================================
    코스 데이터 — 여기에 자료를 추가/수정하세요.
    - thumb/hero/map: 이미지·지도 URL을 넣으면 '자료 삽입 영역' 대신 표시됩니다 (비워두면 빈칸 유지)
@@ -799,7 +1077,7 @@ const COURSES=[
   { id:"seoul-gyeongbok-ar", region:"서울", theme:"AR 탁본 체험", ar:"/ar/course.html?id=seoul-gyeongbok-ar", isNew:true,
     title:"경복궁, 불을 막는 다섯 부적",
     summary:"휴대폰 AR 카메라로 경복궁 다섯 곳의 비석을 탁본하고, 수수께끼를 풀어 3D 보물과 완주 보상을 모으는 체험형 코스.",
-    thumb:"img/seoul-poster.jpg", hero:"img/photo-seoul.jpg", map:"img/route-seoul-gyeongbok-ar.jpg",
+    thumb:"img/gyeongbok-geunjeong.jpg", hero:"img/photo-seoul.jpg", map:"img/route-seoul-gyeongbok-ar.jpg",
     info:{거리:"약 1.5km (궁 안 도보)", 소요시간:"약 90분", 난이도:"쉬움", 집결지:"경복궁 광화문"},
     stops:[
       {where:"보물 1 · 광화문", name:"해치의 뿔", addr:"서울특별시 종로구 사직로 161 (경복궁 광화문)", desc:"경복궁의 정문 앞을 지키는 돌짐승 해치. 관악산의 불기운을 누르려 세웠다는 이야기가 전해집니다. [미션] AR 카메라로 첫째 비석을 탁본하고, 옳고 그름을 가린다는 상상의 동물 이름을 맞혀 보세요."},
@@ -916,17 +1194,6 @@ const COURSES=[
       {where:"진도 바닷길", name:"신비의 바닷길", addr:"전라남도 진도군 고군면 신비의바닷길 148", desc:"가족을 만나려 빌자 바다가 갈라졌다는 뽕할머니 전설."},
     ],
     stories:["춘향전","견훤 탄생","정읍사","김제 벽골제","진도 신비의 바닷길"] },
-
-  { id:"fairy", region:"전래", theme:"옛이야기", title:"누구나 아는 옛이야기 마당",
-    summary:"온 가족이 함께 듣는 정겨운 전래동화를 테마로 엮은 길.",
-    thumb:null, hero:null, map:null,
-    info:{거리:null, 소요시간:null, 난이도:null, 집결지:null},
-    stops:[
-      {where:"이야기 마당", name:"해와 달이 된 오누이", addr:"전국에 전해지는 이야기로, 한 곳의 유적 주소는 없습니다.", desc:"동아줄을 타고 하늘로 올라 해와 달이 된 오누이 이야기."},
-      {where:"이야기 마당", name:"선녀와 나무꾼", addr:"전국에 전해지는 이야기로, 한 곳의 유적 주소는 없습니다.", desc:"날개옷을 감춘 나무꾼과 하늘로 떠난 선녀의 애틋한 이야기."},
-      {where:"이야기 마당", name:"흥부와 놀부", addr:"전국에 전해지는 이야기로, 한 곳의 유적 주소는 없습니다.", desc:"제비가 물어다 준 박씨로 갈린 두 형제의 이야기."},
-    ],
-    stories:["해와 달이 된 오누이","선녀와 나무꾼","흥부와 놀부","콩쥐팥쥐","혹부리 영감"] },
 
   { id:"gg-suwon", region:"경기도", theme:"정조와 효심", title:"정조의 효심, 화성 보물길",
     summary:"아버지 사도세자를 향한 정조의 마음을 따라, 수원 화성에서 융건릉·용주사까지 걷는 효심의 길.",
@@ -1901,8 +2168,8 @@ const IMAGES={
 
 /* 경로 지도 (코스 지도 자리) */
 const ROUTEMAPS={
-  "seoul":"img/route-seoul.jpg", "seoul-half":"img/route-seoul.jpg",
-  "seoul-gangdong":"img/route-seoul-gangdong.jpg", "seoul-gangdong-half":"img/route-seoul-gangdong.jpg",
+  "seoul":"img/route-seoul.jpg", "seoul-half":"img/route-seoul-half.jpg",
+  "seoul-gangdong":"img/route-seoul-gangdong.jpg", "seoul-gangdong-half":"img/route-seoul-gangdong-half.jpg",
   "gyeongju":"img/route-gyeongju.jpg",
   "buyeo":"img/route-buyeo.jpg", "jeju":"img/route-jeju.jpg",
   "seorak":"img/route-seorak.jpg", "honam":"img/route-honam.jpg",
@@ -2414,8 +2681,20 @@ let accountReady=false;
 let memberPromptDismissed=false;
 const MEMBERSHIP_PRICE=9900;
 const FREE_MODE=true;
-const FEATURED_IDS=COURSES.slice(0,3).map(c=>c.id);
-function canSeeCourse(c){ return signedIn || Boolean(c && FEATURED_IDS.includes(c.id)); }
+const FREE_COURSE_IDS=["seoul-gyeongbok-ar"];
+const MEMBER_COURSE_IDS=["seoul-gangdong"];
+const FEATURED_IDS=COURSES.slice(0,3).map(c=>c.id).filter(id=>!MEMBER_COURSE_IDS.includes(id));
+const COURSE_PASS_PRICE=4000;
+const ALL_PASS_PRICE=8000;
+function hasCoursePass(id){
+  if(FREE_COURSE_IDS.includes(id)) return true;
+  if(accountUser && accountUser.user_type==="admin") return true;
+  const pass=accountUser && accountUser.membership;
+  if(!pass) return false;
+  if(pass.active) return true;
+  return Array.isArray(pass.courses) && pass.courses.includes(id);
+}
+function canSeeCourse(c){ return Boolean(c && hasCoursePass(c.id)); }
 function loginRequiredHtml(text){
   return `<div class="member-box" style="grid-column:1/-1">
     <h2>${ui("courses.membersOnlyTitle")}</h2>
@@ -2426,12 +2705,14 @@ function loginRequiredHtml(text){
 function won(value){ return Number(value).toLocaleString("ko-KR")+"원"; }
 /* 모든 코스에 AR 탁본 체험 연결 (/ar/course.html?id=코스아이디) */
 function arUrl(c){ return c.ar || `/ar/course.html?id=${encodeURIComponent(c.id)}`; }
-function courseCard(c){
+function courseCard(c, opts){
   const L = window.BomulI18n ? BomulI18n.course(c) : c;
+  const free = opts && opts.freeTrial ? `<span class="badge badge-free">무료체험</span>` : "";
+  const fresh = c.isNew && !(opts && opts.compact) ? `<span class="badge badge-new">NEW</span>` : "";
   return `<article class="ccard" data-course="${c.id}">
     ${thumbMarkup(c.thumb||PHOTOS[c.id]||IMAGES[c.id], ui("detail.hero"))}
     <div class="body">
-      <div class="top"><span class="badge">${L.region}</span><span class="badge badge-ar">AR</span>${c.isNew?`<span class="badge badge-new">NEW</span>`:""}<span class="theme">${L.theme}</span></div>
+      <div class="top"><span class="badge">${L.region}</span><span class="badge badge-ar">AR</span>${free}${fresh}<span class="theme">${L.theme}</span></div>
       <h3>${L.title}</h3>
       <p>${L.summary}</p>
       <span class="more">${ui("courses.more")}</span>
@@ -2440,7 +2721,7 @@ function courseCard(c){
 }
 
 function renderHome(){
-  $("#featured").innerHTML=COURSES.slice(0,3).map(courseCard).join("");
+  $("#featured").innerHTML=COURSES.slice(0,3).map(c=>courseCard(c,{freeTrial:FREE_COURSE_IDS.includes(c.id),compact:true})).join("");
 }
 let activeRegion="전체";
 function membershipOfferHtml(){
@@ -2488,9 +2769,14 @@ function openMemberModal(){
   $("#memberOffer").innerHTML=membershipOfferHtml();
   modal.hidden=false;
 }
-function openPaymentWindow(){
+async function openPaymentWindow(){
   const modal=$("#memberModal");
   if(!modal || hasMembership) return;
+  if(!(await ensurePaymentsEnabled())){
+    $("#memberOffer").innerHTML=`<h2 class="ms-pay-title">결제 준비 중</h2><p class="ms-note">${paymentsStatusMessage}</p><button class="ms-back" type="button" data-back-member>← 멤버십</button>`;
+    modal.hidden=false;
+    return;
+  }
   $("#memberOffer").innerHTML=paymentWindowHtml();
   modal.hidden=false;
 }
@@ -2515,9 +2801,10 @@ function renderCourses(){
       : `<p style="color:var(--muted)">${ui("courses.loading")}</p>`;
     return;
   }
-  const regions=["전체","서울","경기도","인천","강원도","충청도","경상도","전라","제주","전래","부산","대구","대전","울산","광주","세종"];
+  const regions=["전체","서울","경기도","인천","강원도","충청도","경상도","전라","제주","부산","대구","대전","울산","광주","세종","전설을 찾아서"];
   filters.innerHTML=regions.map(r=>`<button class="chip" aria-pressed="${r===activeRegion}" data-region="${r}">${ui("region."+r)}</button>`).join("");
-  const list=COURSES.filter(c=>activeRegion==="전체"||c.region===activeRegion);
+  const visible=COURSES.filter(c=>c.region!=="전래"&&c.id!=="fairy");
+  const list=visible.filter(c=>activeRegion==="전체"||c.region===activeRegion);
   box.innerHTML=list.length?list.map(courseCard).join(""):`<p style="color:var(--muted)">${ui("courses.preparing",{region:ui("region."+activeRegion)})}</p>`;
 }
 function infoCell(k,v){
@@ -2534,15 +2821,19 @@ function renderDetail(id){
   if(!c){go("courses");return;}
   const info = Object.assign({}, c.info, INFOX[c.id]||{});
   const L = window.BomulI18n ? BomulI18n.course({...c, info}) : {...c, info};
-  if(!canSeeCourse(c) && !accountReady){
+  if(!accountReady){
     $("#courseDetail").innerHTML=`<p class="detail-intro">${ui("courses.loading")}</p>`;
     return;
   }
-  if(!canSeeCourse(c)){
-    $("#courseDetail").innerHTML=`
-      <div class="detail-head"><span class="badge">${L.region}</span><span class="theme" style="color:var(--muted);font-size:.8rem">${ui("courses.membersBadge")}</span></div>
-      <h1>${L.title}</h1>
-      ${loginRequiredHtml(ui("courses.membersDetail"))}`;
+  if(!hasCoursePass(c.id)){
+    if(!signedIn){
+      $("#courseDetail").innerHTML=`
+        <div class="detail-head"><span class="badge">${L.region}</span><span class="theme" style="color:var(--muted);font-size:.8rem">${ui("courses.membersBadge")}</span></div>
+        <h1>${L.title}</h1>
+        ${loginRequiredHtml("회원가입 후 도전권을 결제하면 이 코스에 도전할 수 있습니다.")}`;
+      return;
+    }
+    renderPay(c);
     return;
   }
   const mapSrc = ROUTEMAPS[c.id] || c.map;
@@ -2623,7 +2914,7 @@ function renderDetail(id){
     ${eatsHtml}
     <div class="detail-cta">
       <a class="btn btn-primary" href="${arUrl(c)}">${ui("detail.arStart")}</a>
-      <button class="btn btn-ghost" data-go="apply">${ui("detail.apply")}</button>
+      <button class="btn btn-ghost" type="button" data-add-cart="${c.id}">${ui("detail.cart")}</button>
       <button class="btn btn-ghost" data-go="courses">${ui("detail.other")}</button>
     </div>`;
 }
@@ -2642,9 +2933,45 @@ function show(viewKey){
   closeMobileNav();
   window.scrollTo({top:0,behavior:'auto'});
 }
+function courseIdFromHash(h){
+  if(h.startsWith("pay-")) return decodeURIComponent(h.slice(4));
+  if(h.startsWith("course-")) return h.slice(7);
+  return "";
+}
+function escHtml(value){
+  return String(value||"").replace(/[&<>"']/g, ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+let payCourseId="";
+function renderPay(c){
+  payCourseId=c.id;
+  $("#courseDetail").innerHTML=`
+    <section class="pay" aria-label="결제">
+      <h2>결제하기</h2>
+      <p class="pay-course">도전 코스 · ${escHtml(c.title)}</p>
+      <h3>상품 정보</h3>
+      <label class="pay-opt"><input type="radio" name="coursePlan" value="course" checked><span class="pay-name"><b>코스 1개 도전권</b><small>이 코스만 도전할 수 있습니다</small></span><span class="pay-amt">${won(COURSE_PASS_PRICE)}</span></label>
+      <label class="pay-opt"><input type="radio" name="coursePlan" value="all"><span class="pay-name"><b>전체 코스 도전권</b><small>모든 전설 코스에 도전할 수 있습니다</small></span><span class="pay-amt">${won(ALL_PASS_PRICE)}</span></label>
+      <h3>결제 금액</h3>
+      <div class="pay-total"><span>총 결제금액</span><b><strong data-pay-total>${COURSE_PASS_PRICE.toLocaleString("ko-KR")}</strong><em>원</em></b></div>
+      <h3>결제 수단</h3>
+      <label class="pay-opt"><input type="radio" name="coursePay" value="신용카드" checked><span class="pay-name"><b>신용카드</b></span></label>
+      <label class="pay-opt"><input type="radio" name="coursePay" value="계좌이체"><span class="pay-name"><b>계좌이체</b></span></label>
+      <label class="pay-opt"><input type="radio" name="coursePay" value="네이버페이"><span class="pay-name"><b>네이버페이</b></span></label>
+      <h3>약관 동의 및 결제 진행</h3>
+      <label class="pay-agree"><input type="checkbox" id="payAgree"><span><a href="/terms.html" target="_blank" rel="noopener">이용약관</a>과 결제 진행에 동의합니다.</span></label>
+      <button class="pay-go" type="button" data-buy-course disabled>선택한 상품 구매하기</button>
+      <p class="pay-msg" id="payMsg" hidden></p>
+    </section>`;
+}
+function updatePayTotal(){
+  const plan=document.querySelector('input[name="coursePlan"]:checked')?.value||"course";
+  const total=document.querySelector("[data-pay-total]");
+  if(total) total.textContent=(plan==="all"?ALL_PASS_PRICE:COURSE_PASS_PRICE).toLocaleString("ko-KR");
+}
 function route(){
   const h=(location.hash||"#home").slice(1);
-  if(h.startsWith("course-")){ show("course"); renderDetail(h.slice(7)); return; }
+  const courseId=courseIdFromHash(h);
+  if(courseId){ show("course"); renderDetail(courseId); return; }
   if(views[h]){ if(h==="courses")renderCourses(); show(h); }
   else { show("home"); }
 }
@@ -2666,6 +2993,10 @@ document.addEventListener('click',async e=>{
   if(back){ openMemberModal(); return; }
   const buy=e.target.closest('[data-buy-membership]');
   if(buy){ await buyMembership(buy); return; }
+  const buyCourseBtn=e.target.closest('[data-buy-course]');
+  if(buyCourseBtn){ await buyCourse(buyCourseBtn); return; }
+  const addCartBtn=e.target.closest('[data-add-cart]');
+  if(addCartBtn){ await addCourseToCart(addCartBtn); return; }
   const toggle=e.target.closest('.nav-toggle');
   if(toggle){
     const nav=$("#siteNav");
@@ -2676,11 +3007,20 @@ document.addEventListener('click',async e=>{
     return;
   }
   if(e.target.closest('.nav nav a')) closeMobileNav();
+  const allCourses=e.target.closest('[data-all-courses]');
+  if(allCourses){ activeRegion="전체"; go("courses"); return; }
   const goEl=e.target.closest('[data-go]'); if(goEl){ go(goEl.dataset.go); return; }
   const card=e.target.closest('[data-course]'); if(card){ location.hash="course-"+card.dataset.course; return; }
   const chip=e.target.closest('[data-region]'); if(chip){ activeRegion=chip.dataset.region; renderCourses(); return; }
 });
 window.addEventListener('hashchange',route);
+document.addEventListener('change',e=>{
+  if(e.target && e.target.name==="coursePlan") updatePayTotal();
+  if(e.target && e.target.id==="payAgree"){
+    const button=document.querySelector("[data-buy-course]");
+    if(button) button.disabled=!e.target.checked;
+  }
+});
 document.addEventListener('keydown',e=>{
   if(e.key==="Escape" && $("#memberModal") && !$("#memberModal").hidden) closeMemberModal();
   if(e.key==="Escape") closeMobileNav();
@@ -2714,7 +3054,7 @@ $("#applyForm").addEventListener('submit',async e=>{
     }
     toast.style.color="var(--primary)";
     toast.textContent=ui("apply.done",{name});
-    e.target.reset();
+  e.target.reset();
   }catch{
     toast.style.color="var(--accent)";
     toast.textContent=ui("apply.offline");
@@ -2727,10 +3067,82 @@ $("#copyMail").addEventListener('click',async()=>{
   setTimeout(()=>{ b.textContent=ui("apply.copy"); },1500);
 });
 
+async function addCourseToCart(button){
+  const saved=storedToken();
+  if(!saved){ location.href="/login"; return; }
+  const legendId=button.dataset.addCart;
+  if(!legendId) return;
+  const label=button.textContent;
+  button.disabled=true;
+  button.textContent=ui("detail.cartPending");
+  try{
+    const response=await fetch(API_BASE+"/api/carts",{
+      method:"POST",
+      headers:{"content-type":"application/json",authorization:`Bearer ${saved}`},
+      body:JSON.stringify({legend_id:legendId, quantity:1}),
+    });
+    if(response.status===401){ location.href="/login"; return; }
+    const body=await response.json().catch(()=>({}));
+    if(!response.ok){
+      window.alert(body.message||ui("detail.cartFail"));
+      return;
+    }
+    window.dispatchEvent(new Event("cart-updated"));
+    location.href="/cart";
+  }catch{
+    window.alert(ui("detail.cartOffline"));
+  }finally{
+    button.disabled=false;
+    button.textContent=label;
+  }
+}
+async function buyCourse(button){
+  const saved=storedToken();
+  const msg=$("#payMsg");
+  if(!saved){ location.href="/login"; return; }
+  if(!(await ensurePaymentsEnabled())){
+    if(msg){ msg.hidden=false; msg.style.color="#e01278"; msg.textContent=paymentsStatusMessage; }
+    return;
+  }
+  const agree=$("#payAgree");
+  if(!agree || !agree.checked){
+    if(msg){ msg.hidden=false; msg.style.color="#e01278"; msg.textContent="약관에 동의해 주세요."; }
+    return;
+  }
+  const plan=document.querySelector('input[name="coursePlan"]:checked')?.value||"course";
+  const payment=document.querySelector('input[name="coursePay"]:checked')?.value||"신용카드";
+  button.disabled=true;
+  if(msg){ msg.hidden=false; msg.style.color="#666"; msg.textContent="결제하는 중입니다."; }
+  try{
+    const response=await fetch(API_BASE+"/api/membership",{
+      method:"POST",
+      headers:{"content-type":"application/json",authorization:`Bearer ${saved}`},
+      body:JSON.stringify({plan, course_id:payCourseId, payment_method:payment, agree:true}),
+    });
+    const body=await response.json().catch(()=>({}));
+    if(!response.ok){
+      button.disabled=false;
+      if(msg){ msg.style.color="#e01278"; msg.textContent=body.message||"결제하지 못했습니다."; }
+      return;
+    }
+    if(accountUser) accountUser.membership=body.membership||accountUser.membership;
+    hasMembership=Boolean(accountUser && (accountUser.user_type==="admin" || accountUser.membership?.active));
+    const id=payCourseId;
+    if(msg){ msg.style.color="#0b7a45"; msg.textContent=body.message||"결제가 완료되었습니다."; }
+    renderDetail(id);
+  }catch{
+    button.disabled=false;
+    if(msg){ msg.style.color="#e01278"; msg.textContent="서버에 연결하지 못했습니다."; }
+  }
+}
 async function buyMembership(button){
   const saved=storedToken();
   const msg=$("#lockMsg");
   if(!saved){ location.href="/login"; return; }
+  if(!(await ensurePaymentsEnabled())){
+    if(msg){ msg.hidden=false; msg.style.color="var(--accent)"; msg.textContent=paymentsStatusMessage; }
+    return;
+  }
   const payment=document.querySelector('input[name="membershipPay"]:checked')?.value||"신용카드";
   button.disabled=true;
   if(msg){ msg.hidden=false; msg.style.color="var(--muted)"; msg.textContent="멤버십을 구매하는 중"; }
@@ -2759,7 +3171,8 @@ function refreshCourseViews(){
   renderHome();
   const h=(location.hash||"#home").slice(1);
   if(h==="courses") renderCourses();
-  if(h.startsWith("course-")) renderDetail(h.slice(7));
+  const courseId=courseIdFromHash(h);
+  if(courseId) renderDetail(courseId);
   if(hasMembership){
     const modal=$("#memberModal");
     if(modal) modal.hidden=true;
@@ -2831,14 +3244,14 @@ async function applyRemoteCourses(){
   try{
     const response=await fetch(API_BASE+"/api/legend-courses");
     if(!response.ok) return;
-    const saved=await response.json();
+    const saved=(await response.json()).filter(item=>item&&item.id!=="fairy"&&item.region!=="전래");
     if(!Array.isArray(saved)||!saved.length) return;
     const remote=new Map(saved.map(item=>[item.id, item]));
     const keepLocal=COURSES.filter(course=>course.ar && !remote.has(course.id));
     const merged=keepLocal.concat(COURSES.filter(course=>remote.has(course.id)).map(course=>overlayCourse(course, remote.get(course.id))));
     saved.forEach(item=>{ if(!COURSES.some(course=>course.id===item.id)) merged.push(overlayCourse({}, item)); });
     COURSES.splice(0, COURSES.length, ...merged);
-    FEATURED_IDS.splice(0, FEATURED_IDS.length, ...COURSES.slice(0,3).map(course=>course.id));
+    FEATURED_IDS.splice(0, FEATURED_IDS.length, ...COURSES.slice(0,3).map(course=>course.id).filter(id=>!MEMBER_COURSE_IDS.includes(id)));
   }catch{}
 }
 function startStarfield(){
@@ -2898,10 +3311,66 @@ function startStarfield(){
   window.addEventListener("resize", resize);
   if(!reduce) frame();
 }
+/* ── 홈: 다음 시즌 카운트다운 · 구역 바로가기 ── */
+// 공개 날짜를 정하면 여기만 바꾸세요. (지금 값은 예시입니다)
+const SEASON2_OPEN_AT = "2027-03-01T00:00:00+09:00";
+function startCountdown(){
+  const end=new Date(SEASON2_OPEN_AT).getTime();
+  const el={d:$("#cdD"),h:$("#cdH"),m:$("#cdM"),s:$("#cdS")};
+  if(!el.d||Number.isNaN(end)) return;
+  const pad=(n,w=2)=>String(n).padStart(w,"0");
+  const tick=()=>{
+    let t=Math.max(0,Math.floor((end-Date.now())/1000));
+    const d=Math.floor(t/86400); t-=d*86400;
+    const h=Math.floor(t/3600); t-=h*3600;
+    const m=Math.floor(t/60), s=t-m*60;
+    el.d.textContent=pad(d,d>99?3:2); el.h.textContent=pad(h); el.m.textContent=pad(m); el.s.textContent=pad(s);
+  };
+  tick(); setInterval(tick,1000);
+}
+function setNavHeight(){
+  const nav=document.querySelector("header.nav");
+  if(nav) document.documentElement.style.setProperty("--nav-h", nav.offsetHeight+"px");
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-scroll]"); if(!b) return;
+  const target=document.getElementById(b.dataset.scroll); if(!target) return;
+  const off=(document.querySelector("header.nav")?.offsetHeight||0)+(document.querySelector(".bf-tabs")?.offsetHeight||0)-1;
+  window.scrollTo({top:target.getBoundingClientRect().top+window.scrollY-off,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+function watchHomeTabs(){
+  const btns=[...document.querySelectorAll(".bf-tabs [data-scroll]")];
+  if(!btns.length||!("IntersectionObserver" in window)) return;
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{ if(en.isIntersecting) btns.forEach(b=>b.classList.toggle("on",b.dataset.scroll===en.target.id)); });
+  },{rootMargin:"-45% 0px -50% 0px"});
+  btns.forEach(b=>{ const t=document.getElementById(b.dataset.scroll); if(t) io.observe(t); });
+}
+setNavHeight(); window.addEventListener("resize",setNavHeight);
+startCountdown(); watchHomeTabs();
 renderHome();
 route();
 loadAccount();
 startStarfield();
+function startBannerSlides(){
+  const box=document.querySelector(".bf-banner-slides");
+  if(!box) return;
+  const slides=[...box.querySelectorAll("img")];
+  if(slides.length<2) return;
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let i=0;
+  setInterval(()=>{
+    if(document.hidden) return;
+    const home=document.getElementById("view-home");
+    if(home && home.hidden) return;
+    slides[i].classList.remove("is-on");
+    slides[i].setAttribute("aria-hidden","true");
+    i=(i+1)%slides.length;
+    slides[i].classList.add("is-on");
+    slides[i].removeAttribute("aria-hidden");
+  },4500);
+}
+startBannerSlides();
 applyRemoteCourses().then(()=>refreshCourseViews());
 function paintLangTabs(){
   const box=document.querySelector(".lang-tabs");

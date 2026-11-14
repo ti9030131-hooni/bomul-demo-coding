@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [
         function requiredForLocalAccount() {
-          return this.provider !== 'naver';
+          return this.provider !== 'naver' && this.provider !== 'google';
         },
         '비밀번호는 필수입니다.',
       ],
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [
         function requiredOnPasswordChange() {
-          return this.isModified('password') || (this.isNew && this.provider !== 'naver');
+          return this.isModified('password') || (this.isNew && this.provider !== 'naver' && this.provider !== 'google');
         },
         '비밀번호 확인은 필수입니다.',
       ],
@@ -67,8 +67,14 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: [true, '전화번호는 필수입니다.'],
+      required: [
+        function requiredUnlessGoogle() {
+          return this.provider !== 'google';
+        },
+        '전화번호는 필수입니다.',
+      ],
       trim: true,
+      default: '',
     },
     email: {
       type: String,
@@ -79,7 +85,7 @@ const userSchema = new mongoose.Schema(
     },
     provider: {
       type: String,
-      enum: ['local', 'naver'],
+      enum: ['local', 'naver', 'google'],
       default: 'local',
     },
     naver_id: {
@@ -87,8 +93,16 @@ const userSchema = new mongoose.Schema(
       unique: true,
       sparse: true,
     },
+    google_id: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
     membership: {
       active: { type: Boolean, default: false },
+      plan: { type: String, enum: ['course', 'all'], },
+      courses: { type: [String], default: [] },
+      price: { type: Number, default: 0 },
       purchased_at: { type: Date },
       payment_method: {
         type: String,

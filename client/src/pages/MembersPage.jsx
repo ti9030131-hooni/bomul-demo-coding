@@ -20,7 +20,9 @@ function roleLabel(userType) {
 }
 
 function joinLabel(provider) {
-  return provider === 'naver' ? '네이버' : '직접 가입';
+  if (provider === 'naver') return '네이버';
+  if (provider === 'google') return '구글';
+  return '직접 가입';
 }
 
 function MembersPage() {
@@ -153,7 +155,7 @@ function MembersPage() {
                     <td>{member.name}</td>
                     <td>{member.nickname || '—'}</td>
                     <td>{member.email}</td>
-                    <td>{member.phone}</td>
+                    <td>{member.phone || '—'}</td>
                     <td>{joinLabel(member.provider)}</td>
                     <td>
                       <em className={member.user_type === 'admin' ? 'admin-member-role is-admin' : 'admin-member-role'}>

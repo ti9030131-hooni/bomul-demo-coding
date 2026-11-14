@@ -15,9 +15,9 @@
 (function () {
   "use strict";
   const LANGS = [
-    { code: "ko", tab: "KO", name: "한국어", html: "ko" },
-    { code: "en", tab: "EN", name: "English", html: "en" },
-    { code: "zh", tab: "中文", name: "中文(简体)", html: "zh-Hans" },
+    { code: "ko", tab: "한국어", name: "한국어", html: "ko" },
+    { code: "en", tab: "영어", name: "English", html: "en" },
+    { code: "zh", tab: "중국어", name: "中文(简体)", html: "zh-Hans" },
   ];
   const CODES = LANGS.map((l) => l.code);
   const KEY = "bomul-lang";
