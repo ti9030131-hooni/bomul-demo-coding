@@ -156,10 +156,8 @@ function SignupPage() {
         </label>
         <input id="name" name="name" value={form.name} onChange={update} autoComplete="name" placeholder="실명을 입력하세요" required />
 
-        <label htmlFor="nickname">
-          닉네임 <span className="required">*</span>
-        </label>
-        <input id="nickname" name="nickname" value={form.nickname} onChange={update} placeholder="닉네임을 입력하세요" required />
+        <label htmlFor="nickname">닉네임</label>
+        <input id="nickname" name="nickname" value={form.nickname} onChange={update} placeholder="닉네임을 입력하세요" />
 
         <label htmlFor="phone">
           휴대폰번호 <span className="required">*</span>

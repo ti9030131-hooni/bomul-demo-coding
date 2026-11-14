@@ -53,8 +53,8 @@ const userSchema = new mongoose.Schema(
     },
     nickname: {
       type: String,
-      required: [true, '닉네임은 필수입니다.'],
       trim: true,
+      default: '',
     },
     user_type: {
       type: String,

@@ -9,7 +9,8 @@
   },
   "scripts": {
     "dev": "nodemon --watch index.js --watch src index.js",
-    "start": "node --env-file-if-exists=.env src/server.js"
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "test": "node --test"
   },
   "dependencies": {
     "express": "^5.2.1",

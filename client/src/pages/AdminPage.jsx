@@ -7,8 +7,9 @@ const ACTIONS = [
   { id: 'course', label: '유료 코스 등록하기', icon: 'plus', to: '/admin/legend-courses' },
   { id: 'manage', label: '코스 관리', icon: 'list', to: '/admin/courses' },
   { id: 'legend', label: '전체 코스 등록', icon: 'route', to: '/admin/legend-courses' },
+  { id: 'ar', label: 'AR 상품 설정', icon: 'trend', to: '/admin/ar-settings' },
   { id: 'stats', label: '코스현황 통계', icon: 'chart' },
-  { id: 'members', label: '회원 관리', icon: 'people' },
+  { id: 'members', label: '회원 관리', icon: 'people', to: '/admin/members' },
 ];
 
 function storedToken() {
@@ -157,7 +158,7 @@ function AdminPage() {
   const recent = applications.slice(0, 5);
 
   const cards = [
-    { label: '총 회원', value: memberCount === null ? '—' : memberCount.toLocaleString('ko-KR'), note: '가입된 계정', icon: 'people', tone: 'purple' },
+    { label: '총 회원', value: memberCount === null ? '—' : memberCount.toLocaleString('ko-KR'), note: '가입된 계정', icon: 'people', tone: 'purple', to: '/admin/members' },
     { label: '총 코스', value: courseCount === null ? '—' : courseCount.toLocaleString('ko-KR'), note: '등록된 코스', icon: 'route', tone: 'green' },
     { label: '총 신청', value: applications.length.toLocaleString('ko-KR'), note: '접수된 신청', icon: 'inbox', tone: 'blue' },
     { label: '이번 달 문의', value: thisMonth.toLocaleString('ko-KR'), note: '이번 달 접수', icon: 'trend', tone: 'orange' },
@@ -183,18 +184,29 @@ function AdminPage() {
         <p className="admin-lead">보물 여행 관리 화면에 오신 것을 환영합니다.</p>
 
         <div className="admin-stats">
-          {cards.map((card) => (
-            <article className="admin-stat" key={card.label}>
-              <div>
-                <p>{card.label}</p>
-                <strong>{card.value}</strong>
-                <span>{card.note}</span>
-              </div>
-              <span className={`admin-stat-icon is-${card.tone}`}>
-                <Icon name={card.icon} />
-              </span>
-            </article>
-          ))}
+          {cards.map((card) => {
+            const body = (
+              <>
+                <div>
+                  <p>{card.label}</p>
+                  <strong>{card.value}</strong>
+                  <span>{card.note}</span>
+                </div>
+                <span className={`admin-stat-icon is-${card.tone}`}>
+                  <Icon name={card.icon} />
+                </span>
+              </>
+            );
+            return card.to ? (
+              <Link className="admin-stat" key={card.label} to={card.to}>
+                {body}
+              </Link>
+            ) : (
+              <article className="admin-stat" key={card.label}>
+                {body}
+              </article>
+            );
+          })}
         </div>
 
         <div className="admin-grid">

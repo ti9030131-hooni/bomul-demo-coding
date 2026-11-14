@@ -153,6 +153,32 @@
   font-size: 12px;
 }
 
+a.admin-stat {
+  color: inherit;
+  cursor: pointer;
+}
+
+a.admin-stat:hover {
+  border-color: #d9c4fb;
+  box-shadow: 0 8px 18px rgba(124, 58, 237, 0.08);
+}
+
+.admin-member-role {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #f2f4f7;
+  color: #475467;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-member-role.is-admin {
+  background: #ffe4ee;
+  color: #e11d48;
+}
+
 .admin-stat-icon {
   display: grid;
   flex: none;
@@ -855,4 +881,180 @@
   .legend-stop {
     grid-template-columns: 1fr;
   }
+}
+
+
+/* ───────── AR 탁본 설정 ───────── */
+.legend-stop-card {
+  margin-bottom: 14px;
+  padding: 14px;
+  border: 1px solid #e7ebf2;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.legend-stop-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.legend-stop-head button {
+  margin-left: 6px;
+  padding: 4px 10px;
+  border: 1px solid #e7ebf2;
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.legend-stop-head button:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.legend-hint {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.legend-hint a {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.legend-ar {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fbf8f0;
+}
+
+.legend-ar summary {
+  font-size: 14px;
+  font-weight: 700;
+  color: #8e6a22;
+  cursor: pointer;
+}
+
+.legend-ar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 12px;
+  margin-top: 10px;
+}
+
+.legend-ar-grid label {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.legend-ar-grid .wide {
+  grid-column: 1 / -1;
+}
+
+.legend-ar-grid input,
+.legend-ar-grid textarea,
+.legend-ar-grid select,
+.ar-row input,
+.ar-row select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e7ebf2;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #1c2430;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.legend-row {
+  display: flex;
+  gap: 8px;
+}
+
+.legend-row button,
+.ar-row button {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border: 1px solid #e7ebf2;
+  border-radius: 10px;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.legend-ar-course {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #ecd9a8;
+  border-radius: 12px;
+  background: #fffdf7;
+}
+
+.legend-ar-course legend {
+  padding: 0 6px;
+  font-weight: 800;
+  color: #8e6a22;
+}
+
+.legend-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.ar-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 120px 150px;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed #ecd9a8;
+}
+
+.ar-row .wide {
+  grid-column: 1 / 3;
+}
+
+.ar-points {
+  align-self: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #8e6a22;
+}
+
+@media (max-width: 680px) {
+  .legend-ar-grid,
+  .ar-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ar-row .wide {
+    grid-column: auto;
+  }
+}
+
+.ar-row.shop {
+  grid-template-columns: 70px 130px 1fr 130px;
+}
+
+.ar-tail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }

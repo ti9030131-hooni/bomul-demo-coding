@@ -5,6 +5,7 @@ import boardRouter from './routes/board.js';
 import cartsRouter from './routes/carts.js';
 import coursesRouter from './routes/courses.js';
 import legendCoursesRouter from './routes/legendCourses.js';
+import arRouter from './routes/ar.js';
 import membershipsRouter from './routes/memberships.js';
 import ordersRouter from './routes/orders.js';
 import authRouter from './routes/auth.js';
@@ -95,6 +96,7 @@ app.use('/api/carts', cartsRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/membership', membershipsRouter);
 app.use('/api/legend-courses', legendCoursesRouter);
+app.use('/api/ar', arRouter);
 
 app.get('/api/cloudinary', (req, res) => {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;

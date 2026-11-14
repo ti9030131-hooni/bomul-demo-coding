@@ -4,6 +4,7 @@ import SiteLayout from './components/SiteLayout.jsx';
 import AdminPage from './pages/AdminPage.jsx';
 import ApplicationDetailPage from './pages/ApplicationDetailPage.jsx';
 import ApplyPage from './pages/ApplyPage.jsx';
+import ArSettingsPage from './pages/ArSettingsPage.jsx';
 import BoardPage from './pages/BoardPage.jsx';
 import CourseListPage from './pages/CourseListPage.jsx';
 import LegendCoursesPage from './pages/LegendCoursesPage.jsx';
@@ -14,6 +15,7 @@ import CoursesPage from './pages/CoursesPage.jsx';
 import FindAccountPage from './pages/FindAccountPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
+import MembersPage from './pages/MembersPage.jsx';
 import NaverCallbackPage from './pages/NaverCallbackPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 
@@ -31,10 +33,12 @@ function App() {
           <Route path="order" element={<OrderPage />} />
         </Route>
         <Route path="admin" element={<AdminPage />} />
+        <Route path="admin/members" element={<MembersPage />} />
         <Route path="admin/applications/:id" element={<ApplicationDetailPage />} />
         <Route path="admin/courses" element={<CourseListPage />} />
         <Route path="admin/courses/new" element={<LegendCoursesPage />} />
         <Route path="admin/legend-courses" element={<LegendCoursesPage />} />
+        <Route path="admin/ar-settings" element={<ArSettingsPage />} />
         <Route element={<SiteLayout />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="login/find" element={<FindAccountPage />} />

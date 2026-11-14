@@ -1,0 +1,42 @@
+---
+description: 보물 여행 AR 탁본·관리자·서버 구조 (AR, 전설 코스, 포인트 작업 시 참고)
+globs:
+  - server/src/**
+  - client/src/pages/LegendCoursesPage.jsx
+  - client/src/pages/ArSettingsPage.jsx
+  - client/public/ar/**
+  - client/public/bomul.html
+  - tools/ar-courses/**
+alwaysApply: false
+---
+
+# 보물 여행 AR 탁본 구조
+
+## 흐름
+관리자 화면(React, `/admin/legend-courses`) → `PATCH /api/legend-courses/:slug` → MongoDB `LegendCourse`
+→ `GET /api/ar/courses/:slug` (`server/src/services/arCourse.js`의 `buildArCourse`) → `client/public/ar/course.html`
+
+- `course.html`은 서버 응답을 먼저 쓰고, 3.5초 안에 응답이 없으면 정적 파일
+  (`ar/data/common.js`, `ar/data/courses.js`, `ar/data/gyeongbok.js`)로 진행한다.
+- 경복궁 코스의 손그림 약도(`map`)와 라벨 위치(`lx/ly/anchor`)는 화면 쪽 정적 파일에만 있고, 서버 데이터와 합친다(`mergeCourse`).
+- 메인 사이트 `bomul.html`은 `/api/legend-courses`로 코스를 덮어쓰고(`applyRemoteCourses`), 모든 코스에 `/ar/course.html?id=` 링크를 단다.
+
+## 지켜야 할 것
+- `server/src/controllers/legendCourses.js`의 `SEED_VERSION`을 올리지 말 것. 올리면 관리자 수정분이 시드로 덮어써진다.
+  새 필드는 `AR_SYNC_VERSION` + `migrateArFields()`처럼 빈 칸만 채우는 방식으로 넣는다.
+- `PATCH`에서 보내지 않은 좌표·AR 칸은 `keepMissing()`이 기존 값을 유지한다. 이 동작을 깨지 말 것(테스트 있음).
+- `buildArCourse()`는 DB·Express에 의존하지 않는 순수 함수로 유지하고, 바꾸면 `server/test/arCourse.test.mjs`를 함께 고친다.
+- 관리자 입력 글은 서버에서 `escapeHtml` 후 줄바꿈만 `<br>`로 바꾼다. `course.html`에서 innerHTML에 넣는 코스 글은 `esc()`를 쓴다.
+- 경유지 진행 기록 키(`stops[].ar.key`, 기본 `s1..`)와 코스 `ar.storageKey`는 사용자 브라우저 기록과 연결되므로 함부로 바꾸지 않는다.
+  경복궁은 `storageKey: bomul-gbg-v1`, 키 `gwanghwa…hyangwon`.
+- 적립금은 로그인한 회원 계정의 서버 지갑(`/api/ar/wallet`)에 저장한다. 상품·상금은 현장 GPS 인증으로 코스를 모두 완주한 계정만 받는다. 데모 탁본은 체험만 가능하다.
+
+## 처음 적용할 때
+- 저장소 맨 위의 `_ar_kit/`이 있으면 그 안의 `START-HERE.md`, `CURSOR-PROMPTS.md`, `SPEC.md`를 따른다.
+  파일 적용은 `node _ar_kit/apply.mjs`가 하고, 직접 다시 쓰지 않는다. 확인은 `node _ar_kit/verify.mjs --test`.
+
+## 명령
+- 서버 테스트: `cd server && npm test`
+- 정적 AR 데이터 다시 만들기: `node tools/ar-courses/build.cjs`
+- 시드에 좌표·AR 정보 다시 채우기: `node tools/ar-courses/make-seed.cjs` (bomul.html·ar/data/gyeongbok.js 기준)
+- 3D 모델 다시 만들기: `python tools/ar-models/make_models.py`, `python tools/ar-models/chest.py`
