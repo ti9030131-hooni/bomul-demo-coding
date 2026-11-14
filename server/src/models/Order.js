@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const ORDER_STATUSES = ['결제완료', '취소'];
+const ORDER_STATUSES = ['결제완료', '취소', '결제확인필요'];
 const PAYMENT_METHODS = ['신용카드', '계좌이체', '네이버페이'];
 
 const orderItemSchema = new mongoose.Schema(
@@ -106,17 +106,56 @@ const orderSchema = new mongoose.Schema(
       required: [true, '합계 금액은 필수입니다.'],
       min: [0, '합계 금액은 0 이상이어야 합니다.'],
     },
+    /** 포트원 결제 고유번호 */
+    imp_uid: {
+      type: String,
+      trim: true,
+      default: undefined,
+    },
+    /** 가맹점 주문번호 */
+    merchant_uid: {
+      type: String,
+      trim: true,
+      default: undefined,
+    },
+    /** 결제사에 기록된 승인 금액 */
+    paid_amount: {
+      type: Number,
+      min: [0, '결제 금액은 0 이상이어야 합니다.'],
+      default: undefined,
+    },
+    /** 포트원 결제 상태 (paid 등) */
+    pg_status: {
+      type: String,
+      trim: true,
+      default: undefined,
+    },
+    /** 관리자 확인용 메모 (결제확인필요 등) */
+    payment_note: {
+      type: String,
+      trim: true,
+      default: undefined,
+    },
     status: {
       type: String,
       enum: {
         values: ORDER_STATUSES,
-        message: '주문 상태는 결제완료 또는 취소여야 합니다.',
+        message: '주문 상태는 결제완료, 취소 또는 결제확인필요여야 합니다.',
       },
       default: '결제완료',
       required: [true, '주문 상태는 필수입니다.'],
     },
   },
   { timestamps: true },
+);
+
+orderSchema.index(
+  { imp_uid: 1 },
+  { unique: true, partialFilterExpression: { imp_uid: { $type: 'string' } } },
+);
+orderSchema.index(
+  { merchant_uid: 1 },
+  { unique: true, partialFilterExpression: { merchant_uid: { $type: 'string' } } },
 );
 
 export const ORDER_STATUS = ORDER_STATUSES;

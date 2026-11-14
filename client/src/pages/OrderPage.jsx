@@ -79,6 +79,14 @@ async function postOrder(token, payload) {
   return body;
 }
 
+function orderPayloadWithPayment(payload, impUid, merchantUid) {
+  return {
+    ...payload,
+    imp_uid: impUid,
+    merchant_uid: merchantUid,
+  };
+}
+
 function OrderPage() {
   const token = storedToken();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -132,13 +140,16 @@ function OrderPage() {
       setMessage(`결제는 완료되었습니다. 로그인 후 다시 확인해 주세요. 결제번호 ${paidImpUid}`);
       return undefined;
     }
-    postOrder(auth, saved.payload)
+    postOrder(auth, orderPayloadWithPayment(saved.payload, paidImpUid, paidMerchantUid))
       .then((body) => {
         sessionStorage.removeItem(PENDING_PAY_KEY);
         window.dispatchEvent(new Event('cart-updated'));
-        setImpUid(paidImpUid);
+        setImpUid(paidImpUid || body.imp_uid || '');
         setOrder(body);
         setStatus('done');
+        if (body.status === '결제확인필요') {
+          setMessage(`결제는 확인됐지만 주문 확정에 문제가 있습니다. 관리자 확인이 필요합니다. 결제번호 ${paidImpUid}`);
+        }
       })
       .catch((error) => {
         finishingPayments.delete(paidMerchantUid);
@@ -258,12 +269,17 @@ function OrderPage() {
           setStatus('guest');
           throw new Error('로그인이 필요합니다.');
         }
-        const body = await postOrder(auth, payload);
+        const paidImp = response.imp_uid || '';
+        const paidMerchant = response.merchant_uid || uid;
+        const body = await postOrder(auth, orderPayloadWithPayment(payload, paidImp, paidMerchant));
         sessionStorage.removeItem(PENDING_PAY_KEY);
         window.dispatchEvent(new Event('cart-updated'));
-        setImpUid(response.imp_uid || '');
+        setImpUid(paidImp || body.imp_uid || '');
         setOrder(body);
         setStatus('done');
+        if (body.status === '결제확인필요') {
+          setMessage(`결제는 확인됐지만 주문 확정에 문제가 있습니다. 관리자 확인이 필요합니다. 결제번호 ${paidImp || uid}`);
+        }
       } catch (error) {
         finishingPayments.delete(uid);
         if (error.status === 401) setStatus('guest');
@@ -294,15 +310,22 @@ function OrderPage() {
   }
 
   if (status === 'done' && order) {
+    const needsReview = order.status === '결제확인필요';
     return (
       <section className="order-page">
         <div className="wrap order-done">
           <p>주문번호 ORD-{String(order._id).slice(-6).toUpperCase()}</p>
-          <h1>결제가 완료되었습니다</h1>
+          <h1>{needsReview ? '결제 확인이 필요합니다' : '결제가 완료되었습니다'}</h1>
           <p>
             {order.payment_method} · {money(order.total_price)}
           </p>
-          {impUid ? <p>결제번호 {impUid}</p> : null}
+          {impUid || order.imp_uid ? <p>결제번호 {impUid || order.imp_uid}</p> : null}
+          {order.merchant_uid ? <p>주문번호 {order.merchant_uid}</p> : null}
+          {needsReview ? (
+            <p className="course-status">
+              {message || '결제는 확인됐지만 주문 확정에 문제가 있습니다. 관리자에게 문의해 주세요.'}
+            </p>
+          ) : null}
           <div className="order-done-actions">
             <Link className="btn btn-primary" to="/">
               메인으로

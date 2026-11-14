@@ -1,6 +1,13 @@
 import mongoose from 'mongoose';
 import Course from '../models/Course.js';
 import Order, { ORDER_PAYMENTS, ORDER_STATUS } from '../models/Order.js';
+import {
+  confirmedOrderFields,
+  duplicatePaymentResult,
+  paymentIdsOf,
+  reviewOrderFields,
+} from '../services/orderPayment.js';
+import { verifyPortOnePayment } from '../services/portone.js';
 
 function httpError(status, message) {
   const error = new Error(message);
@@ -52,7 +59,9 @@ function placeOf(value) {
 }
 
 function statusOf(value) {
-  if (!ORDER_STATUS.includes(value)) throw httpError(400, '주문 상태는 결제완료 또는 취소여야 합니다.');
+  if (!ORDER_STATUS.includes(value)) {
+    throw httpError(400, '주문 상태는 결제완료, 취소 또는 결제확인필요여야 합니다.');
+  }
   return value;
 }
 
@@ -102,6 +111,16 @@ function totalOf(items) {
   return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 }
 
+function logPaymentEvent(level, event, detail) {
+  const line = JSON.stringify({
+    at: new Date().toISOString(),
+    event,
+    ...detail,
+  });
+  if (level === 'error') console.error(`[payment] ${line}`);
+  else console.info(`[payment] ${line}`);
+}
+
 async function findOrder(req) {
   if (!mongoose.isValidObjectId(req.params.id)) throw httpError(404, '주문을 찾을 수 없습니다.');
   const order = await Order.findById(req.params.id);
@@ -110,6 +129,43 @@ async function findOrder(req) {
     throw httpError(403, '본인 주문만 다룰 수 있습니다.');
   }
   return order;
+}
+
+async function findExistingPaymentOrder(impUid, merchantUid) {
+  return Order.findOne({
+    $or: [{ imp_uid: impUid }, { merchant_uid: merchantUid }],
+  });
+}
+
+async function saveReviewOrder(fields, reason, cause) {
+  logPaymentEvent('error', 'order_save_failed_needs_review', {
+    imp_uid: fields.imp_uid,
+    merchant_uid: fields.merchant_uid,
+    user: String(fields.user),
+    reason,
+    cause: cause instanceof Error ? cause.message : String(cause),
+  });
+
+  try {
+    const review = await Order.create(reviewOrderFields(fields, reason));
+    logPaymentEvent('error', 'payment_review_order_created', {
+      order_id: String(review._id),
+      imp_uid: fields.imp_uid,
+      merchant_uid: fields.merchant_uid,
+    });
+    return review;
+  } catch (saveError) {
+    if (saveError?.code === 11000) {
+      const existing = await findExistingPaymentOrder(fields.imp_uid, fields.merchant_uid);
+      if (existing) return existing;
+    }
+    logPaymentEvent('error', 'payment_review_order_failed', {
+      imp_uid: fields.imp_uid,
+      merchant_uid: fields.merchant_uid,
+      cause: saveError instanceof Error ? saveError.message : String(saveError),
+    });
+    throw cause instanceof Error ? cause : httpError(500, '주문을 저장하지 못했습니다.');
+  }
 }
 
 export async function listOrders(req, res) {
@@ -123,30 +179,88 @@ export async function getOrder(req, res) {
 }
 
 export async function createOrder(req, res) {
+  const { imp_uid: impUid, merchant_uid: merchantUid } = paymentIdsOf(req.body);
+
+  const existing = await findExistingPaymentOrder(impUid, merchantUid);
+  const dup = duplicatePaymentResult(existing, req.user, isAdmin(req.user));
+  if (dup) {
+    logPaymentEvent('info', dup.event, {
+      order_id: String(dup.order._id),
+      imp_uid: impUid,
+      merchant_uid: merchantUid,
+      user: String(req.user._id),
+    });
+    res.status(dup.status).json(dup.order);
+    return;
+  }
+
   const items = await orderItems(req.body.items);
-  const order = await Order.create({
-    user: req.user._id,
-    buyer: buyerOf(req.body, req.user),
-    items,
-    departure_date: dateOf(req.body.departure_date),
-    departure_time: timeOf(req.body.departure_time),
-    departure_place: placeOf(req.body.departure_place),
-    people: peopleOf(req.body.people),
-    payment_method: paymentOf(req.body.payment_method),
-    total_price: totalOf(items),
-    status: '결제완료',
+  const totalPrice = totalOf(items);
+  const buyer = buyerOf(req.body, req.user);
+  const payment = await verifyPortOnePayment({
+    imp_uid: impUid,
+    merchant_uid: merchantUid,
+    expectedAmount: totalPrice,
   });
-  res.status(201).json(order);
+
+  const fields = confirmedOrderFields({
+    userId: req.user._id,
+    buyer,
+    items,
+    travel: {
+      departure_date: dateOf(req.body.departure_date),
+      departure_time: timeOf(req.body.departure_time),
+      departure_place: placeOf(req.body.departure_place),
+      people: peopleOf(req.body.people),
+    },
+    paymentMethod: paymentOf(req.body.payment_method),
+    totalPrice,
+    payment,
+  });
+
+  try {
+    const order = await Order.create(fields);
+    logPaymentEvent('info', 'order_confirmed', {
+      order_id: String(order._id),
+      imp_uid: order.imp_uid,
+      merchant_uid: order.merchant_uid,
+      amount: order.total_price,
+      user: String(req.user._id),
+    });
+    res.status(201).json(order);
+  } catch (error) {
+    if (error?.code === 11000) {
+      const raced = await findExistingPaymentOrder(impUid, merchantUid);
+      if (raced) {
+        res.status(200).json(raced);
+        return;
+      }
+    }
+    const review = await saveReviewOrder(
+      fields,
+      '결제 확인 후 주문 저장에 실패했습니다. 관리자 확인이 필요합니다.',
+      error,
+    );
+    res.status(201).json(review);
+  }
 }
 
 export async function updateOrder(req, res) {
   const order = await findOrder(req);
 
-  if (req.body.status !== undefined) order.status = statusOf(req.body.status);
+  if (req.body.status !== undefined) {
+    if (!isAdmin(req.user) && req.body.status === '결제확인필요') {
+      throw httpError(403, '관리자만 결제확인필요 상태로 변경할 수 있습니다.');
+    }
+    order.status = statusOf(req.body.status);
+  }
   if (req.body.departure_date !== undefined) order.departure_date = dateOf(req.body.departure_date);
   if (req.body.departure_time !== undefined) order.departure_time = timeOf(req.body.departure_time);
   if (req.body.departure_place !== undefined) order.departure_place = placeOf(req.body.departure_place);
   if (req.body.people !== undefined) order.people = peopleOf(req.body.people);
+  if (req.body.payment_note !== undefined && isAdmin(req.user)) {
+    order.payment_note = text(req.body.payment_note) || undefined;
+  }
   if (req.body.buyer && typeof req.body.buyer === 'object') {
     const name = text(req.body.buyer.name);
     const phone = text(req.body.buyer.phone);
