@@ -6,7 +6,7 @@
     "theme": "AR 탁본 체험",
     "title": "경복궁, 불을 막는 다섯 부적",
     "summary": "휴대폰 AR 카메라로 경복궁 다섯 곳의 비석을 탁본하고, 수수께끼를 풀어 3D 보물과 완주 보상을 모으는 체험형 코스.",
-    "thumb": "/img/seoul-poster.jpg",
+    "thumb": "/img/gyeongbok-geunjeong.jpg",
     "hero": "/img/photo-seoul.jpg",
     "map": "/img/route-seoul-gyeongbok-ar.jpg",
     "info": {
@@ -735,59 +735,6 @@
     "ar": {
       "enabled": true,
       "place": "남도"
-    }
-  },
-  {
-    "id": "fairy",
-    "region": "전래",
-    "theme": "옛이야기",
-    "title": "누구나 아는 옛이야기 마당",
-    "summary": "온 가족이 함께 듣는 정겨운 전래동화를 테마로 엮은 길.",
-    "thumb": "/img/photo-fairy.jpg",
-    "hero": "/img/course-fairy.jpg",
-    "map": "",
-    "info": {
-      "거리": null,
-      "소요시간": null,
-      "난이도": null,
-      "집결지": null
-    },
-    "stops": [
-      {
-        "where": "이야기 마당",
-        "name": "해와 달이 된 오누이",
-        "desc": "동아줄을 타고 하늘로 올라 해와 달이 된 오누이 이야기.",
-        "addr": "전국에 전해지는 이야기로, 한 곳의 유적 주소는 없습니다.",
-        "lat": null,
-        "lng": null
-      },
-      {
-        "where": "이야기 마당",
-        "name": "선녀와 나무꾼",
-        "desc": "날개옷을 감춘 나무꾼과 하늘로 떠난 선녀의 애틋한 이야기.",
-        "addr": "전국에 전해지는 이야기로, 한 곳의 유적 주소는 없습니다.",
-        "lat": null,
-        "lng": null
-      },
-      {
-        "where": "이야기 마당",
-        "name": "흥부와 놀부",
-        "desc": "제비가 물어다 준 박씨로 갈린 두 형제의 이야기.",
-        "addr": "전국에 전해지는 이야기로, 한 곳의 유적 주소는 없습니다.",
-        "lat": null,
-        "lng": null
-      }
-    ],
-    "stories": [
-      "해와 달이 된 오누이",
-      "선녀와 나무꾼",
-      "흥부와 놀부",
-      "콩쥐팥쥐",
-      "혹부리 영감"
-    ],
-    "ar": {
-      "enabled": true,
-      "place": "옛이야기"
     }
   },
   {

@@ -167,12 +167,12 @@ function CartPage() {
         {status === 'ready' ? (
           <div className="cart-pay">
             {items.length > 0 ? <strong>합계 {total.toLocaleString('ko-KR')}원</strong> : null}
-            <Link className="btn btn-ghost" to="/#paid-courses">
-              쇼핑 계속하기
+            <Link className="btn btn-ghost" to="/bomul.html#courses">
+              코스 더 보기
             </Link>
             {items.length > 0 ? (
-              <Link className="btn btn-primary" to="/order">
-                결제하기
+              <Link className="btn btn-primary" to="/order?pay=1">
+                주문하기
               </Link>
             ) : null}
           </div>
