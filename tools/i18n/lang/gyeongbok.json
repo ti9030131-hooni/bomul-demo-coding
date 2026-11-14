@@ -1,0 +1,252 @@
+{
+ "en": {
+  "title": "Gyeongbokgung: Five Talismans Against Fire",
+  "text": {
+   "place": "Gyeongbokgung",
+   "side": "Bomul Travel · Gyeongbokgung",
+   "h1": "Gyeongbokgung:<br>Five Talismans Against Fire",
+   "story": [
+    "Gyeongbokgung burned down in the Imjin War, stood empty for some 270 years and was rebuilt in the 1860s. The wish that it would never burn again remains in the 'fire-prevention devices' hidden throughout the palace.",
+    "Legend says each of these devices holds a talisman that puts Hwama, the fire demon, to sleep. Take rubbings of all five talismans to complete the Jinhwabu, the Fire-Quelling Seal."
+   ],
+   "duration": "About 90 min",
+   "unit": "Talisman",
+   "sealShort": "Fire",
+   "deed": "recovered the talismans against fire through rubbings and",
+   "allDone": "You collected all five talismans. The fire demon has fallen asleep."
+  },
+  "final": {
+   "name": "Jinhwabu (Fire-Quelling Seal)",
+   "nextSeason": "In the rear garden of Changdeokgung, a treasure waits beyond Bullomun, the Gate of Agelessness."
+  },
+  "map": {
+   "건청궁": "Geoncheonggung",
+   "교태전": "Gyotaejeon",
+   "강녕전": "Gangnyeongjeon",
+   "사정전": "Sajeongjeon",
+   "흥례문": "Heungnyemun"
+  },
+  "stops": [
+   {
+    "name": "Gwanghwamun",
+    "mark": "1st Talisman",
+    "restoreYear": "Before 1592",
+    "restoreCaption": "Gwanghwamun before it burned in the Imjin War",
+    "photoAlt": "A painting of Hanyang with palace roofs and Namsan",
+    "piece": "Haechi's Horn",
+    "cert": "The main gate of Gyeongbokgung (built 1395, restored to its original spot in 2010). Found the haechi, said to judge right from wrong and suppress fire, and won the first talisman.",
+    "story": "This is the main gate of Gyeongbokgung, built by King Taejo in 1395. Today's Gwanghwamun was rebuilt on its original site in 2010. The first talisman is said to dwell in the stone beasts guarding the gate.",
+    "look": "Find the stone beasts sitting on both sides in front of Gwanghwamun and look closely at their faces and the horns on their heads.",
+    "q": "What is the imaginary animal in front of Gwanghwamun, said to judge right from wrong and suppress fire?",
+    "opts": [
+     "Girin",
+     "Haechi",
+     "Hyeonmu",
+     "Bonghwang"
+    ],
+    "explain": "The haechi (haetae) is an imaginary animal said to tell right from wrong and good from evil. The story goes that the haechi in front of Gwanghwamun was set up to suppress the fire energy of Gwanaksan to the south."
+   },
+   {
+    "name": "Geunjeongjeon",
+    "mark": "2nd Talisman",
+    "restoreYear": "Before 1592",
+    "restoreCaption": "Geunjeongjeon before the fire",
+    "photoAlt": "Geunjeongjeon with its two-tiered roof and stone terrace",
+    "piece": "Deume's Water Mirror",
+    "cert": "The central hall of Gyeongbokgung, where coronations and court assemblies were held (National Treasure). Found the deume water vat that scared off the fire demon and won the second talisman.",
+    "story": "This central hall of Gyeongbokgung, where coronations and great court assemblies were held, is a National Treasure. In the wide courtyard stand rows of rank stones where officials lined up in order of rank.",
+    "look": "On the stone terrace (woldae) supporting Geunjeongjeon, find the wide, flat vessel that once held water.",
+    "q": "What wide, flat vessel was placed on the terrace of Geunjeongjeon so the fire demon would flee in fright at its own reflection in the water?",
+    "opts": [
+     "Incense burner",
+     "Wind chime",
+     "Deume",
+     "Iron cauldron"
+    ],
+    "explain": "A deume is a wide, flat vessel kept filled with water. The story goes that the fire demon fled in fright at its own fearsome face reflected in the water — and in a real fire, the water could also be used to put it out."
+   },
+   {
+    "name": "Gyeonghoeru",
+    "mark": "3rd Talisman",
+    "restoreYear": "Before 1592",
+    "restoreCaption": "Gyeonghoeru before the fire",
+    "photoAlt": "A pavilion over a pond in the dawn mist",
+    "piece": "The Bronze Dragon's Pearl",
+    "cert": "The pavilion over the pond where banquets were held (National Treasure), with its 48 stone pillars. Won the third talisman through the story of the bronze dragon found in the pond in 1997.",
+    "story": "This pavilion, a National Treasure, hosted banquets on happy occasions for the nation and received foreign envoys. Forty-eight stone pillars hold the pavilion up above the pond.",
+    "look": "The outer stone pillars are square and the inner ones round, said to reflect the old idea that heaven is round and the earth is square.",
+    "q": "While cleaning the pond bed in 1997, what bronze animal was found just as old records described, placed there to ward off fire?",
+    "opts": [
+     "Turtle",
+     "Carp",
+     "Dragon",
+     "Haechi"
+    ],
+    "explain": "In 1997, a bronze dragon was discovered while dredging the Gyeonghoeru pond. It matched old records saying a dragon, ruler of water, was placed in the pond to protect the palace from fire."
+   },
+   {
+    "name": "Amisan",
+    "mark": "4th Talisman",
+    "restoreYear": "Rebuilt under King Gojong",
+    "restoreCaption": "The terraced garden and chimneys of Amisan behind Gyotaejeon",
+    "photoAlt": "A traveler looking at a phone in a palace courtyard",
+    "piece": "The Chimney's Last Smoke",
+    "cert": "The flower garden behind Gyotaejeon with four hexagonal chimneys (Treasure). Counted the chimneys that let out the ondol smoke and won the fourth talisman.",
+    "story": "This small flower garden was made behind Gyotaejeon, where the queen lived. It is said to have been built with earth dug out when making the Gyeonghoeru pond.",
+    "look": "Find the red brick chimneys standing on the flower garden, and look at the auspicious patterns carved on their walls too.",
+    "q": "How many hexagonal chimneys stand on the Amisan flower garden? Count them on site.",
+    "opts": [
+     "2",
+     "3",
+     "4",
+     "6"
+    ],
+    "explain": "Four hexagonal chimneys stand on Amisan (Treasure). Smoke from the ondol floor heating of Gyotaejeon passed through underground flues and out of these chimneys."
+   },
+   {
+    "name": "Hyangwonjeong",
+    "mark": "5th Talisman",
+    "restoreYear": "1887",
+    "restoreCaption": "The first electric light at Geoncheonggung, called water fire",
+    "photoAlt": "A pavilion in the middle of a misty pond",
+    "piece": "The Spark of 'Water Fire'",
+    "cert": "A two-story hexagonal pavilion on an island in the pond. Won the fifth talisman through the story of 'water fire', the first electric light, lit at Geoncheonggung in 1887.",
+    "story": "This two-story hexagonal pavilion was built on an island in the middle of the pond under King Gojong. Its name means 'fragrance spreading far'. At Geoncheonggung, north of the pond, Korea's first electric lights were switched on in 1887.",
+    "look": "Check which side of the pond Chwihyanggyo, the wooden bridge to the pavilion, is on.",
+    "q": "The first electric light, lit at Geoncheonggung in 1887, is said to have used pond water to turn its generator. What nickname did people give it?",
+    "opts": [
+     "Goblin fire",
+     "Firefly light",
+     "Water fire",
+     "Oil lamp"
+    ],
+    "explain": "It is said to have been called 'mulbul' (water fire) because water from the Hyangwonjeong pond was drawn to turn the generator. It also flickered on and off so often that it was nicknamed 'geondalbul', the idler's light."
+   }
+  ]
+ },
+ "zh": {
+  "title": "景福宫：防火的五道符",
+  "text": {
+   "place": "景福宫",
+   "side": "宝物旅行 景福宫篇",
+   "h1": "景福宫：<br>防火的五道符",
+   "story": [
+    "景福宫在壬辰倭乱中被烧毁，荒废了270余年，1860年代才重建。希望宫殿不再被烧毁的心愿，化作了宫中各处隐藏的“防火装置”。",
+    "传说这些装置里各藏着一道能让火鬼“火魔”沉睡的符。把五道符都拓印下来，完成“镇火符”吧。"
+   ],
+   "duration": "约90分钟",
+   "unit": "符",
+   "sealShort": "镇火",
+   "deed": "通过拓本寻回了防火之符，",
+   "allDone": "五道符全部集齐了。火魔已经沉睡。"
+  },
+  "final": {
+   "name": "镇火符",
+   "nextSeason": "昌德宫后苑，传说能让人不老的不老门后，藏着的宝物正在等你。"
+  },
+  "map": {
+   "건청궁": "乾清宫",
+   "교태전": "交泰殿",
+   "강녕전": "康宁殿",
+   "사정전": "思政殿",
+   "흥례문": "兴礼门"
+  },
+  "stops": [
+   {
+    "name": "光化门",
+    "mark": "第一道符",
+    "restoreYear": "1592年以前",
+    "restoreCaption": "壬辰倭乱烧毁前的光化门",
+    "photoAlt": "能看到宫殿屋顶和南山的汉阳风景画",
+    "piece": "獬豸之角",
+    "cert": "景福宫正门(1395年始建，2010年原址复建)。找到能明辨是非、压制火气的獬豸，获得第一道符。",
+    "story": "这是1395年太祖修建的景福宫正门。现在的光化门是2010年在原址重建的。据说第一道符就藏在守护门前的石兽身上。",
+    "look": "找到坐在光化门前两侧的石兽，仔细看看它们的脸和头上的角。",
+    "q": "传说能明辨是非、压制火气的光化门前的想象动物是什么？",
+    "opts": [
+     "麒麟",
+     "獬豸",
+     "玄武",
+     "凤凰"
+    ],
+    "explain": "獬豸(海驼)是传说中能分辨是非善恶的想象动物。还流传着光化门前的獬豸是为了压制南边冠岳山火气而设立的说法。"
+   },
+   {
+    "name": "勤政殿",
+    "mark": "第二道符",
+    "restoreYear": "1592年以前",
+    "restoreCaption": "火灾前的勤政殿",
+    "photoAlt": "重檐屋顶的勤政殿与月台",
+    "piece": "铜缸的水镜",
+    "cert": "举行即位仪式和朝会的景福宫中心殿阁(国宝)。找到吓跑火魔的水缸“铜缸”，获得第二道符。",
+    "story": "这是举行国王即位仪式和大型朝会的景福宫中心建筑，被指定为国宝。宽阔的庭院里排列着臣子们按官阶站立的品阶石。",
+    "look": "在托起勤政殿的石台(月台)上，找一找曾经盛水的宽口浅缸。",
+    "q": "为了让火鬼火魔看到水中自己的倒影吓得逃跑，放在勤政殿月台上的宽口浅缸叫什么？",
+    "opts": [
+     "香炉",
+     "风铃",
+     "铜缸(드므)",
+     "铁锅"
+    ],
+    "explain": "“드므”是盛满水的宽口浅缸。传说火魔看到水中自己可怕的面孔会吓得逃跑，真正失火时缸里的水也能用来灭火。"
+   },
+   {
+    "name": "庆会楼",
+    "mark": "第三道符",
+    "restoreYear": "1592年以前",
+    "restoreCaption": "火灾前的庆会楼",
+    "photoAlt": "黎明雾气中池塘上的楼阁",
+    "piece": "青铜龙的如意珠",
+    "cert": "在池上举行宴会的楼阁(国宝)，有48根石柱。凭借1997年从池中出土的青铜龙故事，获得第三道符。",
+    "story": "这座楼阁是国家有喜事时设宴、接待外国使臣的地方，是国宝。48根石柱在池上托起楼阁。",
+    "look": "外侧石柱是方的，内侧是圆的。据说其中蕴含着天圆地方的古老观念。",
+    "q": "1997年清理池底时，按古老记载发现的、据说为防火而放入的青铜动物是什么？",
+    "opts": [
+     "龟",
+     "鲤鱼",
+     "龙",
+     "獬豸"
+    ],
+    "explain": "1997年疏浚庆会楼池塘时发现了一条青铜龙。这与古代记载“把掌管水的龙放入池中以防宫殿失火”相吻合。"
+   },
+   {
+    "name": "峨嵋山",
+    "mark": "第四道符",
+    "restoreYear": "高宗重建",
+    "restoreCaption": "交泰殿后峨眉山的花阶与烟囱",
+    "photoAlt": "在宫殿前院看手机的旅行者",
+    "piece": "烟囱的最后一缕烟",
+    "cert": "交泰殿后院的花坛与4座六角形烟囱(宝物)。数了排出暖炕烟气的烟囱，获得第四道符。",
+    "story": "这是在王后居住的交泰殿后面修建的小花山。据说是用挖庆会楼池塘时挖出的土堆成的。",
+    "look": "找一找立在花山上的红砖烟囱，也看看烟囱壁上刻着的吉祥图案。",
+    "q": "峨嵋山花山上的六角形烟囱一共有几座？请在现场数一数。",
+    "opts": [
+     "2座",
+     "3座",
+     "4座",
+     "6座"
+    ],
+    "explain": "峨嵋山上立着4座六角形烟囱(宝物)。交泰殿暖炕产生的烟经过地下通道，从这些烟囱排出。"
+   },
+   {
+    "name": "香远亭",
+    "mark": "第五道符",
+    "restoreYear": "1887",
+    "restoreCaption": "乾清宫点亮的第一盏电灯，水火",
+    "photoAlt": "雾气笼罩的池塘中央的亭子",
+    "piece": "“水火”的火种",
+    "cert": "池中小岛上的六角形二层亭子。凭借1887年在乾清宫首次点亮的电灯“水火”的故事，获得第五道符。",
+    "story": "这是高宗时期在池塘中央小岛上建造的六角形二层亭子，名字意为“香气远扬”。1887年，池塘北边的乾清宫点亮了韩国第一盏电灯。",
+    "look": "确认一下通往亭子的木桥“醉香桥”架在池塘的哪一边。",
+    "q": "1887年在乾清宫首次点亮的电灯，据说是用池水带动发电机的。人们给它起的外号是什么？",
+    "opts": [
+     "鬼火",
+     "萤火",
+     "水火",
+     "油灯"
+    ],
+    "explain": "据说因为引香远亭池水带动发电机，所以被称为“水火”。又因为经常忽灭忽亮，还有个外号叫“懒汉火”。"
+   }
+  ]
+ }
+}

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>보물 여행</title>
-<meta name="description" content="역사와 설화를 찾아 떠나는 전설여행 — 코스 소개와 신청">
+<title data-i18n="meta.title">보물 여행</title>
+<meta name="description" data-i18n-attr="content:meta.description" content="역사와 설화를 찾아 떠나는 전설여행 — 코스 소개와 신청">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
@@ -20,6 +20,10 @@
     --display:"Gowun Batang",Georgia,serif;
     --body:"Noto Sans KR",system-ui,sans-serif;
     --wrap:1140px;
+  }
+  html[data-lang="zh"]{
+    --display:"Noto Serif SC","Gowun Batang",Georgia,serif;
+    --body:"Noto Sans SC","Noto Sans KR",system-ui,sans-serif;
   }
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
     --bg:#111410; --surface:#191d16; --surface-2:#20251c;
@@ -54,6 +58,9 @@
   .nav .wrap{display:flex;flex-wrap:nowrap;align-items:center;gap:10px;padding-block:10px}
   .brand{display:flex;align-items:center;gap:8px;min-width:0;flex:1;font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--feature-blue);cursor:pointer;white-space:nowrap}
   .brand .chest{width:26px;height:22px;flex:none;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
+  .lang-tabs{display:flex;flex:none;align-items:center;gap:4px}
+  .lang-tab{height:28px;padding:0 8px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:transparent;color:var(--ink);font-family:var(--body);font-size:.78rem;font-weight:700;line-height:26px;cursor:pointer}
+  .lang-tab[aria-pressed="true"]{background:#c9a15b;color:#1a1408;border-color:#c9a15b}
   .nav-toggle{
     display:inline-flex;
     flex:none;
@@ -160,6 +167,13 @@
   .ccard .body{padding:18px;display:flex;flex-direction:column;gap:8px}
   .ccard .top{display:flex;align-items:center;gap:8px}
   .badge{font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--primary);background:var(--primary-soft);padding:4px 10px;border-radius:3px}
+.badge-ar{color:#1E2233;background:linear-gradient(135deg,#F3D58A,#C49A4A)}
+.badge-new{color:#fff;background:#B3372A}
+.ar-cta-box{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center;justify-content:space-between;margin:22px 0 4px;padding:18px 20px;border-radius:8px;
+  background:linear-gradient(135deg,rgba(196,154,74,.18),rgba(196,154,74,.05));border:1px solid rgba(196,154,74,.55)}
+.ar-cta-box b{font-size:1.05rem}
+.ar-cta-box p{margin:4px 0 0;font-size:.9rem;opacity:.85;max-width:520px}
+.ar-cta-box .btn{white-space:nowrap}
   .ccard .theme{font-size:.74rem;color:var(--muted)}
   .ccard h3{font-size:1.2rem}
   .ccard p{color:var(--muted);font-size:.92rem}
@@ -535,8 +549,10 @@
     body{padding-top:56px}
     body>header.nav{position:fixed;top:0;right:0;left:0;z-index:200;height:56px;overflow:visible;background:#05060a}
     .nav .nav-bar,.nav .wrap{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;height:56px;max-width:100%;padding-block:0;padding-inline:16px}
-    .brand{flex:1;min-width:0;gap:6px;font-size:1.05rem;white-space:nowrap}
-    .brand .chest{width:22px;height:18px}
+    .brand{flex:1;min-width:0;gap:6px;font-size:.92rem;white-space:nowrap;overflow:hidden}
+    .brand .chest{width:22px;height:18px;flex:none}
+    .lang-tabs{flex:none}
+    .lang-tab{color:#ece6d6;border-color:rgba(255,255,255,.35)}
     .nav-toggle{display:inline-flex !important}
     .nav .nav-links{display:none;position:fixed;top:56px;right:0;left:0;z-index:201;flex-direction:column;align-items:stretch;width:100%;max-width:100%;margin:0;padding:8px 12px 14px;background:#05060a;border-bottom:1px solid rgba(255,255,255,.14)}
     .nav .nav-links.is-open{display:flex}
@@ -551,22 +567,26 @@
     .wrap,.hero .wrap{max-width:100%}
   }
 </style>
+<script src="/i18n/i18n.js"></script>
+<script src="/i18n/ui-site.js"></script>
 </head>
 <body>
 <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
 <header class="nav">
   <div class="wrap nav-bar">
-    <div class="brand" data-go="home"><svg class="chest" viewBox="0 0 80 68" aria-hidden="true"><path d="M18 36 10 12c16-10 44-10 60 0L62 36c-12-6-32-6-44 0z" fill="#f6d36a"/><path d="M16 18c14-6 38-6 50 0" fill="none" stroke="#7a4a0e" stroke-width="2.2" stroke-linecap="round"/><path d="M14 34h52v8c-8 4-44 4-52 0v-8z" fill="#5c3a12"/><ellipse cx="40" cy="38" rx="18" ry="5" fill="#ffe9ad"/><circle cx="29" cy="36" r="4" fill="#ffd56a" stroke="#8a5410" stroke-width="1.1"/><circle cx="40" cy="34" r="4.5" fill="#fff6d0" stroke="#8a5410" stroke-width="1.1"/><circle cx="51" cy="37" r="3.5" fill="#f0c14a" stroke="#8a5410" stroke-width="1.1"/><path d="M12 42h56v14c0 6-5 8-10 8H22c-5 0-10-2-10-8V42z" fill="#e2a52e"/><path d="M12 42h56v6H12z" fill="#c4841c"/><rect x="35" y="50" width="10" height="8" rx="1.6" fill="#6b3f10"/><circle cx="40" cy="54" r="1.6" fill="#ffe9ad"/></svg>보물 여행</div>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="메뉴 열기">☰</button>
+    <div class="brand" data-go="home"><svg class="chest" viewBox="0 0 80 68" aria-hidden="true"><path d="M18 36 10 12c16-10 44-10 60 0L62 36c-12-6-32-6-44 0z" fill="#f6d36a"/><path d="M16 18c14-6 38-6 50 0" fill="none" stroke="#7a4a0e" stroke-width="2.2" stroke-linecap="round"/><path d="M14 34h52v8c-8 4-44 4-52 0v-8z" fill="#5c3a12"/><ellipse cx="40" cy="38" rx="18" ry="5" fill="#ffe9ad"/><circle cx="29" cy="36" r="4" fill="#ffd56a" stroke="#8a5410" stroke-width="1.1"/><circle cx="40" cy="34" r="4.5" fill="#fff6d0" stroke="#8a5410" stroke-width="1.1"/><circle cx="51" cy="37" r="3.5" fill="#f0c14a" stroke="#8a5410" stroke-width="1.1"/><path d="M12 42h56v14c0 6-5 8-10 8H22c-5 0-10-2-10-8V42z" fill="#e2a52e"/><path d="M12 42h56v6H12z" fill="#c4841c"/><rect x="35" y="50" width="10" height="8" rx="1.6" fill="#6b3f10"/><circle cx="40" cy="54" r="1.6" fill="#ffe9ad"/></svg><span data-i18n="nav.brand">보물 여행</span></div>
+    <div class="lang-tabs" role="group" aria-label="언어 선택"></div>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav" data-i18n-attr="aria-label:nav.menuOpen" aria-label="메뉴 열기">☰</button>
     <nav class="nav-links" id="siteNav">
-      <a data-go="home">홈</a>
-      <a data-go="courses">전체 코스</a>
-      <a data-go="apply">신청·문의</a>
-      <a href="/board" id="boardLink" hidden>게시판</a>
-      <a href="/cart">장바구니 <span id="cartCount"></span></a>
-      <a href="/order">주문</a>
-      <a href="/login" id="loginLink">로그인</a>
-      <a href="/signup" id="signupLink">회원가입</a>
+      <a data-go="home" data-i18n="nav.home">홈</a>
+      <a data-go="courses" data-i18n="nav.courses">전체 코스</a>
+      <a data-go="apply" data-i18n="nav.apply">신청·문의</a>
+      <a href="/ar/course.html?id=seoul-gyeongbok-ar" data-i18n="nav.ar">AR 탁본 체험</a>
+      <a href="/board" id="boardLink" hidden data-i18n="nav.board">게시판</a>
+      <a href="/cart"><span data-i18n="nav.cart">장바구니</span> <span id="cartCount"></span></a>
+      <a href="/order" data-i18n="nav.order">주문</a>
+      <a href="/login" id="loginLink" data-i18n="nav.login">로그인</a>
+      <a href="/signup" id="signupLink" data-i18n="nav.signup">회원가입</a>
     </nav>
   </div>
 </header>
@@ -577,12 +597,12 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <div class="eyebrow">보물 여행</div>
-          <h1>역사와 설화를<br>찾아 떠나는<br><span class="hl">여행</span></h1>
-          <p class="lede">전국에 잠든 전설·설화·역사를 코스로 엮어, 이야기를 따라 걷는 새로운 여행을 제안합니다.</p>
+          <div class="eyebrow" data-i18n="home.eyebrow">보물 여행</div>
+          <h1 data-i18n-html="home.h1">역사와 설화를<br>찾아 떠나는<br><span class="hl">여행</span></h1>
+          <p class="lede" data-i18n="home.lede">전국에 잠든 전설·설화·역사를 코스로 엮어, 이야기를 따라 걷는 새로운 여행을 제안합니다.</p>
           <div class="cta-row">
-            <button class="btn btn-primary" data-go="courses">전체 코스</button>
-            <button class="btn btn-ghost" data-go="apply">신청·문의</button>
+            <button class="btn btn-primary" data-go="courses" data-i18n="nav.courses">전체 코스</button>
+            <button class="btn btn-ghost" data-go="apply" data-i18n="nav.apply">신청·문의</button>
           </div>
         </div>
         <div class="hero-media"><video src="seoul-intro.mp4" poster="img/seoul-poster.jpg" controls playsinline preload="metadata"></video></div>
@@ -592,14 +612,14 @@
     <section>
       <div class="wrap">
         <div class="sec-head intro-lead">
-          <div class="sec-kicker">무엇을 하나요</div>
-          <h2>이야기가 있는 여행</h2>
-          <p class="intro-big">전설이 살아 숨 쉬는 곳, 보물을 찾아 여행을 떠나요!<br>모든 사람에게 지식과 공부가 되는 특별한 여행.</p>
+          <div class="sec-kicker" data-i18n="home.whatKicker">무엇을 하나요</div>
+          <h2 data-i18n="home.whatTitle">이야기가 있는 여행</h2>
+          <p class="intro-big" data-i18n-html="home.whatLead">전설이 살아 숨 쉬는 곳, 보물을 찾아 여행을 떠나요!<br>모든 사람에게 지식과 공부가 되는 특별한 여행.</p>
         </div>
         <div class="vals">
-          <div class="val"><div class="n">탐험</div><h3>전설이 된 코스</h3><p>흩어진 이야기를 지역·테마별 코스로 묶어, 길을 따라 전설을 만납니다.</p></div>
-          <div class="val"><div class="n">이야기</div><h3>깊이 있는 경험</h3><p>각 코스에 담긴 설화와 역사를 안내해, 오래 기억에 남는 하루를 만듭니다.</p></div>
-          <div class="val"><div class="n">가족과 함께</div><h3>아이와 떠나는 역사</h3><p>아이들과 함께 떠나는 신비로운 역사여행. 이야기를 따라 걸으며 온 가족이 함께 배우고 즐깁니다.</p></div>
+          <div class="val"><div class="n" data-i18n="home.val1n">탐험</div><h3 data-i18n="home.val1h">전설이 된 코스</h3><p data-i18n="home.val1p">흩어진 이야기를 지역·테마별 코스로 묶어, 길을 따라 전설을 만납니다.</p></div>
+          <div class="val"><div class="n" data-i18n="home.val2n">이야기</div><h3 data-i18n="home.val2h">깊이 있는 경험</h3><p data-i18n="home.val2p">각 코스에 담긴 설화와 역사를 안내해, 오래 기억에 남는 하루를 만듭니다.</p></div>
+          <div class="val"><div class="n" data-i18n="home.val3n">가족과 함께</div><h3 data-i18n="home.val3h">아이와 떠나는 역사</h3><p data-i18n="home.val3p">아이들과 함께 떠나는 신비로운 역사여행. 이야기를 따라 걸으며 온 가족이 함께 배우고 즐깁니다.</p></div>
         </div>
       </div>
     </section>
@@ -607,17 +627,31 @@
     <section>
       <div class="wrap">
         <div class="sec-head">
-          <div class="sec-kicker">미리보기</div>
-          <h2>이렇게 즐겨요</h2>
-          <p>소개 영상과 '보물 코스' 앱 화면을 미리 만나 보세요. 지도를 따라 보물을 찾고, 미션을 수행하며 이야기를 완성합니다.</p>
+          <div class="sec-kicker" data-i18n="home.previewKicker">미리보기</div>
+          <h2 data-i18n="home.previewTitle">이렇게 즐겨요</h2>
+          <p data-i18n="home.previewLead">소개 영상과 '보물 코스' 앱 화면을 미리 만나 보세요. 지도를 따라 보물을 찾고, 미션을 수행하며 이야기를 완성합니다.</p>
         </div>
         <div class="preview-grid">
-          <div class="media-card"><div class="frame"><img src="img/intro-autumn.jpg" alt="가을 고궁에서 보물 지도 앱을 든 여행자"></div><div class="cap"><h4>보물 여행</h4><p>역사를 여행하는 가장 즐거운 방법.</p></div></div>
-          <div class="media-card"><div class="frame play-frame"><video id="actionPreview" src="seoul-action.mp4?v=2" playsinline preload="none"></video><button class="play-poster" type="button" data-play="actionPreview" aria-label="15초 액션 예고 재생"><img src="img/action-poster.jpg" alt="안개 낀 호수 위 누각"><span class="play-icon" aria-hidden="true">▶</span></button></div><div class="cap"><h4>15초 액션 예고 · 서울</h4><p>귀신에게 쫓기며 보물을 찾는 짧은 액션 예고 영상입니다. (소리를 켜고 보세요)</p></div></div>
-          <div class="media-card"><div class="frame"><video src="intro.mp4" poster="img/intro-poster.jpg" controls playsinline preload="metadata"></video></div><div class="cap"><h4>가을, 보물을 찾아</h4><p>단풍 든 고궁에서 보물 지도를 따라 떠나는 가을 여행.</p></div></div>
-          <div class="media-card"><div class="frame"><img src="img/app-course.jpg" alt="보물 코스 미션 앱 화면"></div><div class="cap"><h4>미션으로 즐기기</h4><p>코스를 따라 미션을 수행하며 이야기를 모읍니다.</p></div></div>
-          <div class="media-card"><div class="frame"><img src="img/region-culture.jpg" alt="부여·공주·익산으로 이어지는 지역 문화 여행 일러스트"></div><div class="cap"><h4>지역과 함께</h4><p>부여·공주·익산으로 넓어지는 길에서 지역의 문화를 만납니다.</p></div></div>
-          <div class="media-card"><div class="frame"><img src="img/app-buyeo.jpg" alt="부여 보물 코스 지도 앱 화면"></div><div class="cap"><h4>보물 코스 지도</h4><p>지역의 숨은 보물 지점을 지도에서 한눈에.</p></div></div>
+          <div class="media-card"><div class="frame"><img src="img/intro-autumn.jpg" alt="가을 고궁에서 보물 지도 앱을 든 여행자" data-i18n-attr="alt:home.card1alt"></div><div class="cap"><h4 data-i18n="home.card1h">보물 여행</h4><p data-i18n="home.card1p">역사를 여행하는 가장 즐거운 방법.</p></div></div>
+          <div class="media-card"><div class="frame play-frame"><video id="actionPreview" src="seoul-action.mp4?v=2" playsinline preload="none"></video><button class="play-poster" type="button" data-play="actionPreview" aria-label="15초 액션 예고 재생" data-i18n-attr="aria-label:home.card2play"><img src="img/action-poster.jpg" alt="안개 낀 호수 위 누각" data-i18n-attr="alt:home.card2alt"><span class="play-icon" aria-hidden="true">▶</span></button></div><div class="cap"><h4 data-i18n="home.card2h">15초 액션 예고 · 서울</h4><p data-i18n="home.card2p">귀신에게 쫓기며 보물을 찾는 짧은 액션 예고 영상입니다. (소리를 켜고 보세요)</p></div></div>
+          <div class="media-card"><div class="frame"><video src="intro.mp4" poster="img/intro-poster.jpg" controls playsinline preload="metadata"></video></div><div class="cap"><h4 data-i18n="home.card3h">가을, 보물을 찾아</h4><p data-i18n="home.card3p">단풍 든 고궁에서 보물 지도를 따라 떠나는 가을 여행.</p></div></div>
+          <div class="media-card"><div class="frame"><img src="img/app-course.jpg" alt="보물 코스 미션 앱 화면" data-i18n-attr="alt:home.card4alt"></div><div class="cap"><h4 data-i18n="home.card4h">미션으로 즐기기</h4><p data-i18n="home.card4p">코스를 따라 미션을 수행하며 이야기를 모읍니다.</p></div></div>
+          <div class="media-card"><div class="frame"><img src="img/region-culture.jpg" alt="부여·공주·익산으로 이어지는 지역 문화 여행 일러스트" data-i18n-attr="alt:home.card5alt"></div><div class="cap"><h4 data-i18n="home.card5h">지역과 함께</h4><p data-i18n="home.card5p">부여·공주·익산으로 넓어지는 길에서 지역의 문화를 만납니다.</p></div></div>
+          <div class="media-card"><div class="frame"><img src="img/app-buyeo.jpg" alt="부여 보물 코스 지도 앱 화면" data-i18n-attr="alt:home.card6alt"></div><div class="cap"><h4 data-i18n="home.card6h">보물 코스 지도</h4><p data-i18n="home.card6p">지역의 숨은 보물 지점을 지도에서 한눈에.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AR 탁본 체험 (경복궁 프로토타입) ===== -->
+    <section id="ar-takbon">
+      <div class="wrap band">
+        <div class="fig"><img src="img/seoul-poster.jpg" alt="경복궁 근정전 앞에서 휴대폰으로 보물 지도를 보는 여행자" data-i18n-attr="alt:ar.alt" loading="lazy"></div>
+        <div>
+          <div class="sec-kicker" data-i18n="ar.kicker">AR 탁본 체험 · 모든 코스</div>
+          <h2 data-i18n="ar.title">비석을 탁본하고, 3D 보물을 줍다</h2>
+          <p data-i18n="ar.lead">이제 보물 여행의 모든 코스에서 AR 탁본을 즐길 수 있어요. 휴대폰 카메라 속에 비석이 세워지면 한지를 붙이고 손가락으로 문질러 탁본을 뜹니다. 탁본에 드러난 수수께끼를 풀면 그 자리에 3D 보물이 나타나고, 코스를 완주하면 보물 상자가 열려 완주 증명서와 적립금을 받습니다.</p>
+          <p style="font-size:.95em;opacity:.8" data-i18n="ar.note">적립금은 모든 코스에서 함께 쌓여 1~5등 포인트 상품으로 바꿀 수 있습니다. 현장 밖에서도 데모 모드로 체험할 수 있어요.</p>
+          <div class="cta-row"><a class="btn btn-primary" href="/ar/course.html?id=seoul-gyeongbok-ar" data-i18n="ar.start">경복궁 AR 탁본 시작하기</a><button class="btn btn-ghost" data-go="courses" data-i18n="ar.pick">전체 코스에서 고르기</button></div>
         </div>
       </div>
     </section>
@@ -625,22 +659,22 @@
     <section style="background:var(--surface-2)">
       <div class="wrap">
         <div class="sec-head">
-          <div class="sec-kicker">먼저 둘러보기</div>
-          <h2>추천 전설 코스</h2>
-          <p>추천 코스는 누구나 볼 수 있습니다. 카드를 누르면 상세 페이지로 이동합니다. 전체 코스는 회원가입 후 로그인하면 볼 수 있습니다.</p>
+          <div class="sec-kicker" data-i18n="featured.kicker">먼저 둘러보기</div>
+          <h2 data-i18n="featured.title">추천 전설 코스</h2>
+          <p data-i18n="featured.lead">추천 코스는 누구나 볼 수 있습니다. 카드를 누르면 상세 페이지로 이동합니다. 전체 코스는 회원가입 후 로그인하면 볼 수 있습니다.</p>
         </div>
         <div class="course-grid" id="featured"></div>
-        <div style="margin-top:24px"><button class="btn btn-ghost" data-go="courses">코스 전체 보기</button></div>
+        <div style="margin-top:24px"><button class="btn btn-ghost" data-go="courses" data-i18n="featured.all">코스 전체 보기</button></div>
       </div>
     </section>
 
     <section>
       <div class="wrap band">
-        <div class="fig"><img src="img/map-nation-treasure.jpg?v=3" alt="전국으로 넓어지는 보물 여행 지도"></div>
+        <div class="fig"><img src="img/map-nation-treasure.jpg?v=3" alt="전국으로 넓어지는 보물 여행 지도" data-i18n-attr="alt:expand.alt"></div>
         <div>
-          <div class="sec-kicker">확장 계획</div>
-          <h2>전국으로 넓어집니다</h2>
-          <p>서울에서 시작해 부여·공주·익산 등 전국의 역사 도시로 코스를 넓혀 갑니다. 지역의 이야기와 상점을 잇는 길이 전국으로 이어집니다.</p>
+          <div class="sec-kicker" data-i18n="expand.kicker">확장 계획</div>
+          <h2 data-i18n="expand.title">전국으로 넓어집니다</h2>
+          <p data-i18n="expand.lead">서울에서 시작해 부여·공주·익산 등 전국의 역사 도시로 코스를 넓혀 갑니다. 지역의 이야기와 상점을 잇는 길이 전국으로 이어집니다.</p>
         </div>
       </div>
     </section>
@@ -648,20 +682,20 @@
     <section style="background:var(--surface-2)">
       <div class="wrap band">
         <div>
-          <div class="sec-kicker">보물 여행</div>
-          <h2>역사를 여행하는 가장 즐거운 방법</h2>
-          <p>이야기를 따라 걷는 여행, 지금 함께 시작해요.</p>
+          <div class="sec-kicker" data-i18n="reward.kicker">보물 여행</div>
+          <h2 data-i18n="reward.title">역사를 여행하는 가장 즐거운 방법</h2>
+          <p data-i18n="reward.lead">이야기를 따라 걷는 여행, 지금 함께 시작해요.</p>
           <div class="prize">
-            <h3>완주 보상 상품 내역</h3>
+            <h3 data-i18n="reward.h">완주 보상 상품 내역</h3>
             <ul>
-              <li><b>1등</b><span>300만 원과 완주 증명서</span></li>
-              <li><b>2등</b><span>200만 원과 완주 증명서</span></li>
-              <li><b>3등</b><span>100만 원과 완주 증명서</span></li>
+              <li data-i18n-html="reward.1"><b>1등</b><span>300만 원과 완주 증명서</span></li>
+              <li data-i18n-html="reward.2"><b>2등</b><span>200만 원과 완주 증명서</span></li>
+              <li data-i18n-html="reward.3"><b>3등</b><span>100만 원과 완주 증명서</span></li>
             </ul>
           </div>
-          <div class="cta-row"><button class="btn btn-primary" data-go="apply">신청·문의</button><button class="btn btn-ghost" data-go="courses">전체 코스</button></div>
+          <div class="cta-row"><button class="btn btn-primary" data-go="apply" data-i18n="nav.apply">신청·문의</button><button class="btn btn-ghost" data-go="courses" data-i18n="nav.courses">전체 코스</button></div>
         </div>
-        <div class="fig"><img src="img/traveler-lake.jpg" alt="새벽 호숫가에서 보물 지도를 보는 여행자"></div>
+        <div class="fig"><img src="img/traveler-lake.jpg" alt="새벽 호숫가에서 보물 지도를 보는 여행자" data-i18n-attr="alt:reward.alt"></div>
       </div>
     </section>
   </div>
@@ -671,9 +705,9 @@
     <section>
       <div class="wrap">
         <div class="sec-head">
-          <div class="sec-kicker">전체 코스</div>
-          <h2>전설 코스 도전하기</h2>
-          <p>회원이라면 모든 전설 코스를 무료로 볼 수 있습니다. 코스를 누르면 상세 페이지로 이동합니다.</p>
+          <div class="sec-kicker" data-i18n="courses.kicker">전체 코스</div>
+          <h2 data-i18n="courses.title">전설 코스 도전하기</h2>
+          <p data-i18n="courses.lead">회원이라면 모든 전설 코스를 무료로 볼 수 있습니다. 코스를 누르면 상세 페이지로 이동합니다.</p>
         </div>
         <div class="filters" id="filters"></div>
         <div class="course-grid" id="allCourses"></div>
@@ -685,7 +719,7 @@
   <div id="view-course" hidden>
     <section>
       <div class="wrap detail">
-        <span class="back" data-go="courses">← 코스 목록으로</span>
+        <span class="back" data-go="courses" data-i18n="courses.back">← 코스 목록으로</span>
         <div id="courseDetail"></div>
       </div>
     </section>
@@ -696,25 +730,25 @@
     <section>
       <div class="wrap apply-grid">
         <div class="apply-copy">
-          <div class="sec-kicker">신청·문의</div>
-          <h2 style="font-size:clamp(2.1rem,4.3vw,2.85rem);margin-top:12px">함께 떠나요</h2>
-          <p>관심 있는 코스나 제휴·문의를 남겨 주세요. 확인 후 안내드리겠습니다.</p>
+          <div class="sec-kicker" data-i18n="apply.kicker">신청·문의</div>
+          <h2 style="font-size:clamp(2.1rem,4.3vw,2.85rem);margin-top:12px" data-i18n="apply.title">함께 떠나요</h2>
+          <p data-i18n="apply.lead">관심 있는 코스나 제휴·문의를 남겨 주세요. 확인 후 안내드리겠습니다.</p>
           <div class="contact">
-            <div class="row"><span>문의</span><code id="mail">ksw21300@gmail.com</code><button class="copy" id="copyMail" type="button">복사</button></div>
+            <div class="row"><span data-i18n="apply.contact">문의</span><code id="mail">ksw21300@gmail.com</code><button class="copy" id="copyMail" type="button" data-i18n="apply.copy">복사</button></div>
           </div>
         </div>
         <form id="applyForm" novalidate>
-          <div class="field"><label for="course">관심 코스</label><input id="course" name="course" placeholder="예: 신라 천년의 보물길"></div>
+          <div class="field"><label for="course" data-i18n="apply.course">관심 코스</label><input id="course" name="course" data-i18n-attr="placeholder:apply.coursePh" placeholder="예: 신라 천년의 보물길"></div>
           <div class="two">
-            <div class="field"><label for="name">이름</label><input id="name" name="name" autocomplete="name" required></div>
-            <div class="field"><label for="phone">연락처</label><input id="phone" name="phone" inputmode="tel" placeholder="010-0000-0000" required></div>
+            <div class="field"><label for="name" data-i18n="apply.name">이름</label><input id="name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="phone" data-i18n="apply.phone">연락처</label><input id="phone" name="phone" inputmode="tel" placeholder="010-0000-0000" required></div>
           </div>
           <div class="two">
-            <div class="field"><label for="people">인원</label><input id="people" name="people" placeholder="예: 2명"></div>
-            <div class="field"><label for="date">희망 날짜</label><input id="date" name="date" placeholder="예: 11월 둘째 주말"></div>
+            <div class="field"><label for="people" data-i18n="apply.people">인원</label><input id="people" name="people" data-i18n-attr="placeholder:apply.peoplePh" placeholder="예: 2명"></div>
+            <div class="field"><label for="date" data-i18n="apply.date">희망 날짜</label><input id="date" name="date" data-i18n-attr="placeholder:apply.datePh" placeholder="예: 11월 둘째 주말"></div>
           </div>
-          <div class="field"><label for="msg">남기실 말씀</label><textarea id="msg" name="msg" rows="3" placeholder="궁금한 점을 적어 주세요"></textarea></div>
-          <button class="btn btn-primary" type="submit">신청 보내기</button>
+          <div class="field"><label for="msg" data-i18n="apply.msg">남기실 말씀</label><textarea id="msg" name="msg" rows="3" data-i18n-attr="placeholder:apply.msgPh" placeholder="궁금한 점을 적어 주세요"></textarea></div>
+          <button class="btn btn-primary" type="submit" data-i18n="apply.submit">신청 보내기</button>
           <div class="toast" id="toast" hidden></div>
         </form>
       </div>
@@ -727,26 +761,26 @@
     <div class="coming-head">
       <span class="coming-tag">COMING SOON</span>
       <div class="coming-line">
-        <div class="coming-big">다음엔 유럽.... 개봉 박두..!</div>
-        <span class="coming-prize">완주 보상 5천만원 예정</span>
+        <div class="coming-big" data-i18n="coming.line">다음엔 유럽.... 개봉 박두..!</div>
+        <span class="coming-prize" data-i18n="coming.prize">완주 보상 5천만원 예정</span>
       </div>
     </div>
     <div class="coming-card">
-      <img src="img/coming-greek.jpg" alt="개봉박두 — 그리스 신화">
+      <img src="img/coming-greek.jpg" alt="개봉박두 — 그리스 신화" data-i18n-attr="alt:coming.alt">
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div>보물 여행 · 역사와 설화를 찾아 떠나는 여행</div>
-    <div class="company-mark"><img src="img/woohoo-logo.png" alt="WOOHOO COMPANY"></div>
+    <div data-i18n="footer.line">보물 여행 · 역사와 설화를 찾아 떠나는 여행</div>
+    <div class="company-mark"><img src="img/woohoo-logo.png" alt="WOOHOO COMPANY" data-i18n-attr="alt:footer.logoAlt"></div>
   </div>
-  <nav class="legal" aria-label="하단 안내">
-    <a href="/terms.html">이용약관</a>
-    <a href="/refund.html">환불정책</a>
-    <a href="/privacy.html">개인정보보호정책</a>
-    <a href="/company.html">회사정보</a>
+  <nav class="legal" aria-label="하단 안내" data-i18n-attr="aria-label:footer.legal">
+    <a href="/terms.html" data-i18n="footer.terms">이용약관</a>
+    <a href="/refund.html" data-i18n="footer.refund">환불정책</a>
+    <a href="/privacy.html" data-i18n="footer.privacy">개인정보보호정책</a>
+    <a href="/company.html" data-i18n="footer.company">회사정보</a>
   </nav>
 </footer>
 
@@ -762,6 +796,20 @@ function storedToken(){ return localStorage.getItem("token") || sessionStorage.g
    - stops(경유지)·stories(이야기)에 콘텐츠를 연결하세요
    ========================================================= */
 const COURSES=[
+  { id:"seoul-gyeongbok-ar", region:"서울", theme:"AR 탁본 체험", ar:"/ar/course.html?id=seoul-gyeongbok-ar", isNew:true,
+    title:"경복궁, 불을 막는 다섯 부적",
+    summary:"휴대폰 AR 카메라로 경복궁 다섯 곳의 비석을 탁본하고, 수수께끼를 풀어 3D 보물과 완주 보상을 모으는 체험형 코스.",
+    thumb:"img/seoul-poster.jpg", hero:"img/photo-seoul.jpg", map:"img/route-seoul-gyeongbok-ar.jpg",
+    info:{거리:"약 1.5km (궁 안 도보)", 소요시간:"약 90분", 난이도:"쉬움", 집결지:"경복궁 광화문"},
+    stops:[
+      {where:"보물 1 · 광화문", name:"해치의 뿔", addr:"서울특별시 종로구 사직로 161 (경복궁 광화문)", desc:"경복궁의 정문 앞을 지키는 돌짐승 해치. 관악산의 불기운을 누르려 세웠다는 이야기가 전해집니다. [미션] AR 카메라로 첫째 비석을 탁본하고, 옳고 그름을 가린다는 상상의 동물 이름을 맞혀 보세요."},
+      {where:"보물 2 · 근정전", name:"드므의 물거울", addr:"서울특별시 종로구 사직로 161 (경복궁 근정전)", desc:"즉위식과 조회가 열리던 경복궁의 중심 전각(국보). 월대 위 넓적한 물그릇 드므가 화마를 쫓았다고 합니다. [미션] 둘째 비석을 탁본하고 드므를 직접 찾아보세요."},
+      {where:"보물 3 · 경회루", name:"청동 용의 여의주", addr:"서울특별시 종로구 사직로 161 (경복궁 경회루)", desc:"48개의 돌기둥이 받친 연못 위의 누각(국보). 1997년 연못에서 실제로 청동 용이 나왔습니다. [미션] 셋째 비석을 탁본하고 불을 막으려 넣었다는 동물을 맞혀 보세요."},
+      {where:"보물 4 · 아미산", name:"굴뚝의 마지막 연기", addr:"서울특별시 종로구 사직로 161 (경복궁 교태전 아미산)", desc:"왕비의 침전 교태전 뒤 꽃동산에 선 육각형 굴뚝(보물). [미션] 넷째 비석을 탁본하고, 현장에서 굴뚝이 모두 몇 개인지 세어 보세요."},
+      {where:"보물 5 · 향원정", name:"물불의 불씨", addr:"서울특별시 종로구 사직로 161 (경복궁 향원정)", desc:"연못 섬 위의 육각형 2층 정자. 1887년 근처 건청궁에 우리나라 첫 전등 ‘물불’이 켜졌습니다. [미션] 마지막 비석을 탁본하면 보물 상자가 열리고 완주 증명서와 적립금을 받습니다."},
+    ],
+    stories:["광화문 해치","근정전 드므","경회루의 용","아미산 굴뚝","향원정과 물불"] },
+
   { id:"seoul", region:"서울", theme:"도성과 전설", title:"한양 도성 보물길",
     summary:"경복궁에서 남산까지, 조선 도읍 한양에 깃든 전설과 보물을 따라 걷는 도심 하루 코스.",
     thumb:"img/seoul-map.jpg", hero:"img/seoul-hanyang-hero.jpg", map:"img/seoul-map.jpg",
@@ -1215,6 +1263,10 @@ const COURSES=[
 
 /* 구간별 타임라인 (코스 id 기준, stops 순서와 동일) — 체류/다음 이동 */
 const TIMELINES={
+  "seoul-gyeongbok-ar":[
+    {stay:"15분",move:"도보 5분"},{stay:"15분",move:"도보 5분"},{stay:"15분",move:"도보 7분"},
+    {stay:"10분",move:"도보 7분"},{stay:"15분"}
+  ],
   "seoul":[
     {stay:"60분",move:"버스 25분"},{stay:"40분",move:"도보 30분"},{stay:"40분",move:"지하철 25분"},
     {stay:"25분",move:"도보 15분"},{stay:"20분",move:"버스+도보 30분"},{stay:"50분"}
@@ -1267,6 +1319,11 @@ const TIMELINES={
 
 /* 이 코스의 이야기 — 전설 줄거리 (제목 그대로 매칭) */
 const STORIES={
+  // 서울 — 경복궁 AR 탁본 코스
+  "광화문 해치":"해치(해태)는 옳고 그름을 가려내고 나쁜 기운을 물리친다는 상상의 동물입니다. 광화문 앞을 지키는 해치 한 쌍은 정면으로 마주 보이는 관악산의 불기운이 궁궐로 넘어오지 못하게 막으려고 세웠다는 이야기가 전해집니다. 불에 탄 경복궁을 다시 지으며 담은 ‘다시는 불타지 않기를’ 바라는 마음의 첫 관문인 셈입니다.",
+  "근정전 드므":"근정전 월대(건물을 받친 넓은 돌 기단)에는 ‘드므’라 불리는 넓적한 그릇이 놓여 있습니다. 불귀신 화마가 궁궐에 불을 지르러 왔다가 드므에 담긴 물에 비친 제 흉측한 얼굴을 보고 놀라 달아난다는 이야기가 전해집니다. 실제로 불이 나면 끄는 물을 담아 두는 방화수 역할도 했습니다.",
+  "아미산 굴뚝":"아미산은 왕비의 침전인 교태전 뒤에 쌓은 작은 꽃동산으로, 경회루 연못을 파낸 흙으로 만들었다고 전해집니다. 꽃동산에 선 육각형 굴뚝 네 개는 교태전 온돌에서 나온 연기를 땅 밑 길로 빼내던 것으로, 벽면에 상서로운 무늬를 새겨 그 자체로 아름다운 장식이 되었습니다. 보물로 지정되어 있습니다.",
+  "향원정과 물불":"향원정은 연못 한가운데 섬에 지은 육각형 2층 정자로, ‘향기가 멀리 퍼진다’는 뜻을 담았습니다. 1887년 연못 북쪽 건청궁에 우리나라 첫 전등이 켜졌는데, 향원정 연못 물을 끌어 발전기를 돌렸다 하여 사람들은 이 불을 ‘물불’이라 불렀다고 합니다. 자주 꺼졌다 켜지기를 반복해 ‘건달불’이라는 별명도 붙었습니다.",
   // 서울 — 도심
   "무학대사와 왕십리":"도읍 터를 찾던 무학대사가 지금의 왕십리에 이르렀을 때, 밭 갈던 노인이 소를 꾸짖었습니다. \"미련하기가 꼭 무학 같은 소야!\" 노인은 \"서북쪽으로 십 리를 더 가라\" 일러 주고 사라졌고, 그 자리가 바로 경복궁 터가 되었습니다. '십 리를 더 가라'는 말에서 '왕십리'라는 지명이 생겼다고 전합니다.",
   "인왕산 선바위":"한양 도성을 쌓을 때 무학대사는 인왕산의 거대한 선바위를 성 안에 넣자 하고, 정도전은 밖에 두자 하여 다투었습니다. \"안에 들이면 불교가, 밖에 두면 유교가 흥한다\"는 정도전의 주장에 따라 성 밖에 두기로 했고, 무학은 \"오백 년 뒤 내 말을 생각하리라\" 탄식했다고 합니다. 선바위는 지금도 영험한 바위로 많은 이가 소원을 빕니다.",
@@ -1727,7 +1784,23 @@ const _GWANGJU={intro:"광주 코스는 의로움과 예술이 흐르는 도시,
 const _SEJONG={intro:"세종 코스는 백제의 마지막 꿈과 한글의 도시를 잇는 길입니다. 백제 부흥운동의 운주산성과 유민의 절 비암사에서 금강 이응다리와 전망대까지 돌아봅니다.",
   points:[{h:"역사 배경",d:"백제 멸망 뒤 부흥운동이 펼쳐진 운주산성과, 유민의 절 비암사가 백제의 끝을, 세종대왕의 이름을 딴 행정도시가 오늘을 전합니다."},{h:"꼭 볼 것",d:"운주산성, 비암사와 불비상, 연기향교, 금강 이응다리, 밀마루전망대."},{h:"추천 포토 스팟",d:"이응다리 야경, 금강과 세종 신도심, 운주산성 조망."},{h:"이야기 포인트",d:"백제 부흥운동, 비암사 유민, 한글을 본뜬 이응다리."}],
   visit:[{k:"관람 시간",v:"비암사·향교 상시 · 이응다리 야간 경관 운영"},{k:"입장료",v:"모두 무료"},{k:"교통",v:"오송역(KTX)→BRT / 서울에서 약 1시간 30분"},{k:"준비물",v:"편한 신발 · 물 · 겉옷"}]};
+const _GBGAR={
+  intro:"경복궁 AR 탁본 코스는 궁궐 곳곳에 숨겨진 ‘불을 막는 장치’를 따라 걷는 체험형 코스입니다. 휴대폰 카메라 속에 나타난 비석을 손가락으로 문질러 탁본을 뜨고, 드러난 수수께끼를 풀면 그 자리에 3D 보물이 나타납니다.",
+  points:[
+    {h:"역사 배경",d:"1395년 태조가 세운 경복궁은 임진왜란 때 불에 타 270여 년 동안 빈터로 남았다가 1860년대에 다시 지어졌습니다. 다시는 불타지 않기를 바라는 마음이 해치·드므·청동 용 같은 상징으로 궁궐 곳곳에 남았습니다."},
+    {h:"체험 방법",d:"장소에서 AR 카메라를 켜고 화면을 탭해 비석을 세웁니다. 한지를 붙여 손가락으로 문지르면 탁본이 떠지고, 탁본에 드러난 수수께끼를 풀면 3D 보물을 주울 수 있습니다. 경복궁 밖에서도 데모 모드로 체험할 수 있습니다."},
+    {h:"완주 보상",d:"다섯 탁본을 모두 모으면 보물 상자가 열립니다. A4로 인쇄할 수 있는 완주 증명서와 보물 적립금 100,000P를 받고, 적립금은 1~5등 포인트 상품으로 교환할 수 있습니다."},
+    {h:"꼭 볼 것",d:"광화문 앞 해치, 근정전 월대의 드므, 경회루의 48개 돌기둥, 아미산의 육각형 굴뚝, 향원정과 취향교."},
+  ],
+  visit:[
+    {k:"관람 시간",v:"경복궁 09:00–18:00 (계절에 따라 다름 · 화요일 휴무)"},
+    {k:"입장료",v:"경복궁 3,000원 · 한복 착용 시 무료"},
+    {k:"교통",v:"지하철 3호선 경복궁역 · 5호선 광화문역에서 도보 5분"},
+    {k:"준비물",v:"충전된 휴대폰(카메라·위치·동작 센서 허용) · 편한 신발"},
+  ],
+};
 const DETAILS={
+  "seoul-gyeongbok-ar":_GBGAR,
   "seoul":_HANYANG, "seoul-half":_HANYANG, "seoul-gangdong":_GODAE, "seoul-gangdong-half":_GODAE,
   "gyeongju":_GYEONGJU, "buyeo":_BUYEO, "jeju":_JEJU, "seorak":_SEORAK, "honam":_HONAM, "fairy":_FAIRY,
   "gg-suwon":_GGSUWON, "gg-poyeon":_GGPOYEON, "gg-yeoju":_GGYEOJU,
@@ -1870,6 +1943,10 @@ const INFOX={
 
 /* 중간 쉼터·맛집 (코스 id 기준) — 경로 주변 이름난 맛집·카페 (별점: 구글 지도 기준) */
 const EATS={
+  "seoul-gyeongbok-ar":[
+    {seg:"출발 전 · 경복궁 근처", name:"Respirer (레스피레)", rate:"카페 · ★4.9", d:"효자로의 이름난 브런치·디저트 카페. 탐험 전 들르기 좋습니다."},
+    {seg:"완주 후 · 서촌", name:"양탄집", rate:"서촌 · ★4.9", d:"서촌 골목의 평점 높은 인기 식당. 경복궁에서 도보로 가깝습니다."},
+  ],
   "seoul":[
     {seg:"보물 1 · 경복궁 근처", name:"양탄집", rate:"서촌 · ★4.9", d:"서촌 골목의 평점 높은 인기 식당. 경복궁에서 도보로 가깝습니다."},
     {seg:"보물 1 · 경복궁 근처", name:"Respirer (레스피레)", rate:"카페 · ★4.9", d:"효자로의 이름난 브런치·디저트 카페. 오전 일정 시작에 좋습니다."},
@@ -2184,6 +2261,11 @@ const EAT_PID={
 
 /* 코스 지도 좌표 (코스 id 기준, 보물 순서) — 실제 지도 마커·경로 */
 const MAPGEO={
+  "seoul-gyeongbok-ar":[
+    {name:"광화문",lat:37.57596,lng:126.97689},{name:"근정전",lat:37.57860,lng:126.97700},
+    {name:"경회루",lat:37.57970,lng:126.97570},{name:"아미산",lat:37.58060,lng:126.97705},
+    {name:"향원정",lat:37.58260,lng:126.97700},
+  ],
   "seoul":[
     {name:"경복궁",lat:37.5796,lng:126.9770},{name:"창의문·세검정",lat:37.5925,lng:126.9664},
     {name:"인왕산 선바위",lat:37.5806,lng:126.9586},{name:"숭례문",lat:37.5600,lng:126.9754},
@@ -2320,9 +2402,11 @@ function gmapDir(geo){
 const $=s=>document.querySelector(s);
 const views={home:"#view-home",courses:"#view-courses",course:"#view-course",apply:"#view-apply"};
 
+function ui(key, vars){ return window.BomulI18n ? BomulI18n.t(key, vars) : key; }
+function dur(text){ return window.BomulI18n ? BomulI18n.duration(text) : text; }
 function thumbMarkup(url,label){
   if(url) return `<img class="thumb" src="${url}" alt="">`;
-  return `<div class="thumb slot"><span class="lbl">${label}</span><span class="sub">자료 삽입 영역</span></div>`;
+  return `<div class="thumb slot"><span class="lbl">${label}</span><span class="sub">${ui("courses.slot")}</span></div>`;
 }
 let hasMembership=false;
 let signedIn=false;
@@ -2334,20 +2418,23 @@ const FEATURED_IDS=COURSES.slice(0,3).map(c=>c.id);
 function canSeeCourse(c){ return signedIn || Boolean(c && FEATURED_IDS.includes(c.id)); }
 function loginRequiredHtml(text){
   return `<div class="member-box" style="grid-column:1/-1">
-    <h2>회원만 볼 수 있습니다</h2>
+    <h2>${ui("courses.membersOnlyTitle")}</h2>
     <p>${text}</p>
-    <div class="member-actions"><a class="btn btn-primary" href="/login">로그인</a><a class="btn btn-ghost" href="/signup">회원가입</a></div>
+    <div class="member-actions"><a class="btn btn-primary" href="/login">${ui("nav.login")}</a><a class="btn btn-ghost" href="/signup">${ui("nav.signup")}</a></div>
   </div>`;
 }
 function won(value){ return Number(value).toLocaleString("ko-KR")+"원"; }
+/* 모든 코스에 AR 탁본 체험 연결 (/ar/course.html?id=코스아이디) */
+function arUrl(c){ return c.ar || `/ar/course.html?id=${encodeURIComponent(c.id)}`; }
 function courseCard(c){
+  const L = window.BomulI18n ? BomulI18n.course(c) : c;
   return `<article class="ccard" data-course="${c.id}">
-    ${thumbMarkup(c.thumb||PHOTOS[c.id]||IMAGES[c.id],"대표 이미지")}
+    ${thumbMarkup(c.thumb||PHOTOS[c.id]||IMAGES[c.id], ui("detail.hero"))}
     <div class="body">
-      <div class="top"><span class="badge">${c.region}</span><span class="theme">${c.theme}</span></div>
-      <h3>${c.title}</h3>
-      <p>${c.summary}</p>
-      <span class="more">코스 보기 →</span>
+      <div class="top"><span class="badge">${L.region}</span><span class="badge badge-ar">AR</span>${c.isNew?`<span class="badge badge-new">NEW</span>`:""}<span class="theme">${L.theme}</span></div>
+      <h3>${L.title}</h3>
+      <p>${L.summary}</p>
+      <span class="more">${ui("courses.more")}</span>
     </div>
   </article>`;
 }
@@ -2424,115 +2511,120 @@ function renderCourses(){
   if(!signedIn){
     filters.innerHTML="";
     box.innerHTML=accountReady
-      ? loginRequiredHtml("회원가입 후 로그인하면 전체 전설 코스를 무료로 볼 수 있습니다.")
-      : `<p style="color:var(--muted)">코스를 확인하고 있습니다.</p>`;
+      ? loginRequiredHtml(ui("courses.membersOnly"))
+      : `<p style="color:var(--muted)">${ui("courses.loading")}</p>`;
     return;
   }
   const regions=["전체","서울","경기도","인천","강원도","충청도","경상도","전라","제주","전래","부산","대구","대전","울산","광주","세종"];
-  filters.innerHTML=regions.map(r=>`<button class="chip" aria-pressed="${r===activeRegion}" data-region="${r}">${r}</button>`).join("");
+  filters.innerHTML=regions.map(r=>`<button class="chip" aria-pressed="${r===activeRegion}" data-region="${r}">${ui("region."+r)}</button>`).join("");
   const list=COURSES.filter(c=>activeRegion==="전체"||c.region===activeRegion);
-  box.innerHTML=list.length?list.map(courseCard).join(""):`<p style="color:var(--muted)">${activeRegion} 코스는 준비 중입니다.</p>`;
+  box.innerHTML=list.length?list.map(courseCard).join(""):`<p style="color:var(--muted)">${ui("courses.preparing",{region:ui("region."+activeRegion)})}</p>`;
 }
 function infoCell(k,v){
-  return `<div class="info"><div class="k">${k}</div><div class="v ${v?'':'todo'}">${v||"입력 예정"}</div></div>`;
+  return `<div class="info"><div class="k">${ui("info."+k)}</div><div class="v ${v?'':'todo'}">${v||ui("info.pending")}</div></div>`;
 }
 function addrLink(addr){
   if(!addr) return "";
   if(addr.includes("주소는 없습니다")) return `<p class="addr"><span class="pin" aria-hidden="true">📍</span><span>${addr}</span></p>`;
   const href="https://map.naver.com/p/search/"+encodeURIComponent(addr);
-  return `<a class="addr" href="${href}" target="_blank" rel="noopener"><span class="pin" aria-hidden="true">📍</span><span>${addr} · 네이버 지도 ↗</span></a>`;
+  return `<a class="addr" href="${href}" target="_blank" rel="noopener"><span class="pin" aria-hidden="true">📍</span><span>${addr} · ${ui("info.naver")}</span></a>`;
 }
 function renderDetail(id){
   const c=COURSES.find(x=>x.id===id);
   if(!c){go("courses");return;}
+  const info = Object.assign({}, c.info, INFOX[c.id]||{});
+  const L = window.BomulI18n ? BomulI18n.course({...c, info}) : {...c, info};
   if(!canSeeCourse(c) && !accountReady){
-    $("#courseDetail").innerHTML=`<p class="detail-intro">코스를 확인하고 있습니다.</p>`;
+    $("#courseDetail").innerHTML=`<p class="detail-intro">${ui("courses.loading")}</p>`;
     return;
   }
   if(!canSeeCourse(c)){
     $("#courseDetail").innerHTML=`
-      <div class="detail-head"><span class="badge">${c.region}</span><span class="theme" style="color:var(--muted);font-size:.8rem">회원 전용</span></div>
-      <h1>${c.title}</h1>
-      ${loginRequiredHtml("이 코스의 지도, 이야기, 경유지는 회원가입 후 로그인하면 볼 수 있습니다.")}`;
+      <div class="detail-head"><span class="badge">${L.region}</span><span class="theme" style="color:var(--muted);font-size:.8rem">${ui("courses.membersBadge")}</span></div>
+      <h1>${L.title}</h1>
+      ${loginRequiredHtml(ui("courses.membersDetail"))}`;
     return;
   }
-  const info = Object.assign({}, c.info, INFOX[c.id]||{});
   const mapSrc = ROUTEMAPS[c.id] || c.map;
   const heroSrc = c.hero || IMAGES[c.id];
   const hero = heroSrc
     ? `<img class="hero-slot" style="object-fit:cover;border-radius:6px" src="${heroSrc}" alt="">`
-    : `<div class="hero-slot slot"><span class="lbl">대표 이미지</span><span class="sub">자료 삽입 영역 (코스 대표 사진)</span></div>`;
+    : `<div class="hero-slot slot"><span class="lbl">${ui("detail.hero")}</span><span class="sub">${ui("detail.heroSub")}</span></div>`;
   const geo = MAPGEO[c.id];
   const mapImg = mapSrc
     ? `<img style="width:100%;height:auto;display:block;border-radius:6px;border:1px solid var(--line);margin-top:18px" src="${mapSrc}" alt="">`
-    : `<div class="map-slot slot"><span class="lbl">코스 지도</span><span class="sub">자료 삽입 영역 (동선·지도)</span></div>`;
+    : `<div class="map-slot slot"><span class="lbl">${ui("detail.map")}</span><span class="sub">${ui("detail.mapSub")}</span></div>`;
   const map = geo
     ? `${mapImg}
-       <a class="btn btn-ghost gmap-btn" href="${gmapDir(geo)}" target="_blank" rel="noopener">구글 지도에서 코스 전체 보기 ↗</a>
-       <p class="map-note">전설을 담은 일러스트 보물지도입니다 · 버튼을 누르면 구글 지도에서 실제 위치·길찾기를 볼 수 있습니다.</p>`
+       <a class="btn btn-ghost gmap-btn" href="${gmapDir(geo)}" target="_blank" rel="noopener">${ui("detail.gmap")}</a>
+       <p class="map-note">${ui("detail.mapNote")}</p>`
     : mapImg;
-  const stops=c.stops.map((s,i)=>`<div class="stop"><div class="idx">${String(i+1).padStart(2,"0")}</div>
-      <div><div class="where">${s.where}</div><h4>${s.name}</h4><p>${s.desc}</p>${addrLink(s.addr)}</div></div>`).join("");
-  const stories=c.stories.map(t=>{
-    const txt=STORIES[t];
-    return txt
-      ? `<details class="story-d"><summary>${t}</summary><div class="story-text">${txt}</div></details>`
-      : `<div class="story"><span class="dot"></span><span>${t}</span></div>`;
+  const stops=(L.stops||[]).map((s,i)=>`<div class="stop"><div class="idx">${String(i+1).padStart(2,"0")}</div>
+      <div><div class="where">${s.where}</div><h4>${s.name}</h4><p>${s.desc}</p>${addrLink((c.stops&&c.stops[i]&&c.stops[i].addr)||"")}</div></div>`).join("");
+  const stories=(c.stories||[]).map(title=>{
+    const S=window.BomulI18n ? BomulI18n.story(title, STORIES[title]) : {title, text:STORIES[title]};
+    return S.text
+      ? `<details class="story-d"><summary>${S.title}</summary><div class="story-text">${S.text}</div></details>`
+      : `<div class="story"><span class="dot"></span><span>${S.title}</span></div>`;
   }).join("");
   const tl=TIMELINES[c.id];
   let timelineHtml="";
   if(tl){
-    const rows=c.stops.map((s,i)=>{
+    const rows=(L.stops||[]).map((s,i)=>{
       const seg=tl[i]||{};
-      const place=(s.where||"").replace(/^보물\s*\d+\s*·\s*/,"")||s.name;
+      const place=(s.where||"").replace(/^(보물|Treasure|宝物)\s*\d+\s*·\s*/,"")||s.name;
       const move=seg.move
-        ? `<div class="tl-move"><span class="tl-ic">↓</span> 이동 · ${seg.move}</div>`
-        : `<div class="tl-move tl-end"><span class="tl-ic">★</span> 완주 보상</div>`;
+        ? `<div class="tl-move"><span class="tl-ic">↓</span> ${ui("detail.move",{time:dur(seg.move)})}</div>`
+        : `<div class="tl-move tl-end"><span class="tl-ic">★</span> ${ui("detail.finish")}</div>`;
       return `<div class="tl-row"><div class="tl-dot">${i+1}</div><div class="tl-body">
-          <div class="tl-head"><span class="tl-name">${place}</span><span class="tl-stay">체류 ${seg.stay||"-"}</span></div>
+          <div class="tl-head"><span class="tl-name">${place}</span><span class="tl-stay">${ui("detail.stay",{time:dur(seg.stay||"-")})}</span></div>
           <div class="tl-sub">${s.name}</div></div></div>${move}`;
     }).join("");
-    timelineHtml=`<div class="block"><h2>구간별 타임라인</h2><div class="timeline">${rows}</div>
-      <div class="tl-total">총 소요시간 · ${info.소요시간||"-"}</div></div>`;
+    timelineHtml=`<div class="block"><h2>${ui("detail.timeline")}</h2><div class="timeline">${rows}</div>
+      <div class="tl-total">${ui("detail.total",{time:(L.info&&L.info.소요시간)||"-"})}</div></div>`;
   }
-  const dd=DETAILS[c.id];
+  const dd=window.BomulI18n ? BomulI18n.details(c.id, DETAILS[c.id]) : DETAILS[c.id];
   const detailHtml = dd
-    ? `<div class="block"><h2>상세 자료</h2>
+    ? `<div class="block"><h2>${ui("detail.details")}</h2>
         <p class="detail-intro">${dd.intro}</p>
         <div class="detail-points">${dd.points.map(p=>`<div class="dp"><h4>${p.h}</h4><p>${p.d}</p></div>`).join("")}</div>
         <div class="detail-visit">${dd.visit.map(v=>`<div class="dv"><span class="dv-k">${v.k}</span><span class="dv-v">${v.v}</span></div>`).join("")}</div>
       </div>`
-    : `<div class="block"><h2>상세 자료</h2><div class="data-slot slot"><span class="lbl">상세 소개·사진·영상</span><span class="sub">자료 삽입 영역 (추후 콘텐츠 연결)</span></div></div>`;
-  const eats=EATS[c.id];
+    : `<div class="block"><h2>${ui("detail.details")}</h2><div class="data-slot slot"><span class="lbl">${ui("detail.detailsSlot")}</span><span class="sub">${ui("detail.detailsSub")}</span></div></div>`;
+  const eats=window.BomulI18n ? BomulI18n.eats(c.id, EATS[c.id]) : EATS[c.id];
   const eatsHtml = eats
-    ? `<div class="block"><h2>중간 쉼터·맛집</h2>
-        <p class="detail-intro">경로를 따라 들르기 좋은 이름난 맛집·카페입니다. (별점은 구글 지도 기준이며 바뀔 수 있어, 방문 전 영업시간 확인을 권합니다.)</p>
+    ? `<div class="block"><h2>${ui("detail.eats")}</h2>
+        <p class="detail-intro">${ui("detail.eatsLead")}</p>
         <div class="eat-list">${eats.map(e=>{
           const pid=EAT_PID[e.name];
           const q=encodeURIComponent(e.name.replace(/\s*\([^)]*\)/,""));
           const href=pid?`https://www.google.com/maps/search/?api=1&query=${q}&query_place_id=${pid}`:`https://www.google.com/maps/search/?api=1&query=${q}`;
-          return `<a class="eat" href="${href}" target="_blank" rel="noopener"><div class="seg">${e.seg}</div><div class="en"><h4>${e.name}</h4><span class="rate">${e.rate}</span></div><p>${e.d}</p><span class="eat-go">구글 지도에서 보기 ↗</span></a>`;
+          return `<a class="eat" href="${href}" target="_blank" rel="noopener"><div class="seg">${e.seg}</div><div class="en"><h4>${e.name}</h4><span class="rate">${e.rate}</span></div><p>${e.d}</p><span class="eat-go">${ui("detail.eatGo")}</span></a>`;
         }).join("")}</div>
       </div>`
     : "";
   $("#courseDetail").innerHTML=`
-    <div class="detail-head"><span class="badge">${c.region}</span><span class="theme" style="color:var(--muted);font-size:.8rem">${c.theme}</span></div>
-    <h1>${c.title}</h1>
-    <p class="summary">${c.summary}</p>
+    <div class="detail-head"><span class="badge">${L.region}</span><span class="theme" style="color:var(--muted);font-size:.8rem">${L.theme}</span></div>
+    <h1>${L.title}</h1>
+    <p class="summary">${L.summary}</p>
     ${hero}
     <div class="info-row">
-      ${infoCell("거리",info.거리)}${infoCell("소요시간",info.소요시간)}
-      ${infoCell("난이도",info.난이도)}${infoCell("집결지",info.집결지)}
+      ${infoCell("거리",L.info&&L.info.거리)}${infoCell("소요시간",L.info&&L.info.소요시간)}
+      ${infoCell("난이도",L.info&&L.info.난이도)}${infoCell("집결지",L.info&&L.info.집결지)}
     </div>
+    <div class="ar-cta-box">
+      <div><b>${ui("detail.arTitle")}</b><p>${ui("detail.arLead")}</p></div>
+      <a class="btn btn-primary" href="${arUrl(c)}">${ui("detail.arStart")}</a></div>
     ${timelineHtml}
-    <div class="block"><h2>코스 경유지</h2><div class="stops">${stops}</div></div>
-    <div class="block"><h2>이 코스의 이야기</h2><div class="story-list">${stories}</div></div>
-    <div class="block"><h2>코스 지도</h2>${map}</div>
+    <div class="block"><h2>${ui("detail.stops")}</h2><div class="stops">${stops}</div></div>
+    <div class="block"><h2>${ui("detail.stories")}</h2><div class="story-list">${stories}</div></div>
+    <div class="block"><h2>${ui("detail.mapTitle")}</h2>${map}</div>
     ${detailHtml}
     ${eatsHtml}
     <div class="detail-cta">
-      <button class="btn btn-primary" data-go="apply">이 코스 신청하기</button>
-      <button class="btn btn-ghost" data-go="courses">다른 코스 보기</button>
+      <a class="btn btn-primary" href="${arUrl(c)}">${ui("detail.arStart")}</a>
+      <button class="btn btn-ghost" data-go="apply">${ui("detail.apply")}</button>
+      <button class="btn btn-ghost" data-go="courses">${ui("detail.other")}</button>
     </div>`;
 }
 
@@ -2541,7 +2633,7 @@ function closeMobileNav(){
   const nav=$("#siteNav");
   const btn=document.querySelector(".nav-toggle");
   if(nav) nav.classList.remove("is-open");
-  if(btn){ btn.setAttribute("aria-expanded","false"); btn.setAttribute("aria-label","메뉴 열기"); }
+  if(btn){ btn.setAttribute("aria-expanded","false"); btn.setAttribute("aria-label",ui("nav.menuOpen")); }
 }
 function show(viewKey){
   Object.values(views).forEach(sel=>{const el=$(sel);if(el)el.hidden=true;});
@@ -2580,7 +2672,7 @@ document.addEventListener('click',async e=>{
     if(!nav) return;
     const open=nav.classList.toggle("is-open");
     toggle.setAttribute("aria-expanded",open);
-    toggle.setAttribute("aria-label",open?"메뉴 닫기":"메뉴 열기");
+    toggle.setAttribute("aria-label",open?ui("nav.menuClose"):ui("nav.menuOpen"));
     return;
   }
   if(e.target.closest('.nav nav a')) closeMobileNav();
@@ -2599,8 +2691,8 @@ $("#applyForm").addEventListener('submit',async e=>{
   e.preventDefault();
   const name=$("#name").value.trim(), phone=$("#phone").value.trim();
   const toast=$("#toast");
-  if(!name||!phone){toast.hidden=false;toast.style.color="var(--accent)";toast.textContent="이름과 연락처를 입력해 주세요.";return;}
-  toast.hidden=false;toast.style.color="var(--muted)";toast.textContent="신청을 보내는 중";
+  if(!name||!phone){toast.hidden=false;toast.style.color="var(--accent)";toast.textContent=ui("apply.need");return;}
+  toast.hidden=false;toast.style.color="var(--muted)";toast.textContent=ui("apply.sending");
   try{
     const response=await fetch(API_BASE+"/api/applications",{
       method:"POST",
@@ -2617,22 +2709,22 @@ $("#applyForm").addEventListener('submit',async e=>{
     const body=await response.json().catch(()=>({}));
     if(!response.ok){
       toast.style.color="var(--accent)";
-      toast.textContent=body.message||"신청을 저장하지 못했습니다.";
+      toast.textContent=body.message||ui("apply.fail");
       return;
     }
     toast.style.color="var(--primary)";
-    toast.textContent=`${name} 님, 신청이 접수되었습니다.`;
+    toast.textContent=ui("apply.done",{name});
     e.target.reset();
   }catch{
     toast.style.color="var(--accent)";
-    toast.textContent="서버에 연결하지 못했습니다.";
+    toast.textContent=ui("apply.offline");
   }
 });
 $("#copyMail").addEventListener('click',async()=>{
-  const t=$("#mail").textContent,b=$("#copyMail");
-  try{await navigator.clipboard.writeText(t);b.textContent="복사됨";}
-  catch{const r=document.createRange();r.selectNode($("#mail"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="선택됨";}
-  setTimeout(()=>b.textContent="복사",1500);
+  const mail=$("#mail").textContent,b=$("#copyMail");
+  try{await navigator.clipboard.writeText(mail);b.textContent=ui("apply.copied");}
+  catch{const r=document.createRange();r.selectNode($("#mail"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent=ui("apply.selected");}
+  setTimeout(()=>{ b.textContent=ui("apply.copy"); },1500);
 });
 
 async function buyMembership(button){
@@ -2674,6 +2766,13 @@ function refreshCourseViews(){
   }
   maybeAutoMember();
 }
+let accountUser=null;
+function paintAccountLink(){
+  const link=$("#loginLink");
+  if(!link || !accountUser) return;
+  link.removeAttribute("data-i18n");
+  link.textContent=accountUser.user_type==="admin"?ui("nav.admin"):(accountUser.nickname||accountUser.name||ui("nav.me"));
+}
 async function loadAccount(){
   const saved=storedToken();
   const link=$("#loginLink");
@@ -2690,8 +2789,9 @@ async function loadAccount(){
     if(me.ok && link){
       const user=await me.json();
       signedIn=true;
+      accountUser=user;
       hasMembership=user.user_type==="admin" || Boolean(user.membership && user.membership.active);
-      link.textContent=user.user_type==="admin"?"관리자":(user.nickname||user.name||"내 정보");
+      paintAccountLink();
       link.href=user.user_type==="admin"?"/admin":"/cart";
       if(signup) signup.hidden=true;
       if(board) board.hidden=false;
@@ -2734,7 +2834,8 @@ async function applyRemoteCourses(){
     const saved=await response.json();
     if(!Array.isArray(saved)||!saved.length) return;
     const remote=new Map(saved.map(item=>[item.id, item]));
-    const merged=COURSES.filter(course=>remote.has(course.id)).map(course=>overlayCourse(course, remote.get(course.id)));
+    const keepLocal=COURSES.filter(course=>course.ar && !remote.has(course.id));
+    const merged=keepLocal.concat(COURSES.filter(course=>remote.has(course.id)).map(course=>overlayCourse(course, remote.get(course.id))));
     saved.forEach(item=>{ if(!COURSES.some(course=>course.id===item.id)) merged.push(overlayCourse({}, item)); });
     COURSES.splice(0, COURSES.length, ...merged);
     FEATURED_IDS.splice(0, FEATURED_IDS.length, ...COURSES.slice(0,3).map(course=>course.id));
@@ -2802,6 +2903,25 @@ route();
 loadAccount();
 startStarfield();
 applyRemoteCourses().then(()=>refreshCourseViews());
+function paintLangTabs(){
+  const box=document.querySelector(".lang-tabs");
+  if(box && window.BomulI18n) box.innerHTML=BomulI18n.tabsHtml();
+}
+paintLangTabs();
+document.querySelector(".lang-tabs")?.addEventListener("click",(event)=>{
+  const button=event.target.closest("[data-lang]");
+  if(!button || !window.BomulI18n) return;
+  BomulI18n.setLang(button.dataset.lang,{packs:["content"]});
+});
+document.addEventListener("bomul:lang",()=>{
+  paintLangTabs();
+  BomulI18n.apply();
+  const toggle=document.querySelector(".nav-toggle");
+  if(toggle) toggle.setAttribute("aria-label", toggle.getAttribute("aria-expanded")==="true"?ui("nav.menuClose"):ui("nav.menuOpen"));
+  refreshCourseViews();
+  paintAccountLink();
+});
+if(window.BomulI18n) BomulI18n.ready(["content"]).then(()=>{ BomulI18n.apply(); refreshCourseViews(); });
 </script>
 </body>
 </html>

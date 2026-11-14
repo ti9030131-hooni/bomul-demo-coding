@@ -1,0 +1,1350 @@
+{
+ "seoul-gyeongbok-ar": {
+  "region": "Seoul",
+  "theme": "AR Rubbing Experience",
+  "title": "Gyeongbokgung: The Five Fire-Warding Talismans",
+  "summary": "Use your phone's AR camera to take rubbings of stone tablets at five spots in Gyeongbokgung Palace, solve riddles, and collect 3D treasures and completion rewards.",
+  "info": {
+   "거리": "About 1.5 km (on foot inside the palace)",
+   "소요시간": "About 90 min",
+   "난이도": "Easy",
+   "집결지": "Gwanghwamun Gate, Gyeongbokgung"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Gwanghwamun",
+    "name": "Haechi's Horn",
+    "desc": "Haechi, the stone beast guarding the front gate of Gyeongbokgung. Legend says it was placed to subdue the fire energy of Gwanaksan Mountain. [Mission] Take a rubbing of the first tablet with the AR camera and name the mythical creature said to tell right from wrong."
+   },
+   {
+    "where": "Treasure 2 · Geunjeongjeon",
+    "name": "Deume's Water Mirror",
+    "desc": "The main throne hall of Gyeongbokgung, where coronations and royal audiences were held (National Treasure). The wide water vessel called deume on its stone terrace is said to have scared off the fire demon. [Mission] Take a rubbing of the second tablet and find a deume yourself."
+   },
+   {
+    "where": "Treasure 3 · Gyeonghoeru",
+    "name": "The Bronze Dragon's Pearl",
+    "desc": "A pavilion over a pond, supported by 48 stone pillars (National Treasure). In 1997 a real bronze dragon was found in the pond. [Mission] Take a rubbing of the third tablet and name the creature placed there to ward off fire."
+   },
+   {
+    "where": "Treasure 4 · Amisan",
+    "name": "The Chimney's Last Smoke",
+    "desc": "Hexagonal chimneys standing in the flower garden behind Gyotaejeon, the queen's quarters (Treasure). [Mission] Take a rubbing of the fourth tablet and count how many chimneys there are on site."
+   },
+   {
+    "where": "Treasure 5 · Hyangwonjeong",
+    "name": "The Spark of 'Water Fire'",
+    "desc": "A two-story hexagonal pavilion on an island in a pond. In 1887 Korea's first electric light, nicknamed 'water fire', was lit at nearby Geoncheonggung. [Mission] Rub the last tablet to open the treasure chest and receive your completion certificate and reward points."
+   }
+  ]
+ },
+ "seoul": {
+  "region": "Seoul",
+  "theme": "Capital & Legends",
+  "title": "Hanyang Fortress Treasure Trail",
+  "summary": "A one-day downtown route from Gyeongbokgung to Namsan, following the legends and treasures of Hanyang, capital of the Joseon Dynasty.",
+  "info": {
+   "거리": "About 9 km (walking + transit)",
+   "소요시간": "About 6 hours",
+   "난이도": "Moderate",
+   "집결지": "Gwanghwamun Gate, Gyeongbokgung"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Gyeongbokgung",
+    "name": "The Dragon of Gyeonghoeru",
+    "desc": "A bronze dragon said to have been sunk in the Gyeonghoeru pond to protect the palace from fire (actually found in 1997). [Mission] Check the dragon story by the pond and count the japsang (decorative figures) on the roof of Geunjeongjeon."
+   },
+   {
+    "where": "Treasure 2 · Changuimun & Segeomjeong",
+    "name": "The Stream Where Swords Were Washed",
+    "desc": "The spot where the plotters of the Injo Restoration are said to have washed their swords (洗劍) to seal their resolve. [Mission] Find the Segeomjeong pavilion and see Changuimun (Jahamun), the gate the rebels crossed into the capital."
+   },
+   {
+    "where": "Treasure 3 · Seonbawi Rock, Inwangsan",
+    "name": "Love of the Skirt Rock",
+    "desc": "Seonbawi, the rock that Master Muhak and Jeong Do-jeon argued over when building the city wall, and Chimabawi, where a deposed queen hung her skirt to send her heart to the king. [Mission] Make a wish at Seonbawi and look for the Skirt Rock."
+   },
+   {
+    "where": "Treasure 4 · Sungnyemun",
+    "name": "Secret of the Vertical Name Board",
+    "desc": "Namdaemun (the Great South Gate), whose name board is said to hang vertically, meaning 'raising propriety', to block the fire energy of Gwanaksan. [Mission] Check the vertical name board that differs from other gates and find out why."
+   },
+   {
+    "where": "Treasure 5 · Gwangtonggyo, Cheonggyecheon",
+    "name": "The Upside-Down Tomb Stones",
+    "desc": "The story of King Taejong, who moved the tomb of his stepmother Queen Sindeok and laid its stones upside down in a bridge so that people would walk on them. [Mission] Under Gwangtonggyo Bridge, find the tomb stone patterns laid upside down."
+   },
+   {
+    "where": "Treasure 6 · Namsan N Seoul Tower",
+    "name": "Guksadang of Mongmyeoksan",
+    "desc": "The site of Guksadang shrine on Namsan (Mongmyeoksan), where people prayed for the nation's peace. [Mission] Look out over the whole capital and finish the journey to receive your completion reward."
+   }
+  ]
+ },
+ "seoul-gangdong": {
+  "region": "Seoul",
+  "theme": "Han River & Ancient Times",
+  "title": "Han River Baekje Treasure Trail",
+  "summary": "On the Han River, where Baekje founded its first capital, search for 2,000-year-old treasures of Seoul at Wiryeseong and Achasan.",
+  "info": {
+   "거리": "About 11 km (walking + transit)",
+   "소요시간": "About 6 hours",
+   "난이도": "Moderate",
+   "집결지": "Pungnaptoseong (Cheonho Station)"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Pungnaptoseong",
+    "name": "Wiryeseong, Baekje's First Capital",
+    "desc": "A huge earthen fortress believed to be the first capital of Baekje, founded by Onjo on the Han River. [Mission] Walk along the wall and learn how Baekje began 2,000 years ago."
+   },
+   {
+    "where": "Treasure 2 · Mongchontoseong",
+    "name": "Royal Fortress of Hanseong Baekje",
+    "desc": "Another royal fortress of Hanseong-period Baekje, inside Olympic Park. [Mission] Find traces of the moat and the wooden palisade around the fortress."
+   },
+   {
+    "where": "Treasure 3 · Seokchon-dong Tombs",
+    "name": "Stone Tombs of the Baekje Kings",
+    "desc": "Goguryeo-style stone-piled tombs, showing that the Baekje royal family came down from Goguryeo. [Mission] See the scale of the stepped stone tombs for yourself."
+   },
+   {
+    "where": "Treasure 4 · Gwangnaru",
+    "name": "The Old Han River Ferry",
+    "desc": "A major Han River ferry crossing fiercely contested by the Three Kingdoms. [Mission] Look across at Achasan and imagine the history of the waterway fought over by Baekje, Goguryeo and Silla."
+   },
+   {
+    "where": "Treasure 5 · Achasanseong",
+    "name": "The Last Stand of General Ondal",
+    "desc": "The mountain fortress where Goguryeo's General Ondal is said to have died trying to win back lost land. [Mission] Climb the fort, look down over Seoul, recall the Ondal legend, and finish to receive your completion reward."
+   }
+  ]
+ },
+ "seoul-half": {
+  "region": "Seoul",
+  "theme": "Half-Day",
+  "title": "Hanyang Fortress Half-Day",
+  "summary": "Short on time? Just the highlights: a half-day downtown route of about 3.5 hours covering Gyeongbokgung, Inwangsan and Sungnyemun.",
+  "info": {
+   "거리": "About 5 km",
+   "소요시간": "About 3.5 hours",
+   "난이도": "Easy to moderate",
+   "집결지": "Gwanghwamun Gate, Gyeongbokgung"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Gyeongbokgung",
+    "name": "The Dragon of Gyeonghoeru",
+    "desc": "The story of a bronze dragon sunk in the pond to protect the palace from fire. [Mission] Look around Gyeonghoeru and Geunjeongjeon. (About 60 min)"
+   },
+   {
+    "where": "Treasure 2 · Seonbawi Rock, Inwangsan",
+    "name": "Love of the Skirt Rock",
+    "desc": "The quarrel between Master Muhak and Jeong Do-jeon over the city wall, and the legend of a deposed queen's Skirt Rock. [Mission] Make a wish at Seonbawi. (About 40 min)"
+   },
+   {
+    "where": "Treasure 3 · Sungnyemun",
+    "name": "Secret of the Vertical Name Board",
+    "desc": "Namdaemun's name board, said to hang vertically to block the fire energy of Gwanaksan. [Mission] Check the vertical name board to complete the half-day route! (About 25 min)"
+   }
+  ]
+ },
+ "seoul-gangdong-half": {
+  "region": "Seoul",
+  "theme": "Half-Day",
+  "title": "Han River Baekje Half-Day",
+  "summary": "Focused on Wiryeseong: a Baekje route of about 3 hours covering Pungnaptoseong, Mongchontoseong and the Seokchon-dong tombs.",
+  "info": {
+   "거리": "About 4 km",
+   "소요시간": "About 3 hours",
+   "난이도": "Easy",
+   "집결지": "Pungnaptoseong (Cheonho Station)"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Pungnaptoseong",
+    "name": "Wiryeseong, Baekje's First Capital",
+    "desc": "A huge earthen fortress believed to be Baekje's first capital, founded by Onjo. [Mission] Walk along the wall. (About 45 min)"
+   },
+   {
+    "where": "Treasure 2 · Mongchontoseong",
+    "name": "Royal Fortress of Hanseong Baekje",
+    "desc": "Hanseong Baekje's royal fortress inside Olympic Park. [Mission] Find traces of the moat and palisade. (About 70 min)"
+   },
+   {
+    "where": "Treasure 3 · Seokchon-dong Tombs",
+    "name": "Stone Tombs of the Baekje Kings",
+    "desc": "Goguryeo-style stepped stone tombs. [Mission] Spot the Goguryeo traces of the Baekje royal family to complete the half-day route! (About 35 min)"
+   }
+  ]
+ },
+ "gyeongju": {
+  "region": "Gyeongsang",
+  "theme": "Silla's Thousand Years",
+  "title": "Silla's Thousand-Year Treasure Trail",
+  "summary": "A one-day route from Wolseong past Bulguksa to Daewangam in the East Sea, finding six hidden treasures of Silla in order.",
+  "info": {
+   "거리": "About 60 km (including driving)",
+   "소요시간": "About 8 hours (1 day)",
+   "난이도": "Moderate",
+   "집결지": "Main gate of Daereungwon"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Gyerim",
+    "name": "The Child of the Golden Chest — Kim Al-ji",
+    "desc": "When a white rooster crowed at night, people gathered in Gyerim forest and found a child in a golden chest hanging from a branch. The child was Kim Al-ji, founder of the Gyeongju Kim clan. This is where the golden chest opened the roots of Silla's royal house. [Mission] Using the white rooster as a clue, find the tree where the chest hung and take a photo."
+   },
+   {
+    "where": "Treasure 2 · Cheomseongdae",
+    "name": "The Queen Who Read the Stars — Queen Seondeok",
+    "desc": "Cheomseongdae, the oldest observatory in East Asia, read the sky with 27 layers of stone. Queen Seondeok foresaw a scentless peony, the frogs of Okmunji pond and even the day of her own death, known as her 'three prophecies'. Here the wisdom of the star-reading queen protected Silla. [Mission] Count the layers of stone and solve the three-prophecies quiz."
+   },
+   {
+    "where": "Treasure 3 · Tomb of King Michu, Daereungwon",
+    "name": "The Bamboo-Leaf Soldiers",
+    "desc": "When enemies closed in on Gyeongju, soldiers with bamboo leaves tucked behind their ears appeared, drove them away and vanished. Bamboo leaves lay piled before the royal tomb, and it is said the spirit of the late King Michu had become soldiers to defend the kingdom. They are called the Bamboo-Leaf Army. [Mission] Find bamboo around the tomb and win the bamboo-leaf treasure."
+   },
+   {
+    "where": "Treasure 4 · Gyeongju National Museum",
+    "name": "The Emille Bell — Sacred Bell of King Seongdeok",
+    "desc": "Silla's largest bell, the Sacred Bell of King Seongdeok, is called the Emille Bell because its long ring sounds like a child calling its mother. The tale of a child cast into the molten metal is a folk legend not found in official histories. The bell's echo and its flying-angel reliefs carry that memory. [Mission] Find the flying celestial maiden pattern and listen to the sound of the bell."
+   },
+   {
+    "where": "Treasure 5 · Seokgatap, Bulguksa",
+    "name": "The Shadowless Pagoda — Muyeongtap",
+    "desc": "While the Baekje stonemason Asadal built Seokgatap, his wife Asanyeo watched a pond every day, believing they would meet when the pagoda's shadow appeared on the water. When no shadow ever appeared, she threw herself into the pond, and so it is called the Shadowless Pagoda. [Mission] Find the differences between Seokgatap and Dabotap, and check the legend that no shadow fell on the pond."
+   },
+   {
+    "where": "Treasure 6 · Gameunsa Site & Daewangam",
+    "name": "Manpasikjeok — King Munmu",
+    "desc": "King Munmu vowed to become a dragon and protect the kingdom even after death, and was buried at Daewangam in the East Sea. When his son King Sinmun made a flute from bamboo in the sea, enemies retreated and the waves calmed, so it was called Manpasikjeok, 'the flute that calms ten thousand waves'. [Mission] Pass the three-story stone pagodas of Gameunsa Site, look out at Daewangam, and finish the journey to receive your completion reward."
+   }
+  ]
+ },
+ "jeju": {
+  "region": "Jeju",
+  "theme": "Island of the Gods",
+  "title": "Island of the Gods: Jeju Myth Journey",
+  "summary": "A journey to meet the gods of Jeju's shamanic myths on the island shaped by Grandmother Seolmundae.",
+  "info": {
+   "거리": "Island-wide (by car)",
+   "소요시간": "1–2 days",
+   "난이도": "Moderate",
+   "집결지": "Jeju Airport"
+  },
+  "stops": [
+   {
+    "where": "Hallasan",
+    "name": "Grandmother Seolmundae",
+    "desc": "A giant creator goddess who shaped Hallasan and the volcanic cones with soil carried in her skirt."
+   },
+   {
+    "where": "Samseonghyeol",
+    "name": "Founders of Tamna",
+    "desc": "Jeju's founding myth, in which three divine men rose from the earth and founded the kingdom of Tamna."
+   },
+   {
+    "where": "Gimnyeongsagul",
+    "name": "Gimnyeongsagul Cave",
+    "desc": "The story of slaying a great serpent that demanded a maiden as a sacrifice every year."
+   }
+  ]
+ },
+ "buyeo": {
+  "region": "Chungcheong",
+  "theme": "Baekje's Final Days",
+  "title": "Walking Baekje's Sunset",
+  "summary": "Retrace the final story of fallen Baekje along the Baengmagang River.",
+  "info": {
+   "거리": "About 25 km (by car)",
+   "소요시간": "About 5 hours",
+   "난이도": "Easy to moderate",
+   "집결지": "Busosanseong Fortress (Buyeo)"
+  },
+  "stops": [
+   {
+    "where": "Busosanseong",
+    "name": "Nakhwaam Cliff",
+    "desc": "The cliff where, on the day Baekje fell, court ladies threw themselves into the river like falling petals."
+   },
+   {
+    "where": "Geumgang River, Gongju",
+    "name": "Gomnaru",
+    "desc": "The origin of Ungjin (Gomnaru, 'Bear Ferry'), a sad tale of a bear and a man."
+   },
+   {
+    "where": "Hwangsanbeol, Nonsan",
+    "name": "General Gyebaek",
+    "desc": "The story of the great Baekje general who led 5,000 men to fight to the very end."
+   }
+  ]
+ },
+ "seorak": {
+  "region": "Gangwon",
+  "theme": "Mountains & Rocks",
+  "title": "Legends the Mountain Tells",
+  "summary": "Climb through the legends hidden in Seoraksan's strange rocks and ancient temples.",
+  "info": {
+   "거리": "About 20 km (car + hiking)",
+   "소요시간": "About 6 hours",
+   "난이도": "Moderate to hard",
+   "집결지": "Seoraksan Sogongwon"
+  },
+  "stops": [
+   {
+    "where": "Seoraksan",
+    "name": "Ulsanbawi Rock",
+    "desc": "The tale of a huge rock that arrived too late to find a place at Geumgangsan and settled here instead."
+   },
+   {
+    "where": "Gyejoam",
+    "name": "Heundeulbawi, the Rocking Stone",
+    "desc": "A famous rock that sways when pushed but never falls."
+   },
+   {
+    "where": "Naksansa",
+    "name": "Hongnyeonam Hermitage",
+    "desc": "The founding legend of a red lotus that rose from the sea before Great Master Uisang."
+   }
+  ]
+ },
+ "honam": {
+  "region": "Jeolla",
+  "theme": "Love & Heroes",
+  "title": "Story Road of the South",
+  "summary": "From the birth of Gyeon Hwon to the love of Chunhyang, the stories that flow through the southern provinces.",
+  "info": {
+   "거리": "About 90 km (by car)",
+   "소요시간": "About 1 day",
+   "난이도": "Easy to moderate",
+   "집결지": "Gwanghallu Garden, Namwon"
+  },
+  "stops": [
+   {
+    "where": "Gwanghallu, Namwon",
+    "name": "The Tale of Chunhyang",
+    "desc": "The love of Chunhyang and Mongryong that crossed social class, set on the Ojakgyo Bridge."
+   },
+   {
+    "where": "Byeokgolje, Gimje",
+    "name": "Maiden Danya",
+    "desc": "The story of Danya, a young woman who gave herself up to save the reservoir dike."
+   },
+   {
+    "where": "Jindo Sea Road",
+    "name": "The Miracle Sea Road",
+    "desc": "The legend of Grandma Ppong, who prayed to reunite with her family and saw the sea part."
+   }
+  ]
+ },
+ "fairy": {
+  "region": "Folk Tales",
+  "theme": "Old Stories",
+  "title": "Courtyard of Beloved Folk Tales",
+  "summary": "A route themed on warm Korean folk tales the whole family can enjoy together.",
+  "info": {
+   "거리": "Indoor & outdoor activities",
+   "소요시간": "About 1–2 hours",
+   "난이도": "Easy",
+   "집결지": "Story Courtyard"
+  },
+  "stops": [
+   {
+    "where": "Story Courtyard",
+    "name": "The Sun and the Moon",
+    "desc": "The tale of a brother and sister who climbed a rope to heaven and became the sun and the moon."
+   },
+   {
+    "where": "Story Courtyard",
+    "name": "The Fairy and the Woodcutter",
+    "desc": "The bittersweet tale of a woodcutter who hid a fairy's feather robe, and the fairy who returned to heaven."
+   },
+   {
+    "where": "Story Courtyard",
+    "name": "Heungbu and Nolbu",
+    "desc": "The tale of two brothers whose fates split over gourd seeds brought by a swallow."
+   }
+  ]
+ },
+ "gg-suwon": {
+  "region": "Gyeonggi",
+  "theme": "King Jeongjo's Devotion",
+  "title": "King Jeongjo's Devotion: Hwaseong Treasure Trail",
+  "summary": "Follow King Jeongjo's love for his father, Crown Prince Sado, walking from Suwon Hwaseong to Yunggeonneung and Yongjusa.",
+  "info": {
+   "거리": "About 20 km (walking + car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Moderate",
+   "집결지": "Hwaseong Haenggung Palace"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Hwaseong Fortress & Haenggung",
+    "name": "Jeongjo's Dream, Hwaseong",
+    "desc": "The planned fortress city and temporary palace Jeongjo built in honor of his father, raised with Jeong Yak-yong's lifting crane. [Mission] Find Janganmun and Hwaseomun gates and walk along the wall."
+   },
+   {
+    "where": "Treasure 2 · Banghwasuryujeong",
+    "name": "Hwaseong's Finest Pavilion",
+    "desc": "The most beautiful pavilion of Hwaseong, standing by the Yongyeon pond. [Mission] Take a photo looking down at Yongyeon from Banghwasuryujeong."
+   },
+   {
+    "where": "Treasure 3 · Yungneung",
+    "name": "Ill-Fated Crown Prince Sado",
+    "desc": "The tomb of Crown Prince Sado, who died locked in a rice chest, and Lady Hyegyeong. [Mission] Walk the forest path to the tomb and think of how Jeongjo honored his father."
+   },
+   {
+    "where": "Treasure 4 · Geolleung",
+    "name": "The King Who Rests Beside His Father",
+    "desc": "The tomb of Jeongjo, who wished to be buried beside his father. [Mission] Walk the path joining Yungneung and Geolleung and feel the story of father and son."
+   },
+   {
+    "where": "Treasure 5 · Yongjusa",
+    "name": "The Temple of Filial Piety",
+    "desc": "The temple of filial piety Jeongjo built to pray for his father's soul. [Mission] See the temple bell of Yongjusa (National Treasure) and finish the journey to receive your completion reward."
+   }
+  ]
+ },
+ "gg-poyeon": {
+  "region": "Gyeonggi",
+  "theme": "Vanished Dynasties",
+  "title": "Legends of Vanished Dynasties",
+  "summary": "From Gungye weeping on the Mountain of Tears to Silla's last king buried outside Gyeongju, a Pocheon–Yeoncheon walk through the lonely legends of fallen dynasties.",
+  "info": {
+   "거리": "About 50 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Moderate to hard",
+   "집결지": "Sanjeong Lake"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Myeongseongsan (Mountain of Tears)",
+    "name": "The Fall of Gungye",
+    "desc": "Called the 'Mountain of Tears' because Gungye, founder of a Later Three Kingdoms state, wept aloud here after being driven out by Wang Geon. [Mission] Climb the silver-grass ridge and look for Gungye Rock."
+   },
+   {
+    "where": "Treasure 2 · Sanjeong Lake",
+    "name": "The Lake Below Myeongseongsan",
+    "desc": "A picture-perfect lake beneath Myeongseongsan. [Mission] Walk the lakeside trail and capture the mountain's reflection on the water."
+   },
+   {
+    "where": "Treasure 3 · Tomb of King Gyeongsun, Yeoncheon",
+    "name": "A Silla Royal Tomb Outside Gyeongju",
+    "desc": "The tomb of King Gyeongsun, Silla's last ruler, who handed his kingdom to Goryeo. It is the only Silla royal tomb outside Gyeongju. [Mission] Before the tomb, reflect on the end of thousand-year Silla."
+   },
+   {
+    "where": "Treasure 4 · Sungeuijeon, Yeoncheon",
+    "name": "Shrine of the Goryeo Kings",
+    "desc": "A shrine honoring Goryeo's founder Wang Geon and later kings. [Mission] At Sungeuijeon by the Imjingang River, connect the stories of three dynasties (Silla, Later Goguryeo, Goryeo) and finish to receive your completion reward."
+   }
+  ]
+ },
+ "gg-yeoju": {
+  "region": "Gyeonggi",
+  "theme": "Ancient Tree & Sage King",
+  "title": "Thousand-Year Tales of the Namhangang",
+  "summary": "A thousand-year-old ginkgo, a riverside master monk and the sage king who created Hangeul: stories of Yangpyeong and Yeoju along the Namhangang River.",
+  "info": {
+   "거리": "About 40 km (by car)",
+   "소요시간": "About 6 hours",
+   "난이도": "Easy to moderate",
+   "집결지": "Yongmunsa, Yangpyeong"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Yongmunsa, Yangpyeong",
+    "name": "The Thousand-Year Ginkgo",
+    "desc": "About 1,100 years old and over 40 m tall, the largest ginkgo in East Asia. Legend says Crown Prince Maui planted it. [Mission] Stand beneath the ginkgo and gauge its thousand-year girth."
+   },
+   {
+    "where": "Treasure 2 · Silleuksa, Yeoju",
+    "name": "Master Naong and the Brick Pagoda",
+    "desc": "A riverside temple on the Namhangang where the Goryeo master monk Naong passed away. Famous for its brick pagoda on a riverside rock. [Mission] From the Gangwolheon pavilion, frame the river and the brick pagoda together."
+   },
+   {
+    "where": "Treasure 3 · Yeongneung (King Sejong), Yeoju",
+    "name": "The King Who Created Hangeul",
+    "desc": "The tomb of King Sejong, creator of Hangeul, and Queen Soheon. [Mission] Tour the King Sejong History and Culture Center and finish to receive your completion reward."
+   }
+  ]
+ },
+ "gg-goyang-half": {
+  "region": "Gyeonggi",
+  "theme": "Half-Day",
+  "title": "Haengjusanseong Half-Day",
+  "summary": "A half-day Goyang route at Haengjusanseong, site of one of the three great victories of the Imjin War, with the Haengju apron legend and Han River views.",
+  "info": {
+   "거리": "About 4 km",
+   "소요시간": "About 3 hours",
+   "난이도": "Easy to moderate",
+   "집결지": "Haengjusanseong parking lot"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Chungjangsa",
+    "name": "Gwon Yul and the Battle of Haengju",
+    "desc": "A shrine to General Gwon Yul, who led the Battle of Haengju. [Mission] At the shrine, recall the 1593 victory at Haengju. (About 30 min)"
+   },
+   {
+    "where": "Treasure 2 · Deogyangjeong & Earthen Wall",
+    "name": "Legend of the Haengju Apron",
+    "desc": "An earthen wall and pavilion overlooking the Han River. Legend says the women in the fortress carried stones in their aprons. [Mission] Take in the Han River view from Deogyangjeong. (About 40 min)"
+   },
+   {
+    "where": "Treasure 3 · Haengju Victory Memorial Hall",
+    "name": "Record of the Great Victory",
+    "desc": "A memorial hall with the history and relics of the Battle of Haengju. [Mission] Find the victory monument to complete the half-day route! (About 30 min)"
+   }
+  ]
+ },
+ "gg-yongin-half": {
+  "region": "Gyeonggi",
+  "theme": "Half-Day",
+  "title": "Cheoinseong Half-Day",
+  "summary": "A half-day Yongin route from Cheoinseong, where the monk Kim Yun-hu felled a Mongol general, to the loyalty of Poeun Jeong Mong-ju.",
+  "info": {
+   "거리": "About 15 km (by car)",
+   "소요시간": "About 3 hours",
+   "난이도": "Easy",
+   "집결지": "Cheoinseong Fortress Site"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Cheoinseong Site",
+    "name": "Kim Yun-hu Shoots Salietai",
+    "desc": "A small earthen fort where in 1232 the monk Kim Yun-hu and local people shot dead the Mongol commander Salietai and drove off the Mongol army. [Mission] Walk the fortress site and recall how humble people saved the nation. (About 40 min)"
+   },
+   {
+    "where": "Treasure 2 · Tomb of Poeun Jeong Mong-ju",
+    "name": "The Loyal Subject of the Dansimga",
+    "desc": "The tomb of Poeun Jeong Mong-ju, who sang his loyalty to Goryeo in the poem Dansimga, 'Though I die and die again'. [Mission] Walk around the tomb and recall the story of Seonjukgyo Bridge. (About 30 min)"
+   },
+   {
+    "where": "Treasure 3 · Simgok Seowon",
+    "name": "Academy Honoring Jo Gwang-jo",
+    "desc": "A Confucian academy honoring Jeongam Jo Gwang-jo, who dreamed of reform and fell. [Mission] Tour the academy to complete the half-day route! (About 30 min)"
+   }
+  ]
+ },
+ "gc-ganghwa": {
+  "region": "Incheon",
+  "theme": "Island of Dangun & Defense",
+  "title": "Ganghwa: Island of Dangun and National Defense",
+  "summary": "From Manisan, where Dangun offered rites to heaven, to the Goryeo palace and Jeondeungsa: a Ganghwa treasure trail of the nation's origins and its defense.",
+  "info": {
+   "거리": "About 40 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Moderate",
+   "집결지": "Ganghwa Dolmen Plaza"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Ganghwa Dolmen",
+    "name": "Megalith of the Bronze Age",
+    "desc": "A huge table-type dolmen whose capstone alone weighs dozens of tons, a UNESCO World Heritage site. [Mission] Stand beneath the giant capstone and feel the megalithic culture of thousands of years ago."
+   },
+   {
+    "where": "Treasure 2 · Chamseongdan, Manisan",
+    "name": "Dangun's Altar to Heaven",
+    "desc": "An altar where Dangun is said to have offered rites to heaven, still used to light the National Sports Festival flame. [Mission] Climb to Chamseongdan and look over the West Sea and the Ganghwa plains."
+   },
+   {
+    "where": "Treasure 3 · Goryeo Palace Site",
+    "name": "Wartime Capital Against the Mongols",
+    "desc": "The palace site where Goryeo moved its capital to Ganghwa and resisted the Mongol invasions for 39 years. [Mission] Walk the palace site and recall how Goryeo used the sea as its shield."
+   },
+   {
+    "where": "Treasure 4 · Jeondeungsa",
+    "name": "Temple of Samnangseong & the Naked Figures",
+    "desc": "An ancient temple inside Samnangseong, the fortress said to have been built by Dangun's three sons. Legend surrounds the naked figures holding up its eaves. [Mission] Find the naked figures at the four corners of the main hall."
+   },
+   {
+    "where": "Treasure 5 · Gwangseongbo",
+    "name": "Seaside Fort of Defense",
+    "desc": "A coastal fort on Ganghwa that saw fierce battles during the French (1866) and American (1871) expeditions. [Mission] Look at the walls and the sea, recall the defense of the opening era, and finish to receive your completion reward."
+   }
+  ]
+ },
+ "cb-danyang": {
+  "region": "Chungcheong",
+  "theme": "Ondal & Sobaek",
+  "title": "Legends of Ondal and Sobaek",
+  "summary": "From Ondalsanseong, where Ondal the Fool and Princess Pyeonggang's love lingers, to Dodamsambong and the Central Pagoda: a North Chungcheong trail of legends and scenery on the upper Namhangang.",
+  "info": {
+   "거리": "About 60 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Moderate",
+   "집결지": "Ondal Tourist Park"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Ondalsanseong & Ondal Cave",
+    "name": "Ondal and Princess Pyeonggang",
+    "desc": "The mountain fortress where Ondal the Fool, who married Princess Pyeonggang and became a general, died fighting Silla. [Mission] Climb the fortress and look out over the Namhangang and the Sobaek ridges."
+   },
+   {
+    "where": "Treasure 2 · Dodamsambong",
+    "name": "Three Peaks of the Namhangang",
+    "desc": "Three peaks rising from the river. Jeong Do-jeon is said to have taken his pen name 'Sambong' from here. [Mission] Photograph the three peaks and the stone arch from the riverside."
+   },
+   {
+    "where": "Treasure 3 · Sainam, Danyang",
+    "name": "Spectacular Cliff",
+    "desc": "A cliff among the Eight Scenic Views of Danyang, beloved by the Goryeo scholar U Tak. [Mission] Enjoy the view of the sheer Sainam cliff and its pine trees."
+   },
+   {
+    "where": "Treasure 4 · Central Pagoda, Chungju",
+    "name": "The Center of the Land",
+    "desc": "The largest stone pagoda of Unified Silla, built to mark the center of the land. [Mission] Gauge the scale of the seven-story pagoda."
+   },
+   {
+    "where": "Treasure 5 · Goguryeo Stele, Chungju",
+    "name": "The Only Goguryeo Stele in South Korea",
+    "desc": "The only Goguryeo stele in South Korea, bearing witness to Goguryeo's southward expansion. [Mission] Look for traces of the inscription and finish to receive your completion reward."
+   }
+  ]
+ },
+ "gn-jinju": {
+  "region": "Gyeongsang",
+  "theme": "Loyalty & Sea Heroes",
+  "title": "Jinju–Tongyeong Sea Road of Loyalty",
+  "summary": "From Jinjuseong, where Nongae embraced an enemy general and leapt into the Namgang River, to Yi Sun-sin's sea off Hansando: a South Gyeongsang trail of loyalty.",
+  "info": {
+   "거리": "About 90 km (car + ferry)",
+   "소요시간": "About 1 day",
+   "난이도": "Easy to moderate",
+   "집결지": "Jinjuseong Fortress"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Chokseongnu, Jinjuseong",
+    "name": "Fortress of the Great Victory of Jinju",
+    "desc": "Where Kim Si-min held off 20,000 Japanese troops in the Battle of Jinju. Chokseongnu pavilion towers over the Namgang River. [Mission] Climb Chokseongnu and look down at the river."
+   },
+   {
+    "where": "Treasure 2 · Uiam (Nongae Rock)",
+    "name": "Nongae's Sacrifice",
+    "desc": "The 'Righteous Rock' from which the gisaeng Nongae leapt into the river holding an enemy general. [Mission] Go down to Uiam below Chokseongnu and honor Nongae's loyalty."
+   },
+   {
+    "where": "Treasure 3 · Sebyeonggwan, Tongyeong",
+    "name": "Naval Headquarters of the Three Provinces",
+    "desc": "The main building of the naval command for the three southern provinces, the root of the name 'Tongyeong'. [Mission] On the vast wooden floor of Sebyeonggwan, picture the might of the navy."
+   },
+   {
+    "where": "Treasure 4 · Jeseungdang, Hansando",
+    "name": "Yi Sun-sin's Watchtower",
+    "desc": "Where Yi Sun-sin commanded the Battle of Hansan Island and composed the poem 'On a moonlit night on Hansan Isle'. [Mission] Stand at the watchtower and gaze at the sea off Hansando."
+   },
+   {
+    "where": "Treasure 5 · Mireuksan, Tongyeong",
+    "name": "View of Hallyeosudo",
+    "desc": "The summit of Mireuksan, reached by cable car. [Mission] Take in the Hallyeosudo waterway that Yi Sun-sin defended and finish to receive your completion reward."
+   }
+  ]
+ },
+ "gb-andong": {
+  "region": "Gyeongsang",
+  "theme": "Scholars & Head Families",
+  "title": "Andong: Path of the Seonbi Scholars",
+  "summary": "Home of the Hahoe mask dance and old head families, all the way to Toegye's Dosanseowon: an Andong treasure trail where Confucian culture and tradition live on.",
+  "info": {
+   "거리": "About 50 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Easy",
+   "집결지": "Hahoe Village"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Hahoe Village",
+    "name": "Hometown of Ryu Seong-ryong",
+    "desc": "A traditional village encircled by the Nakdonggang River, hometown of Seoae Ryu Seong-ryong and a World Heritage site. [Mission] Walk among the old houses and along the river and feel the 'river-circling' (Hahoe) landscape."
+   },
+   {
+    "where": "Treasure 2 · Buyongdae",
+    "name": "Cliff Overlooking Hahoe",
+    "desc": "A cliff viewpoint across the river from Hahoe Village. [Mission] Climb Buyongdae and photograph the whole village in the river's bend."
+   },
+   {
+    "where": "Treasure 3 · Dosanseowon",
+    "name": "Academy of Toegye Yi Hwang",
+    "desc": "A Confucian academy honoring Toegye Yi Hwang, who systematized Joseon Neo-Confucianism. [Mission] Tour the academy and find the scene printed on the 1,000-won note."
+   },
+   {
+    "where": "Treasure 4 · Bongjeongsa",
+    "name": "The Oldest Wooden Building",
+    "desc": "An ancient temple whose Geungnakjeon hall is the oldest wooden building in Korea. [Mission] In front of Geungnakjeon, study the grain of wood that has stood for a thousand years."
+   },
+   {
+    "where": "Treasure 5 · Woryeonggyo Bridge",
+    "name": "Won's Mother's Letter",
+    "desc": "A wooden bridge holding the love story of 'Won's mother', who longed for her husband who died before her. [Mission] Cross the moonlit Woryeonggyo and finish the journey to receive your completion reward."
+   }
+  ]
+ },
+ "jn-haenam": {
+  "region": "Jeolla",
+  "theme": "Land's End & Exile",
+  "title": "Land's End and Exile: The Southern Tip",
+  "summary": "From Ttangkkeut, the southernmost tip of the peninsula, to the exile home of Dasan Jeong Yak-yong and Gosan Yun Seon-do's Noku-dang: a walk through stories at the edge of the south.",
+  "info": {
+   "거리": "About 60 km (by car)",
+   "소요시간": "About 1 day",
+   "난이도": "Easy to moderate",
+   "집결지": "Ttangkkeut Village"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Land's End Tower, Haenam",
+    "name": "Southernmost Tip of the Peninsula",
+    "desc": "A tower and observatory marking the southernmost point of the mainland, once called Galdu. [Mission] From the tower, gaze at the horizon of the archipelago."
+   },
+   {
+    "where": "Treasure 2 · Mihwangsa",
+    "name": "The Beautiful Temple of Dalmasan",
+    "desc": "A temple founded, legend says, where an ox that arrived on a stone boat lay down. [Mission] Photograph Mihwangsa's main hall against the Dalmasan ridge."
+   },
+   {
+    "where": "Treasure 3 · Nokudang",
+    "name": "Gosan Yun Seon-do",
+    "desc": "The ancestral house of the family of Gosan Yun Seon-do, author of 'The Fisherman's Calendar'. Its nutmeg-yew forest sways like green rain. [Mission] Stroll through Nokudang and the yew forest."
+   },
+   {
+    "where": "Treasure 4 · Dasan Chodang, Gangjin",
+    "name": "Jeong Yak-yong's Place of Exile",
+    "desc": "The mountain cottage where Dasan Jeong Yak-yong wrote works such as 'Mongmin Simseo' during 18 years of exile. [Mission] Climb the trail and imagine Dasan's reflections at the cottage."
+   },
+   {
+    "where": "Treasure 5 · Baengnyeonsa, Gangjin",
+    "name": "Friendship of Dasan and Hyejang",
+    "desc": "A temple linked to Dasan Chodang by a camellia forest path, where Dasan and Master Hyejang shared tea and learning. [Mission] Walk the camellia path to Baengnyeonsa to receive your completion reward."
+   }
+  ]
+ },
+ "jb-jeonju": {
+  "region": "Jeolla",
+  "theme": "City of Kings & Seodong's Song",
+  "title": "Path of Gyeon Hwon and Seodong: Jeonju & Iksan",
+  "summary": "Jeonju, ancestral home of the Joseon dynasty, Later Baekje's Gyeon Hwon, and Iksan's Mireuksa site of Seodong and Princess Seonhwa: a North Jeolla treasure trail of kings and legends.",
+  "info": {
+   "거리": "About 40 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Easy",
+   "집결지": "Gyeonggijeon, Jeonju"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Gyeonggijeon, Jeonju",
+    "name": "Royal Portrait of King Taejo",
+    "desc": "A shrine housing the royal portrait of Taejo Yi Seong-gye, founder of Joseon. [Mission] Meet Taejo's face at the Royal Portrait Museum and stroll through the Hanok Village."
+   },
+   {
+    "where": "Treasure 2 · Omokdae, Jeonju",
+    "name": "Yi Seong-gye's Victory Spot",
+    "desc": "Where Yi Seong-gye held a feast after defeating Japanese raiders at the Battle of Hwangsan. [Mission] Climb Omokdae and look down at the waves of hanok rooftops."
+   },
+   {
+    "where": "Treasure 3 · Donggosanseong",
+    "name": "Gyeon Hwon's Later Baekje Palace",
+    "desc": "A mountain fortress believed to be the palace of Gyeon Hwon, who made Jeonju the capital of Later Baekje. [Mission] At the fortress site, imagine Gyeon Hwon's dream of the Later Three Kingdoms."
+   },
+   {
+    "where": "Treasure 4 · Mireuksa Temple Site, Iksan",
+    "name": "Seodong and Princess Seonhwa",
+    "desc": "Baekje's largest temple, built by King Mu (Seodong). Legend says he won Princess Seonhwa with the 'Song of Seodong'. [Mission] Look up at the largest stone pagoda in Korea."
+   },
+   {
+    "where": "Treasure 5 · Wanggung-ri, Iksan",
+    "name": "King Mu's Palace",
+    "desc": "The site of the palace King Mu of Baekje kept in Iksan. [Mission] Walk the five-story pagoda and the palace site, recall Baekje's dream of revival, and finish to receive your completion reward."
+   }
+  ]
+ },
+ "jn-suncheon": {
+  "region": "Jeolla",
+  "theme": "Yi Sun-sin & Tidal Flats",
+  "title": "Yi Sun-sin's Sea: Suncheon & Yeosu",
+  "summary": "From Yeosu, Yi Sun-sin's Left Jeolla Naval Base, to Naganeupseong and the Suncheon Bay tidal flats: a trail linking the south coast's defense and ecology.",
+  "info": {
+   "거리": "About 70 km (by car)",
+   "소요시간": "About 1 day",
+   "난이도": "Easy to moderate",
+   "집결지": "Jinnamgwan, Yeosu"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Jinnamgwan, Yeosu",
+    "name": "Headquarters of the Left Jeolla Navy",
+    "desc": "The Left Jeolla Naval Base headquarters, where Yi Sun-sin built turtle ships and commanded the navy. [Mission] On the vast floor of Jinnamgwan, picture the might of the navy."
+   },
+   {
+    "where": "Treasure 2 · Yi Sun-sin Square, Yeosu",
+    "name": "The Turtle Ship",
+    "desc": "A seaside square with a turtle ship replica and a statue of Yi Sun-sin. [Mission] Board the turtle ship and examine the structure of the armored vessel."
+   },
+   {
+    "where": "Treasure 3 · Naganeupseong",
+    "name": "A Joseon Walled Town",
+    "desc": "A Joseon-era walled town where the walls and thatched houses survive and people still live. [Mission] Walk the walls and feel life in an old county town."
+   },
+   {
+    "where": "Treasure 4 · Suncheon Bay Wetland",
+    "name": "Reeds and Tidal Flats",
+    "desc": "A world-class wetland of vast reed beds and tidal flats. [Mission] Walk the reed-bed boardwalk and capture the sunset over the S-shaped waterway."
+   },
+   {
+    "where": "Treasure 5 · Songgwangsa, Suncheon",
+    "name": "Temple of the Sangha Jewel",
+    "desc": "One of Korea's Three Jewel Temples, which produced sixteen National Preceptors; the practice place of Master Jinul. [Mission] Look around the tranquil Songgwangsa to receive your completion reward."
+   }
+  ]
+ },
+ "gn-gimhae": {
+  "region": "Gyeongsang",
+  "theme": "Founder of Gaya",
+  "title": "Gimhae: Founder of Gaya",
+  "summary": "The land of the Garak kingdom, with the stories of King Suro, born from an egg from heaven, and Heo Hwang-ok, who came across the sea: the Gimhae treasure trail.",
+  "info": {
+   "거리": "About 10 km (walking + car)",
+   "소요시간": "About 5 hours",
+   "난이도": "Easy",
+   "집결지": "Gujibong"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Gujibong",
+    "name": "The Song of Guji and the Descent",
+    "desc": "The peak where six golden eggs descended from heaven, where people sang the Gujiga, 'Turtle, turtle…'. [Mission] Climb Gujibong and imagine the beginning of Gaya."
+   },
+   {
+    "where": "Treasure 2 · Tomb of King Suro",
+    "name": "Founder of Garak",
+    "desc": "The tomb of King Suro, founder of Geumgwan Gaya. [Mission] Tour the tomb and Sungseonjeon shrine."
+   },
+   {
+    "where": "Treasure 3 · Tomb of Queen Heo",
+    "name": "Heo Hwang-ok",
+    "desc": "The tomb of Queen Heo Hwang-ok, said to have come across the sea from the land of Ayuta. [Mission] Find the Pasa stone pagoda and the twin-fish emblem in front of the tomb."
+   },
+   {
+    "where": "Treasure 4 · Gimhae National Museum",
+    "name": "Gaya Relics",
+    "desc": "A museum of relics from Gaya, the kingdom of iron. [Mission] Examine Gaya iron armor and pottery."
+   },
+   {
+    "where": "Treasure 5 · Daeseong-dong Tombs",
+    "name": "Tombs of the Gaya Kings",
+    "desc": "Tombs of Geumgwan Gaya's ruling class, which yielded splendid relics. [Mission] Walk the burial mounds, feel Gaya's power, and finish to receive your completion reward."
+   }
+  ]
+ },
+ "gn-hapcheon": {
+  "region": "Gyeongsang",
+  "theme": "Tripitaka Koreana",
+  "title": "Mountain of the Tripitaka: Haeinsa, Hapcheon",
+  "summary": "A Hapcheon trail through Haeinsa on Gayasan, home of the Tripitaka Koreana carved to protect the nation from the Mongols, and the Hongnyudong Valley.",
+  "info": {
+   "거리": "About 40 km (car + walking)",
+   "소요시간": "About 6 hours",
+   "난이도": "Moderate",
+   "집결지": "Iljumun Gate, Haeinsa"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Janggyeong Panjeon, Haeinsa",
+    "name": "Tripitaka Koreana",
+    "desc": "The wooden halls that have perfectly preserved for some 750 years the Goryeo Tripitaka, carved on over 80,000 woodblocks over 16 years. [Mission] Study the window lattices and the science of preserving the woodblocks."
+   },
+   {
+    "where": "Treasure 2 · Daejeokgwangjeon, Haeinsa",
+    "name": "Main Hall of Haeinsa",
+    "desc": "The central hall of Haeinsa, whose name means 'wisdom as clear as the sea'. [Mission] Look around Daejeokgwangjeon and Goburam."
+   },
+   {
+    "where": "Treasure 3 · Hongnyudong Sori-gil",
+    "name": "Gayasan Valley Trail",
+    "desc": "A valley walk on Gayasan known for autumn leaves and the sound of water. [Mission] Walk the Sori-gil and feel Gayasan in autumn."
+   },
+   {
+    "where": "Treasure 4 · Nongsanjeong",
+    "name": "Choe Chi-won",
+    "desc": "A valley pavilion where the late-Silla scholar Choe Chi-won lived in seclusion and is said to have vanished as an immortal. [Mission] At Nongsanjeong, recall Choe Chi-won's poems."
+   },
+   {
+    "where": "Treasure 5 · Yeongamsa Temple Site, Hapcheon",
+    "name": "Twin-Lion Stone Lantern",
+    "desc": "An old temple site at the foot of Hwangmaesan, a masterpiece of Unified Silla stone art with a superb twin-lion stone lantern. [Mission] Admire the lantern and the terraces to receive your completion reward."
+   }
+  ]
+ },
+ "gn-miryang": {
+  "region": "Gyeongsang",
+  "theme": "Arang & Yeongnamnu",
+  "title": "Miryang: Arang's Pavilion",
+  "summary": "A Miryang trail from Yeongnamnu, haunted by the spirit of the wronged maiden Arang, to Samyeong Daesa's Pyochungsa and the summer ice of Eolgeumgol.",
+  "info": {
+   "거리": "About 50 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Easy to moderate",
+   "집결지": "Yeongnamnu"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Yeongnamnu",
+    "name": "The Legend of Arang",
+    "desc": "The finest pavilion of the Yeongnam region, overlooking the Miryanggang River, home to the legend of Arang, a maiden who died unjustly. [Mission] Climb Yeongnamnu and look down at the river."
+   },
+   {
+    "where": "Treasure 2 · Arang-gak",
+    "name": "Shrine to Arang",
+    "desc": "A shrine that eased Arang's restless spirit and honored her virtue. [Mission] At Arang-gak, recall how Arang's grievance was finally resolved."
+   },
+   {
+    "where": "Treasure 3 · Pyochungsa",
+    "name": "Samyeong Daesa",
+    "desc": "A temple honoring Samyeong Daesa, a Miryang native who led monk soldiers in the Imjin War. [Mission] Tour Pyochung Seowon and Samyeong Daesa's relics."
+   },
+   {
+    "where": "Treasure 4 · Eolgeumgol, Miryang",
+    "name": "Ice in Summer",
+    "desc": "A mysterious valley where ice forms in midsummer (Natural Monument). [Mission] Feel the cold air between the rocks with your hand."
+   },
+   {
+    "where": "Treasure 5 · Maneosa",
+    "name": "Stones That Ring Like Bells",
+    "desc": "A temple with the legend of the 'bell stones' in its rock field, which ring like metal drums when struck. [Mission] Tap a stone to hear its clear ring and receive your completion reward."
+   }
+  ]
+ },
+ "gb-yeongju": {
+  "region": "Gyeongsang",
+  "theme": "Uisang & Scholars",
+  "title": "Yeongju: Buseoksa and the Land of Scholars",
+  "summary": "A Yeongju trail linking Buseoksa, home of the love story of Uisang and Lady Seonmyo, with Sosu Seowon, Korea's first Confucian academy.",
+  "info": {
+   "거리": "About 40 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Easy to moderate",
+   "집결지": "Buseoksa"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Muryangsujeon, Buseoksa",
+    "name": "Uisang and the Floating Stone",
+    "desc": "The head temple of Hwaeom Buddhism founded by Great Master Uisang, one of Korea's most beautiful wooden buildings. [Mission] Lean on a swelling entasis column of Muryangsujeon and gaze at the Sobaeksan ridges."
+   },
+   {
+    "where": "Treasure 2 · Seonmyogak, Buseoksa",
+    "name": "Lady Seonmyo",
+    "desc": "A shrine to Seonmyo, who loved Uisang and became a dragon to protect him. Beside it is the 'floating stone' said to have risen into the air. [Mission] Find Seonmyogak and the floating stone."
+   },
+   {
+    "where": "Treasure 3 · Sosu Seowon",
+    "name": "The First Seowon",
+    "desc": "Korea's first royally chartered Confucian academy, founded by Ju Se-bung. [Mission] Tour the lecture hall and Gyeongnyeomjeong pavilion and feel the beginning of seowon education."
+   },
+   {
+    "where": "Treasure 4 · Seonbichon",
+    "name": "Life of the Old Scholars",
+    "desc": "A hanok village recreating the daily life of Joseon scholars. [Mission] Look around the old houses and imagine a scholar's day."
+   },
+   {
+    "where": "Treasure 5 · Museom Village",
+    "name": "The Single-Log Bridge",
+    "desc": "A traditional village in a river bend. [Mission] Cross the single-log bridge and finish the journey to receive your completion reward."
+   }
+  ]
+ },
+ "cb-cheongju": {
+  "region": "Chungcheong",
+  "theme": "Jikji & Songnisan",
+  "title": "Jikji and Songnisan: Cheongju & Boeun",
+  "summary": "From Heungdeoksa in Cheongju, where Jikji, the world's oldest movable metal type book, was printed, to Beopjusa on Songnisan and the Jeongipumsong pine: a path of records and Buddhism.",
+  "info": {
+   "거리": "About 60 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Easy to moderate",
+   "집결지": "Cheongju Early Printing Museum"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Heungdeoksa Site, Cheongju",
+    "name": "Jikji",
+    "desc": "The temple site where 'Jikji', the world's oldest extant book printed with movable metal type, was produced. [Mission] At the Early Printing Museum, learn the history of Jikji and metal type."
+   },
+   {
+    "where": "Treasure 2 · Sangdangsanseong, Cheongju",
+    "name": "Fortress Trail",
+    "desc": "A Joseon-era stone mountain fortress overlooking Cheongju. [Mission] Walk along the walls and take in the view of the city."
+   },
+   {
+    "where": "Treasure 3 · Iron Flagpole of Yongdusa Site",
+    "name": "Goryeo Flagpole",
+    "desc": "A Goryeo-era iron temple flagpole standing in the heart of downtown. [Mission] Look for the inscriptions and the marks of time on the iron drums."
+   },
+   {
+    "where": "Treasure 4 · Jeongipumsong, Boeun",
+    "name": "King Sejo's Pine",
+    "desc": "A pine said to have lifted its own branches so King Sejo's palanquin could pass, earning a government rank. [Mission] Photograph the pine's majestic form."
+   },
+   {
+    "where": "Treasure 5 · Beopjusa, Boeun",
+    "name": "Palsangjeon",
+    "desc": "A great temple on Songnisan with Palsangjeon, Korea's only five-story wooden pagoda. [Mission] Tour Palsangjeon and the Gilt-bronze Maitreya Buddha to receive your completion reward."
+   }
+  ]
+ },
+ "cn-seosan": {
+  "region": "Chungcheong",
+  "theme": "Baekje Smile & Chusa",
+  "title": "The Smile of Baekje: Seosan & Yesan",
+  "summary": "From the rock-carved Buddha Triad known as 'the Smile of Baekje' to Haemieupseong and the birthplace of Chusa Kim Jeong-hui: a walk through the stories of the Naepo region.",
+  "info": {
+   "거리": "About 50 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Easy",
+   "집결지": "Rock-carved Buddha Triad, Seosan"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Rock-carved Buddha Triad, Seosan",
+    "name": "The Smile of Baekje",
+    "desc": "A rock-carved Buddha called 'the Smile of Baekje' for its bright smile that changes with the light. [Mission] Watch how the smile changes as the light shifts."
+   },
+   {
+    "where": "Treasure 2 · Bowonsa Temple Site",
+    "name": "An Old Temple Site",
+    "desc": "A wide Baekje and Unified Silla temple site near the Buddha Triad. [Mission] Stroll the site where flagpole supports and a stone pagoda remain."
+   },
+   {
+    "where": "Treasure 3 · Haemieupseong",
+    "name": "A Joseon Walled Town",
+    "desc": "A well-preserved Joseon walled town with intact walls and gate towers, where Yi Sun-sin once served and which also holds a history of Catholic persecution. [Mission] Walk inside the walls and feel the old county town."
+   },
+   {
+    "where": "Treasure 4 · Sudeoksa, Yesan",
+    "name": "The Main Hall",
+    "desc": "An ancient temple on Deoksungsan whose main hall dates to the Goryeo period. [Mission] Study the grain of the old wooden main hall."
+   },
+   {
+    "where": "Treasure 5 · Chusa's House, Yesan",
+    "name": "Chusa Kim Jeong-hui",
+    "desc": "The birthplace of Kim Jeong-hui, famous for the Chusa calligraphy style and the painting 'Sehando'. [Mission] Tour the house and the Chusa Memorial Hall to receive your completion reward."
+   }
+  ]
+ },
+ "gw-gangneung": {
+  "region": "Gangwon",
+  "theme": "Saimdang & the Sea",
+  "title": "Gangneung: Home of Saimdang",
+  "summary": "From Ojukheon, where Sin Saimdang and Yulgok were born and raised, to Gyeongpodae and the sea: a walk through the home of the thousand-year Gangneung Danoje Festival.",
+  "info": {
+   "거리": "About 40 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Easy",
+   "집결지": "Ojukheon"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Ojukheon",
+    "name": "Sin Saimdang & Yulgok",
+    "desc": "The house where Sin Saimdang gave birth to and raised Yulgok Yi I, the figures on the 5,000- and 50,000-won notes. [Mission] Find Mongnyongsil room and the ojuk (black bamboo)."
+   },
+   {
+    "where": "Treasure 2 · Gyeongpodae",
+    "name": "The Five Moons of Gyeongpoho",
+    "desc": "One of the Eight Scenic Views of Gwandong, with the tale of five moons: in the sky, the sea, the lake, a wine cup and a loved one's eyes. [Mission] Climb Gyeongpodae and capture both the lake and the East Sea."
+   },
+   {
+    "where": "Treasure 3 · Seongyojang",
+    "name": "A Noble Family Estate",
+    "desc": "A large hanok estate showing the life of Joseon nobility. [Mission] Stroll around Hwallaejeong pavilion and Yeolhwadang hall."
+   },
+   {
+    "where": "Treasure 4 · Guksaseonghwangsa, Daegwallyeong",
+    "name": "Gangneung Danoje",
+    "desc": "A shrine to National Preceptor Beomil, the god of the thousand-year Gangneung Danoje Festival. [Mission] Recall the origins of Danoje and feel the old Daegwallyeong road."
+   },
+   {
+    "where": "Treasure 5 · Jeongdongjin",
+    "name": "Sea and Sunrise",
+    "desc": "The sea 'due east' of Gwanghwamun in Seoul, a famous sunrise spot. [Mission] Look out at the sea and finish the journey to receive your completion reward."
+   }
+  ]
+ },
+ "gw-yeongwol": {
+  "region": "Gangwon",
+  "theme": "Tragedy of King Danjong",
+  "title": "Path of the Boy King: Yeongwol",
+  "summary": "A Yeongwol trail through Cheongnyeongpo and Jangneung, where the sad history of the boy king Danjong, dethroned by his uncle and exiled, still flows.",
+  "info": {
+   "거리": "About 30 km (by car)",
+   "소요시간": "About 6 hours",
+   "난이도": "Easy",
+   "집결지": "Cheongnyeongpo"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Cheongnyeongpo",
+    "name": "Danjong's Place of Exile",
+    "desc": "An island-like exile site with river on three sides and a cliff behind. The pine 'Gwaneumsong' that witnessed Danjong's tears still stands. [Mission] Cross by boat and find Gwaneumsong and the boundary stele."
+   },
+   {
+    "where": "Treasure 2 · Gwanpungheon & Jagyuru",
+    "name": "Danjong's Last Days",
+    "desc": "The guesthouse where Danjong stayed and died, and Jagyuru, the pavilion where he wrote of the cuckoo. [Mission] Climb Jagyuru and recall Danjong's 'Cuckoo Poem'."
+   },
+   {
+    "where": "Treasure 3 · Jangneung",
+    "name": "Tomb of King Danjong",
+    "desc": "Danjong's tomb, built where the local official Eom Heung-do secretly buried his body. [Mission] Tour the tomb and the altar honoring his loyal subjects."
+   },
+   {
+    "where": "Treasure 4 · Seondol, Yeongwol",
+    "name": "Sinseonam Rock",
+    "desc": "A rock towering above the cliffs of the Seogang River. [Mission] From the viewpoint, capture Seondol and the bending river."
+   },
+   {
+    "where": "Treasure 5 · Korean Peninsula-shaped Land",
+    "name": "The Bend of the Seogang",
+    "desc": "Land shaped exactly like the Korean Peninsula by the winding river. [Mission] Look down at it from the viewpoint to receive your completion reward."
+   }
+  ]
+ },
+ "bs-busan": {
+  "region": "Busan",
+  "theme": "City of Sea & Defense",
+  "title": "Busan: City of the Sea and National Defense",
+  "summary": "From Dongnaeseong, where Song Sang-hyeon made his stand in the Imjin War, to Beomeosa, Haeundae and the sea cliffs of Taejongdae: a treasure trail through Busan.",
+  "info": {
+   "거리": "About 50 km (by car)",
+   "소요시간": "About 1 day",
+   "난이도": "Easy to moderate",
+   "집결지": "Dongnae Eupseong"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Dongnae Eupseong",
+    "name": "Song Sang-hyeon and Dongnaeseong",
+    "desc": "The first major battlefield of the Imjin War, where magistrate Song Sang-hyeon resisted to the end, saying 'It is easy to die fighting, but hard to give you passage'. [Mission] Walk the walls and the north gate and recall the Battle of Dongnae."
+   },
+   {
+    "where": "Treasure 2 · Bokcheon-dong Tombs",
+    "name": "Gaya & Silla Tombs",
+    "desc": "Three Kingdoms-era tombs on a hill beside Dongnae Eupseong. [Mission] See the excavated relics at Bokcheon Museum and walk the burial hill."
+   },
+   {
+    "where": "Treasure 3 · Beomeosa",
+    "name": "The Golden Well of Geumjeongsan",
+    "desc": "A great temple with the legend of the 'Golden Well', a rock spring on Geumjeongsan where a golden fish from heaven came down to play. [Mission] Tour Iljumun gate and the main hall."
+   },
+   {
+    "where": "Treasure 4 · Haeundae",
+    "name": "Choe Chi-won's Sea",
+    "desc": "The sea named after 'Haeun' (sea and clouds), the pen name the Silla scholar Choe Chi-won carved on a rock here. [Mission] Walk the Dongbaekseom trail and capture the sea."
+   },
+   {
+    "where": "Treasure 5 · Taejongdae",
+    "name": "Sea Cliffs & Sinseondae",
+    "desc": "Coastal cliffs where, legend says, Silla's King Taejong Muyeol rested and practiced archery. [Mission] Tour Sinseondae and the lighthouse and finish to receive your completion reward."
+   }
+  ]
+ },
+ "dg-daegu": {
+  "region": "Daegu",
+  "theme": "Paths of Palgongsan",
+  "title": "Daegu: Paths of Palgongsan",
+  "summary": "From Palgongsan, where Wonhyo trained and Wang Geon escaped death, to Gatbawi, the prayer site said to grant wishes: Daegu's treasure trail.",
+  "info": {
+   "거리": "About 40 km (by car)",
+   "소요시간": "About 7 hours",
+   "난이도": "Moderate (Gatbawi climb)",
+   "집결지": "Donghwasa"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Donghwasa",
+    "name": "Great Temple of Palgongsan",
+    "desc": "Palgongsan's leading temple, founded in the Silla period, with a giant Buddha of Medicine for Unification. [Mission] Before the great Buddha, feel the embrace of Palgongsan."
+   },
+   {
+    "where": "Treasure 2 · Gatbawi",
+    "name": "The Wish-Granting Prayer Site",
+    "desc": "A seated stone Buddha on the summit of Gwanbong. Said to grant one wish to those who pray sincerely, it draws worshippers all year round. [Mission] Climb the steep stairs and make a wish at Gatbawi."
+   },
+   {
+    "where": "Treasure 3 · Pagyesa",
+    "name": "Legend of King Yeongjo's Birth",
+    "desc": "A temple with the legend that King Yeongjo was born thanks to prayers offered here. [Mission] Tour Wontongjeon hall and Jindongnu pavilion."
+   },
+   {
+    "where": "Treasure 4 · Buinsa",
+    "name": "Honoring Queen Seondeok",
+    "desc": "A temple that holds a memorial rite for Queen Seondeok and once housed the first Tripitaka Koreana. [Mission] Find the traces honoring Queen Seondeok."
+   },
+   {
+    "where": "Treasure 5 · General Sin Sung-gyeom Memorial Site",
+    "name": "Battle of Gongsan and Wang Geon",
+    "desc": "A memorial to the loyal Sin Sung-gyeom, who died in Wang Geon's place at the Battle of Gongsan and saved him. [Mission] Tour the Pyochungdan altar and finish to receive your completion reward."
+   }
+  ]
+ },
+ "dj-daejeon": {
+  "region": "Daejeon",
+  "theme": "City of Filial Piety & Scholars",
+  "title": "Daejeon: City of Filial Piety and Scholars",
+  "summary": "From Dongchundang and Uam Historic Park of Hoedeok's scholar culture to the red-clay trail of Gyejoksan and Ppuri Park: a Daejeon trail of filial piety and scholarly spirit.",
+  "info": {
+   "거리": "About 30 km (by car)",
+   "소요시간": "About 6 hours",
+   "난이도": "Easy",
+   "집결지": "Dongchundang"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Dongchundang",
+    "name": "Song Jun-gil's Pavilion House",
+    "desc": "A detached house showing the refinement of Joseon nobility (Treasure). [Mission] Sit on the wooden hall floor and feel a scholar's ease."
+   },
+   {
+    "where": "Treasure 2 · Uam Historic Park",
+    "name": "Uam Song Si-yeol",
+    "desc": "A park with the traces of Song Si-yeol, leader of the Noron faction, and Namganjeongsa. [Mission] Capture the pavilion reflected in the Namganjeongsa pond."
+   },
+   {
+    "where": "Treasure 3 · Gyejoksanseong",
+    "name": "Baekje Fortress & Red-Clay Trail",
+    "desc": "A Baekje fortress on Gyejoksan, the 'rooster's foot' mountain, famous for the red-clay trail around it. [Mission] Walk the red-clay trail barefoot."
+   },
+   {
+    "where": "Treasure 4 · Bomunsan",
+    "name": "Daejeon's Downtown Mountain",
+    "desc": "An urban forest overlooking Daejeon. [Mission] Take in downtown Daejeon from the observatory."
+   },
+   {
+    "where": "Treasure 5 · Ppuri Park",
+    "name": "Roots of Family and Clan",
+    "desc": "A rare park themed on Korean family clans. [Mission] Find the monument for your own family name's origin to receive your completion reward."
+   }
+  ]
+ },
+ "us-ulsan": {
+  "region": "Ulsan",
+  "theme": "Prehistory & Cheoyong's Sea",
+  "title": "Ulsan: Bangudae and Cheoyong's Sea",
+  "summary": "From the Bangudae petroglyphs of prehistoric whales to Cheoyong's sea and Daewangam: an Ulsan trail linking the oldest pictures and legends.",
+  "info": {
+   "거리": "About 70 km (by car)",
+   "소요시간": "About 1 day",
+   "난이도": "Easy to moderate",
+   "집결지": "Bangudae Petroglyphs"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Bangudae Petroglyphs",
+    "name": "Prehistoric Whale Carvings",
+    "desc": "Rock carvings of whales and tigers made by prehistoric people (National Treasure), the oldest record of whaling in the world. [Mission] Find the whale carvings through the telescope."
+   },
+   {
+    "where": "Treasure 2 · Cheonjeon-ri Petroglyphs",
+    "name": "Prehistoric & Silla Carvings",
+    "desc": "A rock carved with both prehistoric patterns and the writing of Silla hwarang. [Mission] Find traces of two eras on one rock."
+   },
+   {
+    "where": "Treasure 3 · Daewangam Park",
+    "name": "Legend of King Munmu's Queen",
+    "desc": "Seaside rocks with the legend of King Munmu's queen, who became a dragon to protect the kingdom even after death. [Mission] Cross the suspension bridge and capture the Daewangam scenery."
+   },
+   {
+    "where": "Treasure 4 · Cheoyongam",
+    "name": "Tale of Cheoyong",
+    "desc": "Gaeunpo, setting of the tale of Cheoyong, who drove off the spirit of plague with dance and song. [Mission] Gaze at Cheoyongam and recall the Song of Cheoyong."
+   },
+   {
+    "where": "Treasure 5 · Ganjeolgot",
+    "name": "Famous Sunrise Spot",
+    "desc": "The place where the sun rises first on the Korean mainland. [Mission] Look at the horizon from the Ganjeolgot lighthouse to receive your completion reward."
+   }
+  ]
+ },
+ "gj-gwangju": {
+  "region": "Gwangju",
+  "theme": "Righteousness & Mudeungsan",
+  "title": "Gwangju: Mudeungsan and the City of Arts",
+  "summary": "From the columnar joints of Ipseokdae on Mudeungsan to shrines for righteous army leaders and the modern-history village of Yangnim-dong: a Gwangju trail of righteousness and art.",
+  "info": {
+   "거리": "About 30 km (by car)",
+   "소요시간": "About 1 day",
+   "난이도": "Moderate (Mudeungsan hike)",
+   "집결지": "Jeungsimsa Visitor Center"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Ipseokdae, Mudeungsan",
+    "name": "Spectacular Columnar Joints",
+    "desc": "Columnar joints lined up like a folding screen near the summit of Mudeungsan (Natural Monument). [Mission] Look up at the stone columns of Ipseokdae and Seoseokdae."
+   },
+   {
+    "where": "Treasure 2 · Jeungsimsa",
+    "name": "Ancient Temple of Mudeungsan",
+    "desc": "A large temple at the foot of Mudeungsan. [Mission] Tour Obaekjeon hall and the iron Vairocana Buddha."
+   },
+   {
+    "where": "Treasure 3 · Chungjangsa",
+    "name": "Righteous Army Leader Kim Deok-ryeong",
+    "desc": "A shrine to Kim Deok-ryeong, a righteous army leader of the Imjin War and the origin of Gwangju's 'Chungjang-ro' street. [Mission] At the general's shrine, reflect on Gwangju, the city of righteousness."
+   },
+   {
+    "where": "Treasure 4 · Pochungsa",
+    "name": "Go Gyeong-myeong's Righteous Army",
+    "desc": "A shrine to Go Gyeong-myeong, who died with his two sons at the Battle of Geumsan. [Mission] Honor the loyalty of the righteous army."
+   },
+   {
+    "where": "Treasure 5 · Yangnim-dong",
+    "name": "Modern History Village",
+    "desc": "A modern history and culture village where missionaries' Western houses, hanok and alley art come together. [Mission] Stroll Penguin Village and the modern buildings to receive your completion reward."
+   }
+  ]
+ },
+ "sj-sejong": {
+  "region": "Sejong",
+  "theme": "Baekje's Dream & Hangeul",
+  "title": "Sejong: City of Hangeul",
+  "summary": "From Unjusanseong of the Baekje restoration movement and Biamsa, temple of Baekje refugees, to the Geumgang Ieung Bridge: a Sejong trail linking Baekje's last dream with the city of Hangeul.",
+  "info": {
+   "거리": "About 40 km (by car)",
+   "소요시간": "About 6 hours",
+   "난이도": "Easy to moderate",
+   "집결지": "Unjusanseong"
+  },
+  "stops": [
+   {
+    "where": "Treasure 1 · Unjusanseong",
+    "name": "The Baekje Restoration Movement",
+    "desc": "A mountain fortress where, after Baekje fell, its people are said to have fought to revive their kingdom. [Mission] Climb to the top and recall Baekje's last dream."
+   },
+   {
+    "where": "Treasure 2 · Biamsa",
+    "name": "Temple of the Baekje Refugees",
+    "desc": "A temple said to have been founded by Baekje refugees, where Baekje-style Buddhist steles were found. [Mission] Tour the three-story pagoda and the quiet temple grounds."
+   },
+   {
+    "where": "Treasure 3 · Yeongi Hyanggyo",
+    "name": "An Old County School",
+    "desc": "A hyanggyo, a local Confucian school of the Joseon period. [Mission] Tour Myeongnyundang and Daeseongjeon."
+   },
+   {
+    "where": "Treasure 4 · Geumgang Ieung Bridge",
+    "name": "The Round Footbridge",
+    "desc": "One of the world's longest circular footbridges, modeled on the Hangeul consonant 'ㅇ'. [Mission] Walk a full circle and take in the Geumgang River."
+   },
+   {
+    "where": "Treasure 5 · Milmaru Observatory",
+    "name": "View of the Happy City",
+    "desc": "An observatory overlooking Sejong's new downtown. [Mission] Take in the planned city of Sejong to receive your completion reward."
+   }
+  ]
+ }
+}

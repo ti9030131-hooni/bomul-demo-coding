@@ -1,0 +1,689 @@
+{
+ "seoul-gyeongbok-ar": [
+  {
+   "seg": "Before you start · Near Gyeongbokgung",
+   "rate": "Café · ★4.9",
+   "d": "A well-known brunch and dessert café on Hyoja-ro. A good stop before exploring."
+  },
+  {
+   "seg": "After finishing · Seochon",
+   "rate": "Seochon · ★4.9",
+   "d": "A highly rated, popular restaurant in the alleys of Seochon, a short walk from Gyeongbokgung."
+  }
+ ],
+ "seoul": [
+  {
+   "seg": "Treasure 1 · Near Gyeongbokgung",
+   "rate": "Seochon · ★4.9",
+   "d": "A highly rated, popular restaurant in the alleys of Seochon, a short walk from Gyeongbokgung."
+  },
+  {
+   "seg": "Treasure 1 · Near Gyeongbokgung",
+   "rate": "Café · ★4.9",
+   "d": "A well-known brunch and dessert café on Hyoja-ro. Great for starting the morning."
+  },
+  {
+   "seg": "Treasure 2 · Changuimun · Segeomjeong",
+   "rate": "Buam-dong · ★4.0",
+   "d": "A Buam-dong view café famous as a drama filming location. (11:00–19:50)"
+  },
+  {
+   "seg": "Treasure 3 · Inwangsan",
+   "rate": "Café · ★4.4",
+   "d": "A view bookshop café in a converted old guard post, overlooking the whole city."
+  },
+  {
+   "seg": "Treasure 4 · Sungnyemun",
+   "rate": "Namdaemun · ★4.0",
+   "d": "A long-standing Namdaemun favorite for kalguksu and dumplings. Closed Sundays."
+  },
+  {
+   "seg": "Treasure 4 · Sungnyemun",
+   "rate": "Market · ★4.9",
+   "d": "A highly rated Korean restaurant inside Namdaemun Market. Closed Sundays."
+  },
+  {
+   "seg": "Treasure 5 · Gwangtonggyo, Cheonggyecheon",
+   "rate": "Euljiro · ★4.8",
+   "d": "A long-standing Euljiro restaurant for seolleongtang and gomtang, close to Gwangtonggyo."
+  },
+  {
+   "seg": "Treasure 6 · Namsan",
+   "rate": "Dessert · ★4.9",
+   "d": "Right below N Seoul Tower — a sweet way to finish at the end of the course."
+  }
+ ],
+ "seoul-half": [
+  {
+   "seg": "Treasure 1 · Near Gyeongbokgung",
+   "rate": "Seochon · ★4.9",
+   "d": "A highly rated, popular restaurant in the alleys of Seochon, a short walk from Gyeongbokgung."
+  },
+  {
+   "seg": "Treasure 1 · Near Gyeongbokgung",
+   "rate": "Café · ★4.9",
+   "d": "A well-known brunch and dessert café on Hyoja-ro."
+  },
+  {
+   "seg": "Treasure 2 · Inwangsan",
+   "rate": "Café · ★4.4",
+   "d": "A view bookshop café in a converted old guard post."
+  },
+  {
+   "seg": "Treasure 3 · Sungnyemun",
+   "rate": "Namdaemun · ★4.0",
+   "d": "A long-standing Namdaemun favorite for kalguksu and dumplings. Closed Sundays."
+  }
+ ],
+ "seoul-gangdong": [
+  {
+   "seg": "Treasure 1 · Near Pungnaptoseong",
+   "rate": "Wiryeseong-daero · ★4.3",
+   "d": "A highly rated specialty coffee café around Pungnap and Seokchon."
+  },
+  {
+   "seg": "Treasure 2 · Mongchontoseong (Olympic Park)",
+   "rate": "Café · ★4.9",
+   "d": "A cozy café that pairs well with a walk in Olympic Park."
+  },
+  {
+   "seg": "Treasure 4 · Gwangnaru",
+   "rate": "Snacks · ★4.4",
+   "d": "A well-known snack shop in Gwangjang-dong, Gwangnaru. Good for a light bite."
+  },
+  {
+   "seg": "Treasure 5 · Achasan",
+   "rate": "Korean · ★4.6",
+   "d": "A galbitang spot for a hearty meal before or after hiking Achasan."
+  }
+ ],
+ "seoul-gangdong-half": [
+  {
+   "seg": "Treasure 1 · Near Pungnaptoseong",
+   "rate": "Wiryeseong-daero · ★4.3",
+   "d": "A highly rated specialty coffee café around Pungnap and Seokchon."
+  },
+  {
+   "seg": "Treasure 2 · Mongchontoseong (Olympic Park)",
+   "rate": "Café · ★4.9",
+   "d": "A cozy café that pairs well with a walk in Olympic Park."
+  },
+  {
+   "seg": "Treasure 3 · Near Seokchon-dong",
+   "rate": "Garak-ro · ★4.4",
+   "d": "A café near Seokchon-dong. Good for a rest at the end of the course."
+  }
+ ],
+ "gyeongju": [
+  {
+   "seg": "Treasure 2 · Near Cheomseongdae",
+   "rate": "Korean · ★4.8",
+   "d": "A highly rated pot-rice Korean restaurant on Cheomseong-ro. Great for a hearty lunch."
+  },
+  {
+   "seg": "Treasure 3 · Daereungwon · Hwangnidan-gil",
+   "rate": "Local favorite · ★4.7",
+   "d": "A famous eatery on Hwangnidan-gil. Pairs well with a walk in Daereungwon."
+  },
+  {
+   "seg": "Treasure 3 · Daereungwon · Hwangnidan-gil",
+   "rate": "Local favorite · ★4.9",
+   "d": "A very highly rated, popular eatery in Sajeong-dong."
+  },
+  {
+   "seg": "Treasure 3 · Daereungwon · Hwangnidan-gil",
+   "rate": "Café · ★4.8",
+   "d": "A cozy dessert café on Hwangnidan-gil in Hwangnam-dong."
+  }
+ ],
+ "buyeo": [
+  {
+   "seg": "Treasure 1 · Busosanseong · Gungnamji",
+   "rate": "Korean · ★4.4",
+   "d": "Buyeo's famous chueotang (loach soup) restaurant in front of Gungnamji."
+  },
+  {
+   "seg": "Treasure 1 · Downtown Buyeo",
+   "rate": "Korean · ★4.3",
+   "d": "A long-standing handmade kalguksu shop near Gungnamji. Good for a light meal."
+  },
+  {
+   "seg": "Treasure 2 · Gomnaru, Gongju",
+   "rate": "Café · ★4.7",
+   "d": "A charming traditional teahouse café in a converted hanok in old downtown Gongju."
+  },
+  {
+   "seg": "Treasure 2 · Gongju",
+   "rate": "Bakery · ★4.5",
+   "d": "A popular bakery café in Gongju."
+  }
+ ],
+ "jeju": [
+  {
+   "seg": "East Jeju · Near Seongsan Ilchulbong",
+   "rate": "Café · ★4.9",
+   "d": "A very highly rated café near Seongsan Ilchulbong."
+  },
+  {
+   "seg": "East Jeju · Near Seongsan Ilchulbong",
+   "rate": "Bakery · ★4.6",
+   "d": "A bakery café with sea views of Seongsan Ilchulbong."
+  },
+  {
+   "seg": "East Jeju · Seongsan",
+   "rate": "Brunch · ★4.6",
+   "d": "A cozy brunch café in Seongsan-ri. (An eastern rest stop on the island-wide course)"
+  }
+ ],
+ "seorak": [
+  {
+   "seg": "Treasure 3 · Naksansa · Sokcho (Daepo Port)",
+   "rate": "Seafood · ★4.8",
+   "d": "A highly rated raw-fish restaurant at Daepo Port, Sokcho. Dine with a view of the East Sea."
+  },
+  {
+   "seg": "Treasure 3 · Sokcho (Daepo Port)",
+   "rate": "Seafood · ★4.8",
+   "d": "A well-known seafood restaurant at Daepo Port."
+  },
+  {
+   "seg": "Treasure 3 · Sokcho (Daepo Port)",
+   "rate": "Seafood · ★4.7",
+   "d": "A good place for snow crab and seafood at Daepo Port."
+  }
+ ],
+ "honam": [
+  {
+   "seg": "Treasure 1 · Gwanghallu, Namwon",
+   "rate": "Korean · ★4.4",
+   "d": "A grilled (charcoal) meat spot right beside Gwanghallu Garden."
+  },
+  {
+   "seg": "Treasure 1 · Gwanghallu, Namwon",
+   "rate": "Korean · ★4.3",
+   "d": "A stone-pot rice specialist on Hyangdan-ro. Good for a hearty meal."
+  },
+  {
+   "seg": "Treasure 1 · Gwanghallu, Namwon",
+   "rate": "Korean · ★4.4",
+   "d": "A restaurant for baekban and local dishes near Gwanghallu."
+  }
+ ],
+ "gg-suwon": [
+  {
+   "seg": "Treasure 1 · Suwon Hwaseong · Haenggung",
+   "rate": "Café · ★4.6",
+   "d": "A famous Suwon coffee roastery café in front of Hwaseong Haenggung."
+  },
+  {
+   "seg": "Treasure 1 · Suwon Hwaseong · Haenggung",
+   "rate": "Café · ★4.8",
+   "d": "A highly rated specialty coffee café in Haenggung-dong."
+  },
+  {
+   "seg": "Treasure 3 · Yunggeolleung",
+   "rate": "Local favorite · ★5.0",
+   "d": "A very highly rated cuttlefish restaurant near Yunggeolleung."
+  },
+  {
+   "seg": "Treasure 5 · Near Yongjusa",
+   "rate": "Café · ★4.7",
+   "d": "A large, stylish bakery café in Bongdam, Hwaseong."
+  }
+ ],
+ "gg-poyeon": [
+  {
+   "seg": "Treasure 2 · Sanjeong Lake",
+   "rate": "Café · ★4.2",
+   "d": "A famous view café around Sanjeong Lake."
+  },
+  {
+   "seg": "Treasure 2 · Sanjeong Lake",
+   "rate": "Café · ★4.5",
+   "d": "A ranch-themed café on Sanjeonghosu-ro."
+  },
+  {
+   "seg": "Treasure 3 · Yeoncheon",
+   "rate": "Café · ★4.1",
+   "d": "A large café with hanok charm in Gunnam-myeon, Yeoncheon."
+  },
+  {
+   "seg": "Treasure 4 · Yeoncheon",
+   "rate": "Korean · ★4.3",
+   "d": "A hearty Korean restaurant in Yeoncheon-eup."
+  }
+ ],
+ "gg-yeoju": [
+  {
+   "seg": "Treasure 1 · Yongmunsa, Yangpyeong",
+   "rate": "Korean · ★4.3",
+   "d": "A long-standing seolleongtang restaurant in Yongmun (2,500+ reviews)."
+  },
+  {
+   "seg": "Treasure 1 · Yongmunsa, Yangpyeong",
+   "rate": "Korean · ★4.2",
+   "d": "A restaurant for wild greens and local dishes at the entrance to Yongmunsa."
+  },
+  {
+   "seg": "On the way · Okcheon, Yangpyeong",
+   "rate": "Korean · ★4.8",
+   "d": "A highly rated buckwheat jelly (memilmuk) restaurant in Okcheon-myeon, Yangpyeong."
+  }
+ ],
+ "gg-goyang-half": [
+  {
+   "seg": "Treasure 1 · Near Haengjusanseong",
+   "rate": "Eel · ★4.4",
+   "d": "A famous freshwater eel specialist at Haengjusanseong."
+  },
+  {
+   "seg": "Treasure 2 · Deogyangjeong (Hangang view)",
+   "rate": "Café · ★4.4",
+   "d": "A quiet café with floor-to-ceiling windows overlooking the Hangang."
+  },
+  {
+   "seg": "Treasure 2 · Hangang view",
+   "rate": "Café · ★4.2",
+   "d": "A large bakery café below Haengjusanseong (1,000+ reviews)."
+  }
+ ],
+ "gg-yongin-half": [
+  {
+   "seg": "Treasure 1 · Cheoinseong (Namsa)",
+   "rate": "Korean · ★4.1",
+   "d": "A traditional Korean set-meal and stew restaurant near Cheoinseong."
+  },
+  {
+   "seg": "Treasure 1 · Namsa Tofu Village",
+   "rate": "Korean · ★4.1",
+   "d": "A handmade tofu specialist in the tofu village of Namsa-eup."
+  },
+  {
+   "seg": "Treasure 2 · Jeong Mong-ju's tomb (Mohyeon)",
+   "rate": "Bakery · ★4.3",
+   "d": "A spacious bakery café in Mohyeon-eup."
+  }
+ ],
+ "gc-ganghwa": [
+  {
+   "seg": "Treasure 4 · Near Jeondeungsa",
+   "rate": "Korean · ★4.3",
+   "d": "A neat country-style Korean set meal in front of Jeondeungsa."
+  },
+  {
+   "seg": "Treasure 4 · Jeondeungsa road",
+   "rate": "Traditional teahouse · ★4.5",
+   "d": "A charming traditional teahouse on Jeondeungsa-ro."
+  },
+  {
+   "seg": "Treasure 4 · Near Jeondeungsa",
+   "rate": "Korean · ★4.5",
+   "d": "A spot for jijimi pancakes and makgeolli in Onsu-ri."
+  }
+ ],
+ "cb-danyang": [
+  {
+   "seg": "Treasure 2 · Danyang (Dodamsambong)",
+   "rate": "Snacks · ★4.7",
+   "d": "Danyang's famous black-garlic sweet crispy chicken."
+  },
+  {
+   "seg": "Treasure 2 · Gugyeong Market, Danyang",
+   "rate": "Market · ★4.0",
+   "d": "A traditional market full of garlic dishes and street food."
+  },
+  {
+   "seg": "Treasure 4 · Central Pagoda, Chungju",
+   "rate": "Korean · ★4.2",
+   "d": "A buckwheat makguksu and jeon restaurant in front of the Central Pagoda."
+  },
+  {
+   "seg": "Treasure 4 · Central Pagoda, Chungju",
+   "rate": "Korean · ★4.6",
+   "d": "A highly rated Korean restaurant near the Central Pagoda."
+  }
+ ],
+ "gn-jinju": [
+  {
+   "seg": "Treasure 1 · Near Jinjuseong",
+   "rate": "Local favorite · ★5.0",
+   "d": "A very highly rated braised-dish restaurant on Namgang-ro."
+  },
+  {
+   "seg": "Treasure 1 · Jungan-dong, Jinju",
+   "rate": "BBQ · ★4.5",
+   "d": "A briquette-grill restaurant in downtown Jinju."
+  },
+  {
+   "seg": "Treasure 3 · Tongyeong",
+   "rate": "Dessert · ★4.2",
+   "d": "A shop specializing in Tongyeong's famous honey bread (kkulppang)."
+  }
+ ],
+ "gb-andong": [
+  {
+   "seg": "Treasure 1 · Near Hahoe Village",
+   "rate": "Korean · ★4.1",
+   "d": "A restaurant for Andong salted mackerel and heotjesabap in front of Hahoe Village."
+  },
+  {
+   "seg": "Treasure 1 · Near Hahoe Village",
+   "rate": "Korean · ★4.0",
+   "d": "A restaurant where you can taste Andong jjimdak."
+  },
+  {
+   "seg": "Treasure 1 · Near Hahoe Village",
+   "rate": "Korean · ★4.2",
+   "d": "A local Andong food restaurant in Pungcheon-myeon."
+  }
+ ],
+ "jn-haenam": [
+  {
+   "seg": "Treasure 1 · Land's End, Haenam",
+   "rate": "Baekban · ★4.0",
+   "d": "A generous southern-style baekban on Ttangkkeut Haean-ro."
+  },
+  {
+   "seg": "Treasure 1 · Land's End, Haenam",
+   "rate": "Seafood · ★4.3",
+   "d": "A fresh raw-fish restaurant in Ttangkkeut Village."
+  },
+  {
+   "seg": "Treasure 4 · Gangjin",
+   "rate": "Korean set course · ★4.2",
+   "d": "A southern-style Korean set-course restaurant in Gangjin."
+  },
+  {
+   "seg": "Treasure 4 · Byeongyeong, Gangjin",
+   "rate": "Korean · ★4.1",
+   "d": "A long-standing Gangjin restaurant famous for Byeongyeong pork bulgogi."
+  }
+ ],
+ "jb-jeonju": [
+  {
+   "seg": "Treasure 1 · Jeonju Hanok Village",
+   "rate": "Korean · ★4.7",
+   "d": "A highly rated Jeonju bibimbap specialist in Jeonju Hanok Village."
+  },
+  {
+   "seg": "Treasure 1 · Jeonju Hanok Village",
+   "rate": "Korean · ★4.1",
+   "d": "A long-standing Jeonju bibimbap restaurant with many reviews."
+  },
+  {
+   "seg": "Treasure 2 · Jeonju Hanok Village",
+   "rate": "Gukbap · ★3.9",
+   "d": "A specialist in Jeonju's famous bean-sprout gukbap."
+  }
+ ],
+ "jn-suncheon": [
+  {
+   "seg": "Treasure 1 · Gyodong Market, Yeosu",
+   "rate": "Baekban · ★4.3",
+   "d": "A southern-style baekban restaurant in Gyodong, Yeosu."
+  },
+  {
+   "seg": "Treasure 2 · Gyodong Pocha, Yeosu",
+   "rate": "Pocha (street bar) · ★4.3",
+   "d": "Seafood samhap at Gyodong Pocha by Yeosu's night sea."
+  }
+ ],
+ "gn-gimhae": [
+  {
+   "seg": "Treasure 2 · Near King Suro's Tomb",
+   "rate": "Korean · ★4.2",
+   "d": "A Korean restaurant in Bonghwang-dong near King Suro's Tomb."
+  },
+  {
+   "seg": "Treasure 2 · Gaya-ro, Gimhae",
+   "rate": "Local favorite · ★4.9",
+   "d": "A very highly rated eatery on Gaya-ro."
+  },
+  {
+   "seg": "Treasure 4 · Near Gimhae Museum",
+   "rate": "Café · ★4.6",
+   "d": "A cozy café near the Gaya sites of Gimhae."
+  }
+ ],
+ "gn-hapcheon": [
+  {
+   "seg": "Treasure 1 · Near Haeinsa",
+   "rate": "Wild greens set meal · ★4.7",
+   "d": "A famous wild-greens set-meal restaurant in Chiin-ri, Haeinsa."
+  },
+  {
+   "seg": "Treasure 1 · Haeinsa shops",
+   "rate": "Korean · ★4.2",
+   "d": "A century-old Korean restaurant at the entrance to Haeinsa."
+  },
+  {
+   "seg": "Treasure 3 · Near Hongnyudong",
+   "rate": "Korean · ★4.6",
+   "d": "A highly rated wild-greens Korean restaurant in Gaya-myeon."
+  }
+ ],
+ "gn-miryang": [
+  {
+   "seg": "Treasure 1 · Near Yeongnamnu",
+   "rate": "Pork gukbap · ★4.5",
+   "d": "A spot for Miryang's famous pork gukbap."
+  },
+  {
+   "seg": "Treasure 1 · Downtown Miryang",
+   "rate": "Pork gukbap · ★4.0",
+   "d": "A long-standing Miryang pork gukbap restaurant with many reviews."
+  },
+  {
+   "seg": "Treasure 3 · Toward Pyochungsa",
+   "rate": "Pork gukbap · ★4.2",
+   "d": "A pork gukbap restaurant in Sangnam-myeon."
+  }
+ ],
+ "gb-yeongju": [
+  {
+   "seg": "Treasure 1 · Near Buseoksa",
+   "rate": "Wild greens · ★3.9",
+   "d": "A deodeok and wild-greens set-meal restaurant at the entrance to Buseoksa."
+  },
+  {
+   "seg": "Treasure 1 · Buseoksa shops",
+   "rate": "Wild greens set meal · ★3.7",
+   "d": "A long-standing wild-greens set-meal restaurant below Buseoksa."
+  },
+  {
+   "seg": "Treasure 1 · Buseok-myeon",
+   "rate": "Korean · ★4.9",
+   "d": "A highly rated local Korean restaurant in Buseok-myeon."
+  }
+ ],
+ "cb-cheongju": [
+  {
+   "seg": "Treasure 1 · Seongan-gil, Cheongju",
+   "rate": "Local favorite · ★4.6",
+   "d": "A famous long-standing restaurant on Bungmun-ro, Cheongju."
+  },
+  {
+   "seg": "Treasure 1 · Seongan-gil, Cheongju",
+   "rate": "Café · ★5.0",
+   "d": "A highly rated café in downtown Cheongju."
+  },
+  {
+   "seg": "Treasure 1 · Seongan-gil, Cheongju",
+   "rate": "Café · ★4.6",
+   "d": "A cozy café in Sangdang-gu, Cheongju."
+  }
+ ],
+ "cn-seosan": [
+  {
+   "seg": "Treasure 3 · Near Haemieupseong",
+   "rate": "Beef · ★4.3",
+   "d": "A beef restaurant beside Haemieupseong."
+  },
+  {
+   "seg": "Treasure 3 · Haemieupseong",
+   "rate": "Korean · ★4.1",
+   "d": "A ttukbaegi (earthen pot) Korean restaurant in front of Haemieupseong."
+  },
+  {
+   "seg": "Treasure 1 · Downtown Seosan",
+   "rate": "Korean · ★4.2",
+   "d": "A Korean restaurant in Dongmun-dong, Seosan."
+  }
+ ],
+ "gw-gangneung": [
+  {
+   "seg": "Treasure 2 · Chodang Village",
+   "rate": "Soft tofu · ★3.9",
+   "d": "Famous for Gangneung's signature jjamppong soft tofu (7,000 reviews)."
+  },
+  {
+   "seg": "Treasure 2 · Chodang Village",
+   "rate": "Chodang soft tofu · ★4.0",
+   "d": "A traditional soft tofu restaurant in Chodang Village."
+  },
+  {
+   "seg": "Treasure 2 · Chodang Village",
+   "rate": "Soft tofu · ★4.0",
+   "d": "A specialist in spicy jjamppong soft tofu."
+  }
+ ],
+ "gw-yeongwol": [
+  {
+   "seg": "Treasure 3 · Near Jangneung",
+   "rate": "Barley rice · ★3.8",
+   "d": "A barley rice and gondre restaurant in front of Jangneung."
+  },
+  {
+   "seg": "Treasure 2 · Yeongwol-eup",
+   "rate": "Korean · ★4.4",
+   "d": "A highly rated Korean restaurant in downtown Yeongwol."
+  },
+  {
+   "seg": "Treasure 2 · Danjong-ro, Yeongwol",
+   "rate": "Korean · ★4.2",
+   "d": "A local Korean restaurant on Danjong-ro."
+  }
+ ],
+ "bs-busan": [
+  {
+   "seg": "Treasure 1 · Near Dongnae Eupseong",
+   "rate": "Pajeon · ★3.8",
+   "d": "A famous place for Busan's signature Dongnae pajeon."
+  },
+  {
+   "seg": "Treasure 1 · Dongnae",
+   "rate": "Samgyetang · ★4.3",
+   "d": "A long-standing samgyetang restaurant in Dongnae (1,200+ reviews)."
+  },
+  {
+   "seg": "Treasure 5 · Taejongdae",
+   "rate": "Chinese · ★4.1",
+   "d": "A popular seafood jjamppong spot in front of Taejongdae."
+  },
+  {
+   "seg": "Treasure 5 · Taejongdae",
+   "rate": "Seafood · ★4.4",
+   "d": "A tent-bar village for grilled clams and raw fish at Gamji Beach."
+  }
+ ],
+ "dg-daegu": [
+  {
+   "seg": "Treasure 1 · Donghwasa / Palgongsan",
+   "rate": "Baeksuk · ★4.5",
+   "d": "A neungi mushroom baeksuk restaurant on Palgongsan."
+  },
+  {
+   "seg": "Treasure 2 · Near Gatbawi",
+   "rate": "Tofu · wild greens · ★4.3",
+   "d": "A handmade tofu and wild-greens bibimbap restaurant below Gatbawi."
+  },
+  {
+   "seg": "Treasure 1 · Palgongsan-ro",
+   "rate": "Kalguksu · ★4.3",
+   "d": "A big-bowl kalguksu and seafood restaurant on Palgongsan."
+  },
+  {
+   "seg": "Treasure 1 · Palgongsan entrance",
+   "rate": "Tofu · ★3.8",
+   "d": "A soft tofu restaurant at the entrance to Palgongsan (900+ reviews)."
+  }
+ ],
+ "dj-daejeon": [
+  {
+   "seg": "Treasure 1 · Eunhaeng-dong, Daejeon",
+   "rate": "Bakery · ★4.5",
+   "d": "Daejeon's signature bakery (13,000 reviews), famous for fried soboro and chive bread."
+  },
+  {
+   "seg": "Treasure 1 · Eunhaeng-dong, Daejeon",
+   "rate": "Bakery · ★4.5",
+   "d": "Sungsimdang's cake and dessert shop."
+  },
+  {
+   "seg": "Treasure 3 · Near Gyejoksan",
+   "rate": "Korean · ★4.2",
+   "d": "A barley rice restaurant in front of the Gyejoksan red-clay trail."
+  }
+ ],
+ "us-ulsan": [
+  {
+   "seg": "Treasure 1 · Bangudae / Eonyang",
+   "rate": "Bulgogi · ★4.0",
+   "d": "A famous place for Ulsan's signature Eonyang bulgogi (3,600 reviews)."
+  },
+  {
+   "seg": "Treasure 1 · Eonyang",
+   "rate": "Bulgogi · ★4.1",
+   "d": "A charcoal-grilled Eonyang bulgogi restaurant in Eonyang-eup."
+  },
+  {
+   "seg": "Treasure 3 · Near Daewangam",
+   "rate": "Chinese · ★5.0",
+   "d": "A highly rated stone-pot jjamppong in front of Daewangam Park."
+  },
+  {
+   "seg": "Treasure 3 · Daewangam",
+   "rate": "Seafood · ★4.1",
+   "d": "A braised monkfish and seafood restaurant in Ilsan-dong."
+  }
+ ],
+ "gj-gwangju": [
+  {
+   "seg": "Treasure 5 · Yangnim-dong",
+   "rate": "Local favorite · ★4.9",
+   "d": "A very highly rated Korean restaurant in Yangnim-dong."
+  },
+  {
+   "seg": "Treasure 5 · Yangnim-dong",
+   "rate": "Korean set course · ★4.7",
+   "d": "A neat Korean set course in a Yangnim-dong hanok."
+  },
+  {
+   "seg": "Treasure 5 · Yangnim-dong",
+   "rate": "Café · ★4.7",
+   "d": "A cozy café in a modern-era building in Yangnim-dong."
+  },
+  {
+   "seg": "On the way · Songjeong, Gwangju",
+   "rate": "Tteokgalbi · ★3.8",
+   "d": "A long-standing Songjeong tteokgalbi restaurant, a Gwangju specialty."
+  }
+ ],
+ "sj-sejong": [
+  {
+   "seg": "Treasure 1 · Unjusanseong / Jeondong-myeon",
+   "rate": "Brunch · ★4.4",
+   "d": "A cozy brunch café in Jeondong-myeon."
+  },
+  {
+   "seg": "Treasure 4 · Sejong new downtown",
+   "rate": "Local favorite · ★5.0",
+   "d": "A highly rated eatery in Garam-dong, Sejong."
+  },
+  {
+   "seg": "On the way · Jochiwon",
+   "rate": "Kalguksu · ★4.9",
+   "d": "A famous cuttlefish kalguksu in Jochiwon."
+  }
+ ]
+}
