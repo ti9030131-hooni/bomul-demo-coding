@@ -1,0 +1,26 @@
+{
+  "_설명": "코스 도전권 상품. 가격·이름·기간은 여기서만 바꿉니다(서버가 이 값으로 금액을 정하고, 화면이 보낸 금액은 믿지 않습니다).",
+  "termsVersion": "2026-11-14",
+  "freeTrialStops": 1,
+  "_freeTrialStops": "결제 전에 무료로 탁본해 볼 수 있는 보물 수(앞에서부터). 환불 규정 제2조 제3항의 무료 체험. 0이면 첫 보물부터 도전권 필요.",
+  "products": [
+    { "id": "single", "name": "1코스 도전권", "price": 4000, "scope": "course", "days": 30,
+      "desc": "고른 코스 1곳 · 30일 동안 도전", "badge": "" },
+    { "id": "all", "name": "전체 코스 패스", "price": 9900, "scope": "all", "days": 30,
+      "desc": "전국 전설 코스 모두 · 30일 동안 도전", "badge": "추천" }
+  ],
+  "_methods": "KG이니시스 결제수단. pc = 웹표준 결제창(gopaymethod·acceptmethod), mobile = 모바일 결제창(P_INI_PAYMENT·P_RESERVED). 카카오페이·네이버페이 바로 열기는 이니시스에 '간편결제 직접호출' 설정을 신청해야 합니다(없으면 V105 오류). 계약하지 않은 수단은 지우세요.",
+  "methods": [
+    { "id": "card", "label": "신용·체크카드", "pc": { "gopaymethod": "Card" }, "mobile": { "P_INI_PAYMENT": "CARD" } },
+    { "id": "kakaopay", "label": "카카오페이", "pc": { "gopaymethod": "onlykakaopay", "acceptmethod": "cardonly" }, "mobile": { "P_INI_PAYMENT": "CARD", "P_RESERVED": "d_kakaopay=Y" } },
+    { "id": "naverpay", "label": "네이버페이", "pc": { "gopaymethod": "onlynaverpay", "acceptmethod": "cardonly" }, "mobile": { "P_INI_PAYMENT": "CARD", "P_RESERVED": "d_npay=Y" } },
+    { "id": "transfer", "label": "계좌이체", "pc": { "gopaymethod": "DirectBank" }, "mobile": { "P_INI_PAYMENT": "BANK" } },
+    { "id": "phone", "label": "휴대폰", "pc": { "gopaymethod": "HPP" }, "mobile": { "P_INI_PAYMENT": "MOBILE" } }
+  ],
+  "terms": [
+    { "id": "purchase", "required": true, "title": "주문 내용을 확인했으며 결제에 동의합니다" },
+    { "id": "efinance", "required": true, "title": "전자금융거래 이용약관 동의" },
+    { "id": "privacy", "required": true, "title": "개인정보 수집·이용 동의(결제)" },
+    { "id": "thirdparty", "required": true, "title": "개인정보 제3자 제공 동의(결제대행사)" }
+  ]
+}

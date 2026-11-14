@@ -1,0 +1,24 @@
+<!doctype html><meta charset="utf-8"><title>i18n self-test</title><!-- /i18n/selftest.html?lang=en 또는 ?lang=zh 로 열면 번역이 빠진 칸 수를 보여 줍니다 (0 이 정상, zh 는 의도한 한글 ㅇ·드므 때문에 1~2) --><script src="i18n.js"></script>
+<script src="../ar/data/common.js"></script><script src="../ar/data/courses.js"></script><script src="../ar/data/gyeongbok.js"></script>
+<script>
+(async()=>{
+  const r={};
+  await BomulI18n.ready(['content','ar']);
+  const html=await (await fetch("../bomul.html")).text();
+  const code=html.slice(html.indexOf('const COURSES='),html.indexOf('function gmapEmbed'));
+  const d=new Function(code+';return {COURSES,STORIES,DETAILS,EATS,TIMELINES};')();
+  let same=0,tot=0;
+  for(const c of d.COURSES){const L=BomulI18n.course(c);for(const s of L.stops){tot++; if(/[가-힣]/.test(s.desc)) same++;} }
+  r.mainStopsKorean=same+'/'+tot;
+  r.sample=BomulI18n.course(d.COURSES[0]).stops[0];
+  r.story=BomulI18n.story('광화문 해치',d.STORIES['광화문 해치']).title;
+  r.dur=['버스+도보 30분','차량 1시간','배+차량 40분','도보·버스 20분'].map(BomulI18n.duration);
+  let miss=0,all=0;
+  for(const c of Object.values(window.BOMUL_COURSES)){const x=JSON.parse(JSON.stringify(c));x.final.prizes=BOMUL_AR_COMMON.prizes;x.pointShop=BOMUL_AR_COMMON.pointShop;BomulI18n.localizeAr(x);
+    const walk=o=>{if(typeof o==='string'){all++; if(/[가-힣]/.test(o.replace(/<[^>]+>/g,''))) miss++;} else if(o&&typeof o==='object') for(const [k,v] of Object.entries(o)) if(!['addr','id','photo','model','storageKey','siteUrl'].includes(k)) walk(v);};
+    walk(x);}
+  r.arKoreanLeft=miss+'/'+all;
+  const g=JSON.parse(JSON.stringify(BOMUL_COURSES['seoul-gyeongbok-ar']));BomulI18n.localizeAr(g);r.gb=[g.text.h1,g.stops[1].q,g.stops[1].opts,g.map.base.match(/>[^<>]+<\/text>/g)];
+  document.title='DONE';document.body.textContent=JSON.stringify(r);
+})();
+</script>

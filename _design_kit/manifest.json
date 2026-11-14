@@ -1,0 +1,227 @@
+{
+ "kit": "bomul-design",
+ "files": [
+  {
+   "path": "client/public/bomul.html",
+   "bases": [
+    "ar"
+   ],
+   "binary": false
+  },
+  {
+   "path": "client/public/img/hero-chest.webp",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-bs-busan.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-buyeo.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-cb-cheongju.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-cb-danyang.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-cn-seosan.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-dg-daegu.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-dj-daejeon.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gb-andong.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gb-yeongju.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gc-ganghwa.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gg-goyang-half.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gg-poyeon.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gg-suwon.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gg-yeoju.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gg-yongin-half.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gj-gwangju.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gn-gimhae.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gn-hapcheon.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gn-jinju.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gn-miryang.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gw-gangneung.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gw-yeongwol.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-gyeongju.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-honam.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-jb-jeonju.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-jeju.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-jn-haenam.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-jn-suncheon.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-seorak.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-seoul-gangdong-half.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-seoul-gangdong.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-seoul-half.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-seoul.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-sj-sejong.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "client/public/img/route-us-ulsan.jpg",
+   "bases": [],
+   "binary": true
+  },
+  {
+   "path": "tools/route-maps/build.mjs",
+   "bases": [],
+   "binary": false
+  },
+  {
+   "path": "tools/route-maps/data/ne-korea-water.json",
+   "bases": [],
+   "binary": false
+  },
+  {
+   "path": "tools/route-maps/data/skorea-municipalities-2018-topo.json",
+   "bases": [],
+   "binary": false
+  },
+  {
+   "path": "tools/route-maps/data/skorea-provinces-2018-topo-simple.json",
+   "bases": [],
+   "binary": false
+  },
+  {
+   "path": "tools/route-maps/data/skorea-provinces-2018-topo.json",
+   "bases": [],
+   "binary": false
+  },
+  {
+   "path": "tools/route-maps/data/skorea-submunicipalities-2018-topo.json",
+   "bases": [],
+   "binary": false
+  },
+  {
+   "path": "tools/route-maps/render.py",
+   "bases": [],
+   "binary": false
+  }
+ ]
+}

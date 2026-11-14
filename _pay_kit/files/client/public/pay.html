@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>코스 도전권 결제 · 보물 여행</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<!--
+  보물 여행 · 코스 도전권 결제 페이지
+  순서: 1 상품 정보 → 2 결제 금액(4,000원 / 9,900원) → 3 결제 수단 → 4 약관 동의 및 결제 진행
+  · 서버 /api/pay/config 의 mode 로 동작이 바뀝니다.
+      inicis: KG이니시스 결제창(PC 웹표준 · 모바일) → 서버(/api/pay/inicis/*)가 승인 → 이 페이지(?result=success&orderId=…)
+      mock  : 개발용 가짜 결제(서버가 바로 도전권 발급)
+      off   : 결제 없이 모든 코스 도전 가능(지금의 무료 운영)
+      서버에 닿지 않으면 '미리보기'로 화면만 보여 줍니다(실제 결제 없음).
+  · 금액은 서버(server/src/data/payProducts.json)가 정합니다. 화면의 금액은 표시용입니다.
+-->
+<style>
+:root{
+  --bg:#F3F4F6; --card:#FFFFFF; --ink:#191F28; --ink-2:#4E5968; --muted:#8B95A1; --line:#E5E8EB; --line-2:#F2F4F6;
+  --pink:#D3127A; --pink-2:#F0569E; --pink-ink:#B00E66; --pink-bg:#FFF2F8; --pink-line:#F5BFD9;
+  --ok:#0B8A55; --warn:#B4530A; --danger:#D22030;
+  --grad:linear-gradient(100deg,#C8106F 0%,#E2298A 48%,#F566A6 100%);
+  --r:18px; --shadow:0 1px 2px rgba(16,24,40,.04),0 6px 24px rgba(16,24,40,.06);
+  --f:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1115; --card:#191C22; --ink:#ECEEF1; --ink-2:#B4BBC5; --muted:#8A929D; --line:#2A2F37; --line-2:#22262D;
+    --pink:#FF4FA3; --pink-2:#FF86BE; --pink-ink:#FF7BBA; --pink-bg:#2A1421; --pink-line:#6B2A4B;
+    --ok:#34C98A; --warn:#F0A04B; --danger:#FF6B76;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1115; --card:#191C22; --ink:#ECEEF1; --ink-2:#B4BBC5; --muted:#8A929D; --line:#2A2F37; --line-2:#22262D;
+  --pink:#FF4FA3; --pink-2:#FF86BE; --pink-ink:#FF7BBA; --pink-bg:#2A1421; --pink-line:#6B2A4B;
+  --ok:#34C98A; --warn:#F0A04B; --danger:#FF6B76;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.55;letter-spacing:-.01em}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--pink) 55%,transparent);outline-offset:2px;border-radius:10px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* 상단 */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.top-in{max-width:680px;margin:0 auto;padding:0 16px;height:56px;display:flex;align-items:center;gap:10px}
+.back{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;text-decoration:none;margin-left:-8px}
+.back:hover{background:var(--line-2)}
+.brand{font-weight:900;font-size:17px;letter-spacing:-.03em;text-decoration:none}
+.brand i{font-style:normal;color:var(--pink)}
+.steps{margin-left:auto;display:flex;gap:4px;align-items:center;font-size:12px;color:var(--muted)}
+.steps b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--line-2);font-size:11px;font-weight:700;color:var(--muted)}
+.steps b.on{background:var(--pink);color:#fff}
+@media (max-width:420px){.steps span{display:none}}
+
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px 56px}
+.page-h{margin:6px 4px 18px}
+.page-h h1{margin:0;font-size:24px;font-weight:900;letter-spacing:-.035em;line-height:1.3}
+.page-h p{margin:6px 0 0;color:var(--ink-2);font-size:14px}
+.preview-note{display:none;margin:0 0 14px;padding:10px 14px;border-radius:12px;background:var(--pink-bg);color:var(--pink-ink);font-size:13px;border:1px dashed var(--pink-line)}
+[data-mode="preview"] .preview-note{display:block}
+
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:22px 20px;margin-bottom:14px}
+@media (min-width:560px){.card{padding:26px 26px}}
+.sec-h{display:flex;align-items:center;gap:10px;margin:0 0 16px;font-size:17px;font-weight:700;letter-spacing:-.03em}
+.sec-h .n{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--ink);color:var(--card);font-size:12px;font-weight:700}
+.sec-h small{margin-left:auto;font-size:12px;font-weight:500;color:var(--muted)}
+
+/* 1 상품 정보 */
+.course{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start}
+@media (min-width:560px){.course{grid-template-columns:132px 1fr;gap:18px}}
+.thumb{width:100%;aspect-ratio:1/1;border-radius:14px;background:var(--line-2) center/cover no-repeat;position:relative;overflow:hidden}
+.thumb .ar{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.62);color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;letter-spacing:.04em}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px}
+.tag{font-size:12px;font-weight:500;padding:2px 8px;border-radius:999px;background:var(--line-2);color:var(--ink-2)}
+.tag.pk{background:var(--pink-bg);color:var(--pink-ink)}
+.course h3{margin:0;font-size:18px;font-weight:700;line-height:1.35;letter-spacing:-.03em}
+.course p{margin:6px 0 0;color:var(--ink-2);font-size:13.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.change{margin-top:10px;display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--ink-2);background:none;border:0;padding:4px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.pick{display:none;margin-top:14px}
+.pick.open{display:block}
+.pick label{display:block;font-size:13px;color:var(--ink-2);margin-bottom:6px}
+.pick select{width:100%;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 12px;font-size:15px}
+.incl{list-style:none;margin:18px 0 0;padding:16px 0 0;border-top:1px solid var(--line-2);display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+.incl li{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--ink-2)}
+.incl svg{flex:none;margin-top:2px;color:var(--pink)}
+@media (max-width:380px){.incl{grid-template-columns:1fr}}
+
+/* 2 결제 금액 — 라디오 카드 */
+.opts{display:grid;gap:12px}
+.opt{position:relative;display:grid;grid-template-columns:24px 1fr auto;gap:14px;align-items:center;padding:18px 18px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;transition:border-color .15s,background-color .15s,box-shadow .15s}
+.opt:hover{border-color:color-mix(in srgb,var(--pink) 40%,var(--line))}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .radio{width:22px;height:22px;border-radius:50%;border:2px solid #C5CBD3;display:grid;place-items:center;transition:border-color .15s}
+.opt .radio::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--pink);transform:scale(0);transition:transform .15s}
+.opt:has(input:checked){border-color:var(--pink);background:var(--pink-bg);box-shadow:0 0 0 3px color-mix(in srgb,var(--pink) 12%,transparent)}
+.opt:has(input:checked) .radio{border-color:var(--pink)}
+.opt:has(input:checked) .radio::after{transform:scale(1)}
+.opt:has(input:focus-visible){outline:3px solid color-mix(in srgb,var(--pink) 55%,transparent);outline-offset:2px}
+.opt .nm{font-weight:700;font-size:16px;letter-spacing:-.03em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.opt .ds{font-size:13px;color:var(--ink-2);margin-top:2px}
+.opt .pr{text-align:right;white-space:nowrap}
+.opt .pr b{font-size:19px;font-weight:900;letter-spacing:-.03em}
+.opt .pr span{font-size:13px;color:var(--ink-2);margin-left:1px}
+.opt .pr small{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.pill{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;background:var(--grad);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:0}
+.opt.covered{opacity:.55;cursor:not-allowed}
+.total{margin-top:16px;padding:18px 20px;border-radius:16px;background:var(--line-2);display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.total .lb{font-weight:700;font-size:15px}
+.total .lb small{display:block;font-weight:400;font-size:12.5px;color:var(--muted);margin-top:2px}
+.total .amt{color:var(--pink);font-weight:900;font-size:30px;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.total .amt span{font-size:16px;font-weight:700;margin-left:2px}
+.total .amt em{font-style:normal;font-size:14px;font-weight:500;color:var(--ink-2);margin-left:2px}
+
+/* 3 결제 수단 */
+.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:420px){.methods{grid-template-columns:repeat(2,1fr)}}
+.mth{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:76px;padding:12px 6px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-size:13.5px;font-weight:500;text-align:center;transition:border-color .15s,background-color .15s}
+.mth input{position:absolute;opacity:0;pointer-events:none}
+.mth .ic{width:30px;height:22px;display:grid;place-items:center;border-radius:6px;font-size:11px;font-weight:900;letter-spacing:-.02em}
+.mth:has(input:checked){border-color:var(--pink);background:var(--pink-bg);color:var(--pink-ink);font-weight:700}
+.mth:has(input:focus-visible){outline:3px solid color-mix(in srgb,var(--pink) 55%,transparent);outline-offset:2px}
+.hint{margin:12px 2px 0;font-size:12.5px;color:var(--muted)}
+.draw-note,.fee-note{display:flex;gap:6px;align-items:flex-start;line-height:1.55}.draw-note svg,.fee-note svg{flex:none;margin-top:2px}
+.fee-note{margin-top:14px;padding:10px 12px;border-radius:12px;background:var(--line-2);color:var(--ink-2)}
+.phone-row{margin-top:14px;display:grid;gap:6px}.phone-row label{font-size:13.5px;font-weight:700}.phone-row input{height:50px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);padding:0 14px;font-size:16px}.phone-row input:focus{border-color:var(--pink);outline:none}.phone-row small{font-size:12px;color:var(--muted)}
+
+/* 4 약관 */
+.all{display:flex;align-items:center;gap:12px;padding:16px 16px;border-radius:14px;border:1.5px solid var(--line);cursor:pointer;font-weight:700;font-size:16px}
+.all:has(input:checked){border-color:var(--pink);background:var(--pink-bg)}
+.chk{appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;border-radius:8px;border:2px solid #C5CBD3;background:var(--card) center/14px no-repeat;cursor:pointer;margin:0;transition:all .12s}
+.chk:checked{background-color:var(--pink);border-color:var(--pink);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5'/%3E%3C/svg%3E")}
+.terms{list-style:none;margin:8px 0 0;padding:0}
+.terms li{border-bottom:1px solid var(--line-2)}
+.terms li:last-child{border-bottom:0}
+.trow{display:flex;align-items:center;gap:12px;padding:12px 4px 12px 16px}
+.trow label{flex:1;display:flex;align-items:center;gap:12px;cursor:pointer;font-size:14px;color:var(--ink-2)}
+.trow label b{color:var(--pink);font-weight:700;font-size:12.5px;margin-right:2px}
+.trow .chk{width:20px;height:20px;border-radius:6px;background-size:12px}
+.more{flex:none;border:0;background:none;color:var(--muted);font-size:12.5px;cursor:pointer;padding:6px 6px;border-radius:8px;display:inline-flex;align-items:center;gap:2px}
+.more:hover{background:var(--line-2);color:var(--ink-2)}
+.more svg{transition:transform .2s}
+.more[aria-expanded="true"] svg{transform:rotate(180deg)}
+.tbody{display:none;margin:0 4px 12px 48px;padding:12px 14px;border-radius:12px;background:var(--line-2);font-size:12.5px;color:var(--ink-2);line-height:1.65}
+.tbody.open{display:block}
+.tbody p{margin:0 0 6px}.tbody p:last-child{margin:0}
+.tbody table{width:100%;border-collapse:collapse;margin:4px 0 6px}
+.tbody th,.tbody td{text-align:left;vertical-align:top;padding:4px 0;font-size:12px}
+.tbody th{width:74px;color:var(--muted);font-weight:500}
+.refund{margin:16px 0 0;padding:14px 16px;border-radius:14px;border:1px solid var(--pink-line);background:var(--pink-bg);font-size:13px;color:var(--ink-2);line-height:1.65}
+.refund h4{margin:0 0 6px;font-size:13.5px;color:var(--pink-ink)}
+.refund ul{margin:0;padding-left:18px}.refund li{margin:2px 0}
+.refund a{color:var(--pink-ink);font-weight:500}
+
+/* 결제 진행 */
+.final{margin-top:18px;padding-top:18px;border-top:1px solid var(--line-2)}
+.sum{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;margin:0 2px 16px}
+.sum dt{color:var(--muted)} .sum dd{margin:0;text-align:right;font-weight:500}
+.sum .big{font-size:16px;font-weight:700;color:var(--ink)} .sum dd.big{color:var(--pink);font-size:20px;font-weight:900}
+.pay{width:100%;height:60px;border:0;border-radius:16px;background:var(--grad);color:#fff;font-size:18px;font-weight:700;letter-spacing:-.02em;cursor:pointer;box-shadow:0 10px 24px -10px color-mix(in srgb,#D3127A 70%,transparent);transition:transform .08s,filter .15s,opacity .15s;display:flex;align-items:center;justify-content:center;gap:10px}
+.pay:hover{filter:brightness(1.04)}
+.pay:active{transform:translateY(1px)}
+.pay[disabled]{cursor:not-allowed;opacity:.42;box-shadow:none;filter:grayscale(.2)}
+.pay .spin{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.45);border-top-color:#fff;animation:sp 0.8s linear infinite;display:none}
+.pay.busy .spin{display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+.why{min-height:20px;margin:10px 2px 0;text-align:center;font-size:13px;color:var(--danger)}
+.secure{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+
+/* 상태 화면 */
+.state{text-align:center;padding:36px 22px}
+.state .ic{width:64px;height:64px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center}
+.state .ic.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.state .ic.no{background:color-mix(in srgb,var(--danger) 12%,transparent);color:var(--danger)}
+.state .ic.pk{background:var(--pink-bg);color:var(--pink)}
+.state h2{margin:0;font-size:21px;font-weight:900;letter-spacing:-.035em}
+.state p{margin:8px auto 0;max-width:420px;color:var(--ink-2);font-size:14px}
+.state .sum{text-align:left;margin:20px auto 0;max-width:420px;padding:16px 18px;border-radius:14px;background:var(--line-2)}
+.btns{display:grid;gap:10px;margin:22px auto 0;max-width:420px}
+.btn{display:flex;align-items:center;justify-content:center;height:54px;border-radius:14px;font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer}
+.btn.pk{background:var(--grad);color:#fff}
+.btn.ln{background:var(--card);border:1.5px solid var(--line);color:var(--ink)}
+.ring{width:28px;height:28px;border-radius:50%;border:3px solid var(--pink-line);border-top-color:var(--pink);animation:sp .8s linear infinite}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#191F28;color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;transition:all .25s;max-width:calc(100% - 32px);z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.foot{margin:26px 4px 0;font-size:12px;color:var(--muted);line-height:1.7;text-align:center}
+.foot a{margin:0 6px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="back" href="/bomul.html" id="backLink" aria-label="뒤로"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></a>
+    <a class="brand" href="/bomul.html">보물 <i>여행</i></a>
+    <div class="steps" aria-hidden="true"><b class="on">1</b><span>도전권 선택</span>&nbsp;<b id="st2">2</b><span>결제</span>&nbsp;<b id="st3">3</b><span>도전 시작</span></div>
+  </div>
+</header>
+
+<main class="wrap" id="app">
+  <div class="page-h">
+    <h1>코스 도전권 결제</h1>
+    <p>도전권이 있으면 코스의 모든 비석을 AR로 탁본하고 완주 보상을 받을 수 있어요.</p>
+  </div>
+  <p class="preview-note" id="previewNote">미리보기 화면이에요. 결제 서버에 연결되지 않아 실제로 결제되지 않아요.</p>
+  <p class="preview-note" id="testNote" style="display:none">KG이니시스 테스트 결제예요. 실제로 돈이 나가지 않아요.</p>
+
+  <form id="payForm" novalidate>
+    <!-- 1 상품 정보 -->
+    <section class="card" aria-labelledby="h1s">
+      <h2 class="sec-h" id="h1s"><span class="n">1</span>상품 정보</h2>
+      <div class="course" id="courseBox">
+        <div class="thumb" id="cThumb"><span class="ar">AR</span></div>
+        <div>
+          <div class="tags" id="cTags"></div>
+          <h3 id="cTitle">코스를 불러오는 중…</h3>
+          <p id="cDesc"></p>
+          <button type="button" class="change" id="changeBtn" aria-expanded="false" aria-controls="pickBox">다른 코스 고르기</button>
+        </div>
+      </div>
+      <div class="pick" id="pickBox">
+        <label for="courseSel">도전할 코스</label>
+        <select id="courseSel"></select>
+      </div>
+      <ul class="incl" id="incl"></ul>
+      <p class="hint fee-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg><span><b>궁·유적지 입장료는 별도예요.</b> 도전권에는 AR 탁본 체험만 들어 있어요. 입장료가 있는 곳은 현장에서 따로 내 주세요.</span></p>
+    </section>
+
+    <!-- 2 결제 금액 -->
+    <section class="card" aria-labelledby="h2s">
+      <h2 class="sec-h" id="h2s"><span class="n">2</span>결제 금액</h2>
+      <div class="opts" id="opts" role="radiogroup" aria-label="도전권 선택"></div>
+      <div class="total" aria-live="polite">
+        <div class="lb">총 결제금액<small id="totalSub"></small></div>
+        <div class="amt" id="totalAmt">0<span>원</span></div>
+      </div>
+      <p class="hint draw-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>완주 보상 추첨은 시즌마다 한 사람당 1회 응모돼요. 전체 코스 패스로 여러 코스를 완주해도 당첨 기회는 같고, 결제하지 않아도 첫 보물 무료 체험 뒤 무료로 응모할 수 있어요.</p>
+    </section>
+
+    <!-- 3 결제 수단 -->
+    <section class="card" aria-labelledby="h3s">
+      <h2 class="sec-h" id="h3s"><span class="n">3</span>결제 수단</h2>
+      <div class="methods" id="methods" role="radiogroup" aria-label="결제 수단"></div>
+      <div class="phone-row" id="phoneRow" hidden>
+        <label for="phone">휴대폰 번호</label>
+        <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-1234-5678" maxlength="13">
+        <small>결제창에 필요해요. 회원 정보에 번호가 없을 때만 물어봐요.</small>
+      </div>
+      <p class="hint">결제 버튼을 누르면 KG이니시스 결제창이 열려요. 카드 정보는 보물 여행에 저장되지 않아요.</p>
+    </section>
+
+    <!-- 4 약관 동의 및 결제 진행 -->
+    <section class="card" aria-labelledby="h4s">
+      <h2 class="sec-h" id="h4s"><span class="n">4</span>약관 동의 및 결제 진행</h2>
+      <label class="all"><input type="checkbox" class="chk" id="agreeAll"> 전체 동의하기</label>
+      <ul class="terms" id="terms"></ul>
+      <div class="refund" id="refundBox">
+        <h4>취소·환불 안내</h4>
+        <ul id="refundList"></ul>
+      </div>
+      <div class="final">
+        <dl class="sum" id="sum"></dl>
+        <button type="submit" class="pay" id="payBtn" disabled><span class="spin" aria-hidden="true"></span><span id="payLabel">결제하기</span></button>
+        <p class="why" id="why" role="status" aria-live="polite"></p>
+        <p class="secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>결제는 KG이니시스를 통해 안전하게 처리돼요</p>
+      </div>
+    </section>
+  </form>
+
+  <section class="card state" id="stateBox" hidden></section>
+
+  <p class="foot">
+    <a href="/terms.html">이용약관</a>·<a href="/privacy.html">개인정보처리방침</a>·<a href="/refund.html">취소·환불 규정</a><br>
+    우후 컴퍼니 · 사업자등록번호 251-01-04241 · 통신판매업신고 제2026-강원춘천-0680호
+  </p>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="ar/data/courses.js"></script>
+<script src="ar/data/gyeongbok.js"></script>
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const won = (n) => Number(n || 0).toLocaleString("ko-KR");
+const API_BASE = (location.hostname === "localhost" || location.hostname === "127.0.0.1") && location.port !== "4000" ? "http://localhost:4000" : "";
+const params = new URLSearchParams(location.search);
+const token = () => { try { return localStorage.getItem("token") || sessionStorage.getItem("token"); } catch (e) { return null; } };
+const PENDING = "bomul-pay-pending";
+
+/* 서버가 없을 때 보여 줄 기본값 — 실제 값은 server/src/data/payProducts.json */
+const FALLBACK = {
+  mode: "preview", clientKey: "", termsVersion: "2026-11-14", freeTrialStops: 1,
+  products: [
+    { id: "single", name: "1코스 도전권", price: 4000, scope: "course", days: 30, desc: "고른 코스 1곳 · 30일 동안 도전", badge: "" },
+    { id: "all", name: "전체 코스 패스", price: 9900, scope: "all", days: 30, desc: "전국 전설 코스 모두 · 30일 동안 도전", badge: "추천" },
+  ],
+  methods: [
+    { id: "card", label: "신용·체크카드" },
+    { id: "kakaopay", label: "카카오페이" },
+    { id: "naverpay", label: "네이버페이" },
+    { id: "transfer", label: "계좌이체" },
+    { id: "phone", label: "휴대폰" },
+  ],
+  terms: [
+    { id: "purchase", required: true, title: "주문 내용을 확인했으며 결제에 동의합니다" },
+    { id: "efinance", required: true, title: "전자금융거래 이용약관 동의" },
+    { id: "privacy", required: true, title: "개인정보 수집·이용 동의(결제)" },
+    { id: "thirdparty", required: true, title: "개인정보 제3자 제공 동의(결제대행사)" },
+  ],
+};
+const TERM_BODY = {
+  purchase: () => `<p>상품명, 도전할 코스, 이용 기간, 결제 금액을 확인했으며 이 내용으로 결제하는 데 동의합니다.</p><p>도전권은 결제가 승인된 때부터 이용 기간 동안 쓸 수 있고, 기간이 지나면 새 도전권이 필요해요.</p>`,
+  efinance: () => `<p>결제는 전자지급결제대행사 (주)케이지이니시스(KG이니시스)가 처리하며, 결제창에서 KG이니시스의 전자금융거래 이용약관이 함께 안내돼요.</p><p>보물 여행 <a href="/terms.html" target="_blank" rel="noopener">이용약관</a>의 유료 서비스 조항이 함께 적용돼요.</p>`,
+  privacy: () => `<table><tr><th>항목</th><td>회원 아이디, 이름, 이메일, 주문번호, 결제 금액·수단, 결제 일시</td></tr><tr><th>목적</th><td>결제 처리, 도전권 발급, 취소·환불, 고객 문의 응대</td></tr><tr><th>보유 기간</th><td>전자상거래법에 따라 대금결제 기록 5년, 소비자 불만·분쟁 처리 기록 3년</td></tr></table><p>동의하지 않을 수 있으나, 그러면 결제할 수 없어요. 자세한 내용은 <a href="/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a>을 확인해 주세요.</p>`,
+  thirdparty: () => `<table><tr><th>받는 곳</th><td>(주)케이지이니시스 및 이용자가 고른 카드사·은행·간편결제사·통신사</td></tr><tr><th>항목</th><td>주문번호, 상품명, 결제 금액, 이름, 이메일</td></tr><tr><th>목적</th><td>결제 처리와 결제 확인, 취소·환불</td></tr><tr><th>보유 기간</th><td>관계 법령이 정한 기간</td></tr></table><p>동의하지 않을 수 있으나, 그러면 결제할 수 없어요.</p>`,
+};
+const ICON = {
+  card: `<svg width="26" height="20" viewBox="0 0 26 20" aria-hidden="true"><rect x="1" y="1" width="24" height="18" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M1 7h24" stroke="currentColor" stroke-width="2.4"/><path d="M5 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  kakaopay: `<span class="ic" style="background:#FEE500;color:#191919">pay</span>`,
+  naverpay: `<span class="ic" style="background:#03C75A;color:#fff">N</span>`,
+  transfer: `<svg width="26" height="22" viewBox="0 0 26 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M2 8L13 2l11 6z"/><path d="M5 9v8M10 9v8M16 9v8M21 9v8M2 20h22"/></svg>`,
+  phone: `<svg width="18" height="24" viewBox="0 0 18 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="1" width="14" height="22" rx="3"/><path d="M7 19h4" stroke-linecap="round"/></svg>`,
+};
+const CHECK = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5"/></svg>`;
+
+/* 코스 정보: 정적 AR 데이터(ar/data/*.js) — 관리자가 서버에서 새로 만든 코스는 /api/ar/courses/:id 로 보충 */
+const REG = window.BOMUL_COURSES || {};
+const COURSE_LIST = Object.values(REG).filter((c) => c && c.id && Array.isArray(c.stops));
+const imgOf = (c) => { const p = c && c.stops && c.stops[0] && c.stops[0].photo; return p ? p.replace(/^\.\.\//, "") : "img/hero-main.jpg"; };
+const descOf = (c) => { const s = c && c.text && c.text.story; return Array.isArray(s) && s.length ? s[0] : ""; };
+
+const S = { cfg: null, mode: "preview", courseId: params.get("course") || "", course: null, productId: params.get("product") === "all" ? "all" : "single", methodId: "card", access: null, me: null, busy: false };
+
+async function api(path, { method = "GET", body, auth = false, ms = 8000 } = {}) {
+  const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), ms);
+  const headers = {};
+  if (body) headers["Content-Type"] = "application/json";
+  if (auth && token()) headers.Authorization = `Bearer ${token()}`;
+  try {
+    const r = await fetch(API_BASE + path, { method, headers, body: body ? JSON.stringify(body) : undefined, signal: ctl.signal });
+    const data = await r.json().catch(() => ({}));
+    return { ok: r.ok, status: r.status, data };
+  } catch (e) { return { ok: false, status: 0, data: { message: "서버에 연결하지 못했어요. 잠시 후 다시 시도해 주세요." } }; }
+  finally { clearTimeout(timer); }
+}
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("on"), 3200); }
+const product = () => S.cfg.products.find((p) => p.id === S.productId) || S.cfg.products[0];
+const method = () => S.cfg.methods.find((m) => m.id === S.methodId) || S.cfg.methods[0];
+const arLink = (id) => `/ar/course.html?id=${encodeURIComponent(id || S.courseId || "")}`;
+const nextHere = () => encodeURIComponent(`/pay.html?course=${encodeURIComponent(S.courseId)}`);
+const until = (days, from = new Date()) => { const d = new Date(from.getTime() + days * 864e5); return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`; };
+const fmtDate = (v) => { if (!v) return ""; const d = new Date(v); return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`; };
+
+/* ── 1 상품 정보 ── */
+function renderCourse() {
+  const c = S.course, p = product();
+  $("#cThumb").style.backgroundImage = c ? `url("${imgOf(c)}")` : "";
+  if (!c) {
+    $("#cTags").innerHTML = "";
+    $("#cTitle").textContent = p.scope === "all" ? "전국 전설 코스 전체" : "도전할 코스를 골라 주세요";
+    $("#cDesc").textContent = p.scope === "all" ? `${COURSE_LIST.length}개 코스 어디서든 도전할 수 있어요.` : "아래에서 코스를 고르면 1코스 도전권으로 결제할 수 있어요.";
+    $("#pickBox").classList.add("open"); $("#changeBtn").hidden = true;
+  } else {
+    const trial = Math.min(S.cfg.freeTrialStops || 0, c.stops.length);
+    $("#cTags").innerHTML = `<span class="tag">${esc(c.region)}</span><span class="tag">보물 ${c.stops.length}곳</span>${trial ? `<span class="tag pk">첫 보물 ${trial}곳 무료 체험</span>` : ""}`;
+    $("#cTitle").textContent = c.title;
+    $("#cDesc").textContent = descOf(c);
+    $("#changeBtn").hidden = false;
+  }
+  const n = c ? c.stops.length : 5;
+  const scopeLine = p.scope === "all" ? `전국 ${COURSE_LIST.length}개 코스 모두 도전` : "이 코스 1곳 도전";
+  $("#incl").innerHTML = [
+    scopeLine, p.scope === "all" ? "코스마다 비석 AR 탁본 · 3D 보물" : `비석 ${n}곳 AR 탁본 · 3D 보물`, "완주 보물 상자 · 완주 증명서", `결제일부터 ${p.days}일 이용`,
+  ].map((t) => `<li>${CHECK}<span>${esc(t)}</span></li>`).join("");
+}
+function fillCourseSelect() {
+  const byRegion = {};
+  for (const c of COURSE_LIST) (byRegion[c.region] = byRegion[c.region] || []).push(c);
+  $("#courseSel").innerHTML = `<option value="">코스를 골라 주세요</option>` + Object.entries(byRegion).map(([r, list]) =>
+    `<optgroup label="${esc(r)}">${list.map((c) => `<option value="${esc(c.id)}"${c.id === S.courseId ? " selected" : ""}>${esc(c.title)}</option>`).join("")}</optgroup>`).join("");
+}
+async function setCourse(id, { replace = true } = {}) {
+  S.courseId = id || "";
+  S.course = REG[S.courseId] || null;
+  if (!S.course && S.courseId && S.mode !== "preview") {
+    const r = await api(`/api/ar/courses/${encodeURIComponent(S.courseId)}`, { ms: 3500 });
+    if (r.ok && r.data && Array.isArray(r.data.stops)) S.course = r.data;
+  }
+  if (S.courseId && !S.course) S.courseId = "";
+  if (replace) { try { const u = new URL(location.href); if (S.courseId) u.searchParams.set("course", S.courseId); else u.searchParams.delete("course"); history.replaceState(null, "", u); } catch (e) {} }
+  $("#backLink").href = S.courseId ? `/bomul.html#course-${S.courseId}` : "/bomul.html";
+  renderCourse(); renderOpts(); renderSum();
+  if (S.mode === "inicis" || S.mode === "mock") await checkAccess();
+}
+
+/* ── 2 결제 금액 ── */
+function renderOpts() {
+  const covered = S.access && S.access.allowed && S.access.reason === "ticket";
+  $("#opts").innerHTML = S.cfg.products.map((p) => {
+    const one = S.cfg.products.find((x) => x.scope === "course");
+    const n = one ? Math.ceil(p.price / one.price) : 0;            // 9,900원 → 1코스 도전권 3장(12,000원)보다 쌈
+    const sub = p.scope === "all"
+      ? (one && n > 1 && p.price < n * one.price ? `1코스 도전권 ${n}장(${won(n * one.price)}원)보다 싸게 ${COURSE_LIST.length}개 코스 전부` : `${COURSE_LIST.length}개 코스 전부`)
+      : (S.course ? `「${S.course.title}」 1곳` : "고른 코스 1곳");
+    return `<label class="opt${covered ? " covered" : ""}">
+      <input type="radio" name="product" value="${esc(p.id)}"${p.id === S.productId ? " checked" : ""}${covered ? " disabled" : ""}>
+      <span class="radio" aria-hidden="true"></span>
+      <span><span class="nm">${esc(p.name)}${p.badge ? `<span class="pill">${esc(p.badge)}</span>` : ""}</span><span class="ds">${esc(sub)} · ${p.days}일</span></span>
+      <span class="pr"><b>${won(p.price)}</b><span>원</span><small>${p.days}일 이용</small></span>
+    </label>`;
+  }).join("");
+  const p = product();
+  $("#totalAmt").innerHTML = `${won(p.price)}<span>원</span><em>/ ${p.days}일</em>`;
+  $("#totalSub").textContent = `${p.name} · 부가세 포함`;
+}
+$("#opts").addEventListener("change", (e) => {
+  if (e.target.name !== "product") return;
+  S.productId = e.target.value;
+  renderCourse(); renderOpts(); renderSum();
+});
+
+/* ── 3 결제 수단 ── */
+function renderMethods() {
+  $("#methods").innerHTML = S.cfg.methods.map((m) => `<label class="mth">
+    <input type="radio" name="method" value="${esc(m.id)}"${m.id === S.methodId ? " checked" : ""}>
+    ${ICON[m.id] || ICON.card}<span>${esc(m.label)}</span></label>`).join("");
+}
+$("#methods").addEventListener("change", (e) => { if (e.target.name === "method") { S.methodId = e.target.value; renderSum(); } });
+
+/* ── 4 약관 ── */
+function renderTerms() {
+  $("#terms").innerHTML = S.cfg.terms.map((t) => `<li>
+    <div class="trow"><label><input type="checkbox" class="chk" name="term" value="${esc(t.id)}"><span>${t.required ? "<b>[필수]</b>" : "[선택]"} ${esc(t.title)}</span></label>
+      ${TERM_BODY[t.id] ? `<button type="button" class="more" aria-expanded="false" aria-controls="tb-${esc(t.id)}">보기<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>` : ""}</div>
+    ${TERM_BODY[t.id] ? `<div class="tbody" id="tb-${esc(t.id)}">${TERM_BODY[t.id]()}</div>` : ""}
+  </li>`).join("");
+  const trial = S.cfg.freeTrialStops || 0;
+  $("#refundList").innerHTML = [
+    "결제일부터 7일 이내, 이 코스의 보물을 발굴(탁본)하기 전이면 전액 환불돼요.",
+    "결제 후 코스의 보물을 1개 이상 발굴하면 그 코스는 청약철회가 제한돼요(전자상거래법 제17조 제2항).",
+    trial ? `결제 전에 코스의 첫 보물 ${trial}곳을 무료로 체험해 볼 수 있어요.` : "",
+    "전체 코스 패스는 발굴을 시작하지 않은 코스만큼 환불받을 수 있어요(결제 금액 안에서).",
+  ].filter(Boolean).map((t) => `<li>${esc(t)}</li>`).join("") + `<li><a href="/refund.html" target="_blank" rel="noopener">취소·환불 규정 전문 보기</a></li>`;
+}
+const termBoxes = () => [...document.querySelectorAll('input[name="term"]')];
+const agreed = () => termBoxes().filter((b) => b.checked).map((b) => b.value);
+const missing = () => S.cfg.terms.filter((t) => t.required && !agreed().includes(t.id));
+$("#agreeAll").addEventListener("change", (e) => { termBoxes().forEach((b) => (b.checked = e.target.checked)); renderSum(); });
+$("#terms").addEventListener("change", () => { $("#agreeAll").checked = termBoxes().every((b) => b.checked); renderSum(); });
+$("#terms").addEventListener("click", (e) => {
+  const b = e.target.closest(".more"); if (!b) return;
+  const open = b.getAttribute("aria-expanded") !== "true";
+  b.setAttribute("aria-expanded", String(open));
+  $("#" + b.getAttribute("aria-controls")).classList.toggle("open", open);
+});
+$("#changeBtn").addEventListener("click", () => {
+  const box = $("#pickBox"), open = !box.classList.contains("open");
+  box.classList.toggle("open", open); $("#changeBtn").setAttribute("aria-expanded", String(open));
+  if (open) $("#courseSel").focus();
+});
+$("#courseSel").addEventListener("change", (e) => { setCourse(e.target.value); if (e.target.value) { $("#pickBox").classList.remove("open"); $("#changeBtn").setAttribute("aria-expanded", "false"); } });
+
+/* ── 결제 진행 ── */
+function blocker() {
+  const p = product();
+  if (S.access && S.access.allowed && S.access.reason === "ticket") return "이미 이 코스에 도전할 수 있는 도전권이 있어요.";
+  if (p.scope === "course" && !S.course) return "도전할 코스를 골라 주세요.";
+  if (!S.methodId) return "결제 수단을 골라 주세요.";
+  if (missing().length) return "필수 약관에 모두 동의해 주세요.";
+  return "";
+}
+function renderSum() {
+  const p = product(), m = method();
+  $("#sum").innerHTML = `
+    <dt>상품</dt><dd>${esc(p.name)}</dd>
+    <dt>코스</dt><dd>${p.scope === "all" ? `전국 ${COURSE_LIST.length}개 코스` : esc(S.course ? S.course.title : "선택 전")}</dd>
+    <dt>이용 기간</dt><dd>${until(0)} ~ ${until(p.days)}</dd>
+    <dt>결제 수단</dt><dd>${esc(m.label)}</dd>
+    <dt class="big">결제 금액</dt><dd class="big">${won(p.price)}원</dd>`;
+  $("#payLabel").textContent = `${won(p.price)}원 결제하기`;
+  const why = blocker();
+  $("#payBtn").disabled = !!why || S.busy;
+  $("#why").textContent = S.busy ? "" : (why && agreed().length ? why : "");
+  document.getElementById("st2").classList.toggle("on", !why);
+}
+function busy(on) { S.busy = on; $("#payBtn").classList.toggle("busy", on); renderSum(); }
+
+$("#payForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const why = blocker();
+  if (why) { $("#why").textContent = why; return; }
+  if (S.mode === "off") return showFree();
+  if (S.mode !== "preview" && !token()) return showLogin();
+  busy(true);
+  try {
+    if (S.mode === "preview") { await new Promise((r) => setTimeout(r, 900)); return showSuccess(previewResult()); }
+    const phone = $("#phoneRow").hidden ? "" : $("#phone").value.trim();
+    const r = await api("/api/pay/orders", { method: "POST", auth: true, body: {
+      productId: S.productId, courseId: S.courseId, methodId: S.methodId, agreed: agreed(), phone,
+      device: isMobile() ? "mobile" : "pc", apiBase: API_BASE || location.origin, clientBase: location.origin } });
+    if (r.status === 401) return showLogin();
+    if (r.data && r.data.code === "PHONE_REQUIRED") { $("#phoneRow").hidden = false; $("#phone").focus(); $("#why").textContent = r.data.message; return; }
+    if (r.status === 409 && r.data.code === "ALREADY_COVERED") { await checkAccess(); toast(r.data.message); return; }
+    if (r.status === 409 && r.data.code === "PAY_OFF") { S.mode = "off"; return showFree(); }
+    if (!r.ok) { $("#why").textContent = r.data.message || "주문을 만들지 못했어요."; return; }
+    const order = r.data;
+    try { sessionStorage.setItem(PENDING, JSON.stringify({ orderId: order.orderId, courseId: S.courseId, productId: S.productId })); } catch (err) {}
+    if (S.mode === "mock") {
+      const c = await api("/api/pay/mock-confirm", { method: "POST", auth: true, body: { orderId: order.orderId } });
+      if (!c.ok) { $("#why").textContent = c.data.message || "결제를 마치지 못했어요."; return; }
+      return showSuccess(c.data);
+    }
+    await inicisPay(order);
+  } finally { busy(false); }
+});
+
+/* ── KG이니시스 결제창 ── */
+const isMobile = () => /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+function loadScript(src) {
+  if (!src) return Promise.reject(new Error("no script"));
+  const had = document.querySelector(`script[data-pg="${src}"]`);
+  if (had) return had._p;
+  const el = document.createElement("script"); el.src = src; el.charset = "UTF-8"; el.dataset.pg = src;
+  el._p = new Promise((ok, no) => { el.onload = ok; el.onerror = () => no(new Error("결제창을 불러오지 못했어요.")); });
+  document.head.appendChild(el); return el._p;
+}
+function makeForm(fields, { action = "", id = "", charset = "UTF-8" } = {}) {
+  const f = document.createElement("form");
+  f.method = "post"; if (action) f.action = action; if (id) f.id = id; f.acceptCharset = charset; f.hidden = true;
+  for (const [k, v] of Object.entries(fields)) { const i = document.createElement("input"); i.type = "hidden"; i.name = k; i.value = v == null ? "" : String(v); f.appendChild(i); }
+  document.body.appendChild(f); return f;
+}
+async function inicisPay(order) {
+  const p = order.inicis;
+  if (!p) { $("#why").textContent = "결제창 정보를 받지 못했어요. 다시 시도해 주세요."; return; }
+  if (p.device === "mobile") {                         // 모바일: 결제창으로 이동 → 끝나면 서버가 이 페이지로 돌려보냄
+    makeForm(p.fields, { action: p.action, charset: "EUC-KR" }).submit();
+    return;
+  }
+  try { await loadScript(p.jsUrl); } catch (e) { $("#why").textContent = e.message; return; }
+  const old = document.getElementById("inicisForm"); if (old) old.remove();
+  makeForm(p.fields, { id: "inicisForm" });
+  window.INIStdPay.pay("inicisForm");                  // PC: 결제창 레이어 → 끝나면 서버(returnUrl)가 이 페이지로 이동시킴
+}
+
+/* ── 상태 화면 ── */
+function state(html) {
+  $("#payForm").hidden = true; $(".page-h").hidden = true;
+  const box = $("#stateBox"); box.innerHTML = html; box.hidden = false;
+  window.scrollTo({ top: 0 });
+}
+function backToForm() { $("#stateBox").hidden = true; $("#payForm").hidden = false; $(".page-h").hidden = false; }
+const ICO = {
+  ok: `<div class="ic ok"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>`,
+  no: `<div class="ic no"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 7v6M12 17h.01"/></svg></div>`,
+  user: `<div class="ic pk"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.4-6 8-6s6.8 2 8 6"/></svg></div>`,
+};
+function showLogin() {
+  const next = nextHere();
+  state(`${ICO.user}<h2>회원가입 후 코스에 도전할 수 있어요</h2>
+    <p>도전권은 회원 계정에 담겨요. 로그인하면 다른 기기에서도 이어서 도전할 수 있어요.</p>
+    <div class="btns"><a class="btn pk" href="/login?next=${next}">로그인</a><a class="btn ln" href="/signup?next=${next}">회원가입</a></div>`);
+}
+function showFree() {
+  state(`${ICO.ok}<h2>지금은 결제 없이 도전할 수 있어요</h2><p>무료 운영 기간이에요. 바로 AR 탁본을 시작해 보세요.</p>
+    <div class="btns"><a class="btn pk" href="${arLink()}">AR 탁본 시작하기</a><a class="btn ln" href="/bomul.html">다른 코스 보기</a></div>`);
+}
+function showCovered(a) {
+  state(`${ICO.ok}<h2>이미 도전권이 있어요</h2>
+    <p>${a.scope === "all" ? "전체 코스 패스" : "이 코스 도전권"}으로 ${fmtDate(a.expiresAt)}까지 도전할 수 있어요.</p>
+    <div class="btns"><a class="btn pk" href="${arLink()}">AR 탁본 시작하기</a><a class="btn ln" href="/bomul.html">다른 코스 보기</a></div>`);
+}
+function previewResult() {
+  const p = product();
+  return { order: { orderId: "BM-PREVIEW-0000", productName: p.name, scope: p.scope, courseId: S.courseId, courseTitle: S.course ? S.course.title : "", amount: p.price, method: method().label, approvedAt: new Date().toISOString(), receiptUrl: "" },
+    ticket: { scope: p.scope, courseId: S.courseId, expiresAt: new Date(Date.now() + p.days * 864e5).toISOString() } };
+}
+function showSuccess({ order, ticket }) {
+  try { sessionStorage.removeItem(PENDING); } catch (e) {}
+  document.getElementById("st2").classList.add("on"); document.getElementById("st3").classList.add("on");
+  const cid = order.courseId || S.courseId;
+  const c = REG[cid];
+  state(`${ICO.ok}<h2>결제가 완료됐어요</h2>
+    <p>${order.scope === "all" ? "전국 모든 코스" : `「${esc(order.courseTitle || (c && c.title) || "")}」`}에 도전할 수 있어요.${S.mode === "preview" ? " (미리보기라 실제 결제는 되지 않았어요)" : ""}</p>
+    <dl class="sum">
+      <dt>상품</dt><dd>${esc(order.productName)}</dd>
+      <dt>결제 금액</dt><dd>${won(order.amount)}원</dd>
+      <dt>결제 수단</dt><dd>${esc(order.method || "")}</dd>
+      <dt>이용 기간</dt><dd>${ticket ? `${fmtDate(order.approvedAt)} ~ ${fmtDate(ticket.expiresAt)}` : "-"}</dd>
+      <dt>주문번호</dt><dd style="font-size:12.5px;word-break:break-all">${esc(order.orderId)}</dd>
+    </dl>
+    <div class="btns">${cid ? `<a class="btn pk" href="${arLink(cid)}">AR 탁본 시작하기</a>` : `<a class="btn pk" href="/bomul.html">코스 고르러 가기</a>`}
+      ${order.receiptUrl ? `<a class="btn ln" href="${esc(order.receiptUrl)}" target="_blank" rel="noopener">영수증 보기</a>` : ""}
+      <a class="btn ln" href="/bomul.html">홈으로</a></div>`);
+}
+function showFail(msg, code) {
+  state(`${ICO.no}<h2>결제가 완료되지 않았어요</h2><p>${esc(msg || "결제를 진행하지 못했어요.")}${code ? `<br><small style="color:var(--muted)">(${esc(code)})</small>` : ""}</p>
+    <div class="btns"><button type="button" class="btn pk" id="retry">다시 결제하기</button><a class="btn ln" href="/bomul.html">홈으로</a></div>`);
+  $("#retry").addEventListener("click", () => { clearResult(); backToForm(); });
+}
+function clearResult() { try { const u = new URL(location.href); ["result", "orderId", "code", "message"].forEach((k) => u.searchParams.delete(k)); history.replaceState(null, "", u); } catch (e) {} }
+
+/* KG이니시스 결제창에서 돌아왔을 때: 승인은 서버가 이미 끝냈고, 결과만 보여 줍니다 */
+async function handleReturn() {
+  const result = params.get("result");
+  if (!result) return false;
+  const orderId = params.get("orderId");
+  if (result === "success" && orderId) {
+    state(`<div class="ic pk"><span class="ring" aria-hidden="true"></span></div><h2>결제를 확인하고 있어요</h2><p>잠시만 기다려 주세요.</p>`);
+    const r = await api(`/api/pay/my-orders/${encodeURIComponent(orderId)}`, { auth: true, ms: 10000 });
+    clearResult();
+    if (r.ok) showSuccess(r.data);
+    else state(`${ICO.ok}<h2>결제가 완료됐어요</h2><p>주문번호 ${esc(orderId)}<br>로그인하면 도전권과 결제 내역을 볼 수 있어요.</p>
+      <div class="btns"><a class="btn pk" href="${arLink()}">AR 탁본 시작하기</a><a class="btn ln" href="/bomul.html">홈으로</a></div>`);
+    return true;
+  }
+  const code = params.get("code") || "";
+  const msg = params.get("message") || "결제가 완료되지 않았어요.";
+  clearResult();
+  showFail(msg, code);
+  return true;
+}
+
+async function checkAccess() {
+  if (!token() || !S.courseId) { S.access = null; return; }
+  const r = await api(`/api/pay/access/${encodeURIComponent(S.courseId)}`, { auth: true, ms: 5000 });
+  if (r.status === 401) { S.access = null; return showLogin(); }
+  S.access = r.ok ? r.data : null;
+  if (S.access && S.access.allowed && S.access.reason === "ticket") return showCovered(S.access);
+  renderOpts(); renderSum();
+}
+
+(async function init() {
+  const cfg = window.BOMUL_PREVIEW ? null : await api("/api/pay/config", { ms: 4000 });
+  S.cfg = cfg && cfg.ok && Array.isArray(cfg.data.products) ? cfg.data : FALLBACK;
+  S.mode = S.cfg.mode || "preview";
+  document.documentElement.dataset.mode = S.mode;
+  if (S.cfg.test) $("#testNote").style.display = "block";
+  if (S.mode === "inicis" && S.cfg.jsUrl && !isMobile()) loadScript(S.cfg.jsUrl).catch(() => {});   // PC 결제창 스크립트를 미리 불러 둠
+  if (!S.cfg.methods.some((m) => m.id === S.methodId)) S.methodId = S.cfg.methods[0].id;
+  renderMethods(); renderTerms(); fillCourseSelect();
+  if (await handleReturn()) return;
+  if (S.mode === "off") { await setCourse(S.courseId, { replace: false }); return showFree(); }
+  if ((S.mode === "inicis" || S.mode === "mock") && !token()) { await setCourse(S.courseId, { replace: false }); return showLogin(); }
+  await setCourse(S.courseId, { replace: false });
+})();
+})();
+</script>
+</body>
+</html>

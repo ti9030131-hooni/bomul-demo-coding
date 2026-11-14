@@ -1,0 +1,82 @@
+{
+ "en": {
+  "prizes": [
+   {
+    "title": "Completion Certificate",
+    "desc": "A certificate for the explorer who completed the course. Write your name and print it on A4.",
+    "action": "View certificate"
+   },
+   {
+    "title": "Treasure Points",
+    "desc": "Your reward has been paid as points. Use the points you collect to choose and exchange the item you want.",
+    "action": "Choose a point reward"
+   },
+   {
+    "title": "Completion Prize Draw",
+    "desc": "You have been automatically entered in the draw: 1st prize ₩3,000,000, 2nd ₩2,000,000, 3rd ₩1,000,000."
+   }
+  ],
+  "pointShop": [
+   {
+    "name": "Item worth ₩800,000–1,000,000",
+    "desc": "Choose one item worth ₩800,000–1,000,000."
+   },
+   {
+    "name": "Item worth ₩500,000",
+    "desc": "Choose one item worth ₩500,000."
+   },
+   {
+    "name": "Department store gift card ₩100,000",
+    "desc": "Sent to you as a mobile department store gift card."
+   },
+   {
+    "name": "Starbucks coffee coupon",
+    "desc": "Sent to you as a mobile coupon."
+   },
+   {
+    "name": "Convenience store mobile gift card ₩5,000",
+    "desc": "Sent to you as a mobile gift card."
+   }
+  ]
+ },
+ "zh": {
+  "prizes": [
+   {
+    "title": "完成证书",
+    "desc": "完成路线的探险家证书。写上名字即可用A4纸打印。",
+    "action": "查看证书"
+   },
+   {
+    "title": "宝物积分",
+    "desc": "奖励已以积分形式发放。可用攒下的积分挑选并兑换想要的商品。",
+    "action": "挑选积分商品"
+   },
+   {
+    "title": "参与完成奖励抽奖",
+    "desc": "已自动参与抽奖：一等奖300万韩元，二等奖200万韩元，三等奖100万韩元。"
+   }
+  ],
+  "pointShop": [
+   {
+    "name": "价值80万~100万韩元的商品",
+    "desc": "可从价值80万~100万韩元的商品中任选一件。"
+   },
+   {
+    "name": "价值50万韩元的商品",
+    "desc": "可从价值50万韩元的商品中任选一件。"
+   },
+   {
+    "name": "百货商店礼券10万韩元",
+    "desc": "以手机百货商店礼券形式发送给您。"
+   },
+   {
+    "name": "星巴克咖啡券",
+    "desc": "以手机优惠券形式发送给您。"
+   },
+   {
+    "name": "便利店手机礼券5千韩元",
+    "desc": "以手机礼券形式发送给您。"
+   }
+  ]
+ }
+}
