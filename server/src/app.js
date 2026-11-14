@@ -8,10 +8,12 @@ import legendCoursesRouter from './routes/legendCourses.js';
 import arRouter from './routes/ar.js';
 import membershipsRouter from './routes/memberships.js';
 import ordersRouter from './routes/orders.js';
+import paymentsRouter from './routes/payments.js';
 import authRouter from './routes/auth.js';
 import meRouter from './routes/me.js';
 import usersRouter from './routes/users.js';
 import { connectDb } from './db.js';
+
 
 const app = express();
 app.set('trust proxy', 1);
@@ -94,6 +96,7 @@ app.use('/api/board', boardRouter);
 app.use('/api/courses', coursesRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/orders', ordersRouter);
+app.use('/api/payments', paymentsRouter);
 app.use('/api/membership', membershipsRouter);
 app.use('/api/legend-courses', legendCoursesRouter);
 app.use('/api/ar', arRouter);

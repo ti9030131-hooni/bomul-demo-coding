@@ -1,6 +1,7 @@
 /**
  * 포트원(아임포트) REST API v1 결제 조회·검증.
- * PORTONE_MODE=mock | live (미설정 시 키가 있으면 live, 없으면 mock)
+ * PORTONE_MODE=mock | live | off (미설정 시 키가 있으면 live, 없으면 mock;
+ *   운영(NODE_ENV=production)에서 mock 은 ALLOW_MOCK_PAY=1 없으면 off)
  * 모의: seedMockPayment 로 등록하거나 imp_uid 가 mock_ 로 시작하면 서버 기대 금액으로 paid 응답.
  */
 
@@ -20,7 +21,14 @@ function httpError(status, message) {
 
 export function portoneMode(env = process.env) {
   const mode = String(env.PORTONE_MODE || '').toLowerCase();
-  if (mode === 'mock') return 'mock';
+  const production = env.NODE_ENV === 'production';
+  const allowMock = env.ALLOW_MOCK_PAY === '1';
+
+  if (mode === 'off') return 'off';
+  if (mode === 'mock') {
+    if (production && !allowMock) return 'off';
+    return 'mock';
+  }
   if (mode === 'live') {
     if (!env.PORTONE_IMP_KEY || !env.PORTONE_IMP_SECRET) {
       throw httpError(500, '포트원 REST API 키가 없습니다.');
@@ -28,6 +36,7 @@ export function portoneMode(env = process.env) {
     return 'live';
   }
   if (env.PORTONE_IMP_KEY && env.PORTONE_IMP_SECRET) return 'live';
+  if (production && !allowMock) return 'off';
   return 'mock';
 }
 
@@ -101,7 +110,11 @@ export async function fetchPortOnePayment(impUid, options = {}) {
   const uid = text(impUid);
   if (!uid) throw httpError(400, '결제번호가 필요합니다.');
 
-  if (portoneMode(env) === 'mock') {
+  const mode = portoneMode(env);
+  if (mode === 'off') {
+    throw httpError(503, '결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.');
+  }
+  if (mode === 'mock') {
     return mockPaymentOf(uid, { merchantUid, expectedAmount });
   }
 

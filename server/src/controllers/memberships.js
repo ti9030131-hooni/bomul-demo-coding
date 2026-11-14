@@ -1,4 +1,5 @@
 import User from '../models/User.js';
+import { assertPaymentsEnabled, paymentsEnabled, PAYMENTS_DISABLED_MESSAGE } from '../services/payments.js';
 
 const PAYMENTS = ['신용카드', '계좌이체', '네이버페이'];
 const PLANS = {
@@ -13,13 +14,17 @@ function httpError(status, message) {
 }
 
 export function getMembership(req, res) {
+  const enabled = paymentsEnabled();
   res.json({
     plans: Object.values(PLANS),
     payments: PAYMENTS,
+    payments_enabled: enabled,
+    message: enabled ? undefined : PAYMENTS_DISABLED_MESSAGE,
   });
 }
 
 export async function buyMembership(req, res) {
+  assertPaymentsEnabled();
   const plan = req.body.plan === 'all' || req.body.plan === 'course' ? req.body.plan : '';
   if (!plan) throw httpError(400, '상품을 선택해 주세요.');
   if (req.body.agree !== true) throw httpError(400, '약관에 동의해 주세요.');

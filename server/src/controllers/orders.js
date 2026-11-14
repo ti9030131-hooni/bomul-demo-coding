@@ -7,7 +7,9 @@ import {
   paymentIdsOf,
   reviewOrderFields,
 } from '../services/orderPayment.js';
+import { assertPaymentsEnabled } from '../services/payments.js';
 import { verifyPortOnePayment } from '../services/portone.js';
+
 
 function httpError(status, message) {
   const error = new Error(message);
@@ -179,6 +181,7 @@ export async function getOrder(req, res) {
 }
 
 export async function createOrder(req, res) {
+  assertPaymentsEnabled();
   const { imp_uid: impUid, merchant_uid: merchantUid } = paymentIdsOf(req.body);
 
   const existing = await findExistingPaymentOrder(impUid, merchantUid);

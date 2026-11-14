@@ -1052,6 +1052,21 @@ const API_BASE = (location.hostname === "localhost" || location.hostname === "12
   ? "http://localhost:4000"
   : "";
 function storedToken(){ return localStorage.getItem("token") || sessionStorage.getItem("token"); }
+let paymentsEnabledCache=null;
+let paymentsStatusMessage="결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.";
+async function ensurePaymentsEnabled(){
+  if(paymentsEnabledCache===true) return true;
+  if(paymentsEnabledCache===false) return false;
+  try{
+    const response=await fetch(API_BASE+"/api/payments/status");
+    const body=await response.json().catch(()=>({}));
+    paymentsEnabledCache=body.enabled===true;
+    if(typeof body.message==="string" && body.message) paymentsStatusMessage=body.message;
+  }catch{
+    paymentsEnabledCache=false;
+  }
+  return paymentsEnabledCache;
+}
 /* =========================================================
    코스 데이터 — 여기에 자료를 추가/수정하세요.
    - thumb/hero/map: 이미지·지도 URL을 넣으면 '자료 삽입 영역' 대신 표시됩니다 (비워두면 빈칸 유지)
@@ -2754,9 +2769,14 @@ function openMemberModal(){
   $("#memberOffer").innerHTML=membershipOfferHtml();
   modal.hidden=false;
 }
-function openPaymentWindow(){
+async function openPaymentWindow(){
   const modal=$("#memberModal");
   if(!modal || hasMembership) return;
+  if(!(await ensurePaymentsEnabled())){
+    $("#memberOffer").innerHTML=`<h2 class="ms-pay-title">결제 준비 중</h2><p class="ms-note">${paymentsStatusMessage}</p><button class="ms-back" type="button" data-back-member>← 멤버십</button>`;
+    modal.hidden=false;
+    return;
+  }
   $("#memberOffer").innerHTML=paymentWindowHtml();
   modal.hidden=false;
 }
@@ -3080,6 +3100,10 @@ async function buyCourse(button){
   const saved=storedToken();
   const msg=$("#payMsg");
   if(!saved){ location.href="/login"; return; }
+  if(!(await ensurePaymentsEnabled())){
+    if(msg){ msg.hidden=false; msg.style.color="#e01278"; msg.textContent=paymentsStatusMessage; }
+    return;
+  }
   const agree=$("#payAgree");
   if(!agree || !agree.checked){
     if(msg){ msg.hidden=false; msg.style.color="#e01278"; msg.textContent="약관에 동의해 주세요."; }
@@ -3115,6 +3139,10 @@ async function buyMembership(button){
   const saved=storedToken();
   const msg=$("#lockMsg");
   if(!saved){ location.href="/login"; return; }
+  if(!(await ensurePaymentsEnabled())){
+    if(msg){ msg.hidden=false; msg.style.color="var(--accent)"; msg.textContent=paymentsStatusMessage; }
+    return;
+  }
   const payment=document.querySelector('input[name="membershipPay"]:checked')?.value||"신용카드";
   button.disabled=true;
   if(msg){ msg.hidden=false; msg.style.color="var(--muted)"; msg.textContent="멤버십을 구매하는 중"; }

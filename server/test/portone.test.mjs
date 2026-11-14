@@ -20,9 +20,23 @@ test('키가 없으면 mock, 있으면 live(명시 mock 제외)', () => {
   assert.equal(portoneMode({ PORTONE_MODE: 'mock', PORTONE_IMP_KEY: 'k', PORTONE_IMP_SECRET: 's' }), 'mock');
   assert.equal(portoneMode({ PORTONE_IMP_KEY: 'k', PORTONE_IMP_SECRET: 's' }), 'live');
   assert.equal(portoneMode({ PORTONE_MODE: 'live', PORTONE_IMP_KEY: 'k', PORTONE_IMP_SECRET: 's' }), 'live');
+  assert.equal(portoneMode({ PORTONE_MODE: 'off' }), 'off');
+  assert.equal(portoneMode({ NODE_ENV: 'production' }), 'off');
+  assert.equal(portoneMode({ PORTONE_MODE: 'mock', NODE_ENV: 'production' }), 'off');
+  assert.equal(portoneMode({ PORTONE_MODE: 'mock', NODE_ENV: 'production', ALLOW_MOCK_PAY: '1' }), 'mock');
   assert.throws(
     () => portoneMode({ PORTONE_MODE: 'live' }),
     (error) => error.status === 500,
+  );
+});
+
+test('운영에서 mock 이 off 이면 검증을 거부한다', async () => {
+  await assert.rejects(
+    () => verifyPortOnePayment(
+      { imp_uid: 'mock_x', merchant_uid: 'm', expectedAmount: 1000 },
+      { env: { NODE_ENV: 'production', PORTONE_MODE: 'mock' } },
+    ),
+    (error) => error.status === 503,
   );
 });
 

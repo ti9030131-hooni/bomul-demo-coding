@@ -100,10 +100,37 @@ function OrderPage() {
   const [pending, setPending] = useState(false);
   const [order, setOrder] = useState(null);
   const [impUid, setImpUid] = useState('');
+  const [paymentsEnabled, setPaymentsEnabled] = useState(null);
+  const [paymentsMessage, setPaymentsMessage] = useState('');
 
   useEffect(() => {
     if (!window.IMP) return;
     window.IMP.init(PORTONE_IMP_CODE);
+  }, []);
+
+  useEffect(() => {
+    let ignore = false;
+    fetch(`${API_BASE}/api/payments/status`)
+      .then(async (response) => {
+        const body = await response.json().catch(() => ({}));
+        if (ignore) return;
+        const enabled = body.enabled === true;
+        setPaymentsEnabled(enabled);
+        setPaymentsMessage(
+          typeof body.message === 'string' && body.message
+            ? body.message
+            : '결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.',
+        );
+      })
+      .catch(() => {
+        if (!ignore) {
+          setPaymentsEnabled(false);
+          setPaymentsMessage('결제 상태를 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+        }
+      });
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -208,6 +235,10 @@ function OrderPage() {
 
   function startPayment(nextPayment = payment) {
     if (pending) return;
+    if (paymentsEnabled === false) {
+      setMessage(paymentsMessage || '결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.');
+      return;
+    }
     if (!buyer.name.trim() || !buyer.phone.trim() || !buyer.email.trim()) {
       setMessage('이름, 연락처, 이메일을 입력해 주세요.');
       return;
@@ -294,6 +325,7 @@ function OrderPage() {
 
   useEffect(() => {
     if (!autoPay || status !== 'ready' || items.length === 0 || pending || order) return;
+    if (paymentsEnabled !== true) return;
     if (autoPayStarted.current) return;
     if (!buyer.name.trim() || !buyer.phone.trim() || !buyer.email.trim()) return;
     if (!Number.isFinite(total) || total <= 0) return;
@@ -302,7 +334,7 @@ function OrderPage() {
     startPayment(payment);
     // 장바구니에서 넘어온 직후 한 번만 결제창을 엽니다.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPay, status, items, buyer, total, payment, pending, order]);
+  }, [autoPay, status, items, buyer, total, payment, pending, order, paymentsEnabled]);
 
   function submit(event) {
     event.preventDefault();
@@ -402,6 +434,9 @@ function OrderPage() {
                   />
                 </div>
               </div>
+              {paymentsEnabled === false ? (
+                <p className="course-status">{paymentsMessage}</p>
+              ) : null}
               {message ? <p className="course-status">{message}</p> : null}
             </div>
 
@@ -458,8 +493,8 @@ function OrderPage() {
                   </label>
                 ))}
               </div>
-              <button className="btn btn-primary" type="submit" disabled={pending}>
-                {pending ? '결제 중' : '결제하기'}
+              <button className="btn btn-primary" type="submit" disabled={pending || paymentsEnabled === false}>
+                {pending ? '결제 중' : paymentsEnabled === false ? '결제 준비 중' : '결제하기'}
               </button>
               <p className="order-agree">주문 완료 시 개인정보처리방침 및 이용약관에 동의한 것으로 간주됩니다.</p>
             </fieldset>
