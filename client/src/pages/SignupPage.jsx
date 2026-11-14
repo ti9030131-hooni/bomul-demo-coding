@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import SocialAccounts from '../components/SocialAccounts.jsx';
 import { API_BASE } from '../apiBase.js';
 
 const initialForm = {
@@ -216,6 +217,7 @@ function SignupPage() {
       <button className="submit-button" type="submit" disabled={pending}>
         {pending ? '가입 중' : '회원가입'}
       </button>
+      <SocialAccounts mode="signup" />
 
       {policy ? (
         <div className="policy-modal" role="presentation" onClick={() => setPolicy(null)}>

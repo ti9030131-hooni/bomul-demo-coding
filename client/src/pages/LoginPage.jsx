@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import SocialAccounts from '../components/SocialAccounts.jsx';
 import { API_BASE } from '../apiBase.js';
 
 function storedToken() {
@@ -75,6 +76,7 @@ function LoginPage() {
 
   return (
     <section className="login-page">
+      <div className="login-stack">
       <form className="login-card" onSubmit={onSubmit}>
         <h1>로그인</h1>
         <p className="login-switch">
@@ -132,6 +134,8 @@ function LoginPage() {
           </Link>
         </div>
       </form>
+      <SocialAccounts mode="login" />
+      </div>
     </section>
   );
 }

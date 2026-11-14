@@ -6,7 +6,6 @@ import '../bomul.css';
 function SiteLayout() {
   const location = useLocation();
   const isSignup = location.pathname === '/signup';
-  const isLogin = location.pathname.startsWith('/login');
   const isLoginPage = location.pathname === '/login' || location.pathname === '/login/find';
   const { theme, toggleTheme } = useBomulTheme();
 
@@ -17,7 +16,6 @@ function SiteLayout() {
           <SiteNav onToggleTheme={toggleTheme} />
         </div>
       ) : null}
-      {isLogin ? null : <p className="top-phrase">회원가입</p>}
       {isSignup ? (
         <header className="site-header">
           <div className="header-inner">

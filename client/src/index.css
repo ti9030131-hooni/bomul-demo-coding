@@ -39,15 +39,6 @@ a {
   flex-direction: column;
 }
 
-.top-phrase {
-  margin: 0;
-  padding: 28px 20px 0;
-  color: #b000b9;
-  font-size: 26px;
-  font-weight: 700;
-  text-align: center;
-}
-
 .site-header {
   background: #fff;
 }
@@ -280,8 +271,12 @@ a {
   flex-direction: column;
 }
 
-.login-card {
+.login-stack {
   width: min(420px, 100%);
+}
+
+.login-card {
+  width: 100%;
   margin: 0;
   padding: 36px 28px 24px;
   border: 0;
@@ -479,9 +474,61 @@ a {
 
 .login-card input:focus-visible,
 .method:focus-visible,
-.find-button:focus-visible {
+.find-button:focus-visible,
+.social-btn:focus-visible {
   outline: 2px solid #222;
   outline-offset: 2px;
+}
+
+.social-accounts {
+  margin-top: 36px;
+}
+
+.social-accounts-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  color: #9a9a9a;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.social-accounts-label::before,
+.social-accounts-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #d5d5d5;
+}
+
+.social-accounts-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 22px;
+}
+
+.social-btn {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border: 1.5px solid #cfcfcf;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.social-btn:hover {
+  border-color: #b0b0b0;
+  background: #fafafa;
+}
+
+.social-btn svg {
+  width: 32px;
+  height: 32px;
 }
 
 .submit-button:disabled {
