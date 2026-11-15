@@ -2,9 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { API_BASE } from '../apiBase.js';
 const PAYMENT_METHODS = ['신용카드', '계좌이체', '네이버페이'];
-const PORTONE_IMP_CODE = 'imp75477988';
-/** 포트원 콘솔 채널 관리 · 테스트 · 보물여행 (KG이니시스 / INIpayTest) */
-const PORTONE_CHANNEL_KEY = 'channel-key-9890db2d-651f-4cc9-96ca-52603636fedb';
 const PORTONE_PAY_METHOD = { 신용카드: 'card', 계좌이체: 'trans', 네이버페이: 'card' };
 const PENDING_PAY_KEY = 'bomul-portone-order';
 const finishingPayments = new Set();
@@ -102,11 +99,7 @@ function OrderPage() {
   const [impUid, setImpUid] = useState('');
   const [paymentsEnabled, setPaymentsEnabled] = useState(null);
   const [paymentsMessage, setPaymentsMessage] = useState('');
-
-  useEffect(() => {
-    if (!window.IMP) return;
-    window.IMP.init(PORTONE_IMP_CODE);
-  }, []);
+  const [portone, setPortone] = useState(null);
 
   useEffect(() => {
     let ignore = false;
@@ -115,16 +108,20 @@ function OrderPage() {
         const body = await response.json().catch(() => ({}));
         if (ignore) return;
         const enabled = body.enabled === true;
+        const cfg = body.portone && body.portone.impCode && body.portone.channelKey ? body.portone : null;
         setPaymentsEnabled(enabled);
+        setPortone(cfg);
         setPaymentsMessage(
           typeof body.message === 'string' && body.message
             ? body.message
             : '결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.',
         );
+        if (enabled && cfg && window.IMP?.init) window.IMP.init(cfg.impCode);
       })
       .catch(() => {
         if (!ignore) {
           setPaymentsEnabled(false);
+          setPortone(null);
           setPaymentsMessage('결제 상태를 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.');
         }
       });
@@ -233,10 +230,14 @@ function OrderPage() {
     return sum + (Number(course?.price) || 0) * (Number(item.quantity) || 0);
   }, 0);
 
-  function startPayment(nextPayment = payment) {
+  async function startPayment(nextPayment = payment) {
     if (pending) return;
     if (paymentsEnabled === false) {
       setMessage(paymentsMessage || '결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.');
+      return;
+    }
+    if (!portone?.impCode || !portone?.channelKey) {
+      setMessage('결제 설정이 없습니다. 잠시 후 다시 시도해 주세요.');
       return;
     }
     if (!buyer.name.trim() || !buyer.phone.trim() || !buyer.email.trim()) {
@@ -249,6 +250,13 @@ function OrderPage() {
     }
     if (!window.IMP?.request_pay) {
       setMessage('결제 모듈을 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.');
+      return;
+    }
+
+    const auth = storedToken();
+    if (!auth) {
+      setStatus('guest');
+      setMessage('로그인이 필요합니다.');
       return;
     }
 
@@ -270,62 +278,77 @@ function OrderPage() {
       },
     };
     const uid = merchantUid();
-    const payParams = {
-      channelKey: PORTONE_CHANNEL_KEY,
-      pay_method: PORTONE_PAY_METHOD[nextPayment],
-      merchant_uid: uid,
-      name: orderName(items),
-      amount: Math.round(total),
-      buyer_email: payload.buyer.email,
-      buyer_name: payload.buyer.name,
-      buyer_tel: payload.buyer.phone,
-      m_redirect_url: `${window.location.origin}/order`,
-    };
+    const amount = Math.round(total);
 
-    rememberPendingPay(uid, payload);
     setPending(true);
     setMessage('');
-    window.IMP.init(PORTONE_IMP_CODE);
-    window.IMP.request_pay(payParams, async (response) => {
-      try {
-        if (!paymentAccepted(response)) {
-          sessionStorage.removeItem(PENDING_PAY_KEY);
-          setMessage(response?.error_msg || '결제가 취소되었습니다.');
-          return;
-        }
-        if (finishingPayments.has(uid)) return;
-        finishingPayments.add(uid);
-        const auth = storedToken();
-        if (!auth) {
-          setStatus('guest');
-          throw new Error('로그인이 필요합니다.');
-        }
-        const paidImp = response.imp_uid || '';
-        const paidMerchant = response.merchant_uid || uid;
-        const body = await postOrder(auth, orderPayloadWithPayment(payload, paidImp, paidMerchant));
-        sessionStorage.removeItem(PENDING_PAY_KEY);
-        window.dispatchEvent(new Event('cart-updated'));
-        setImpUid(paidImp || body.imp_uid || '');
-        setOrder(body);
-        setStatus('done');
-        if (body.status === '결제확인필요') {
-          setMessage(`결제는 확인됐지만 주문 확정에 문제가 있습니다. 관리자 확인이 필요합니다. 결제번호 ${paidImp || uid}`);
-        }
-      } catch (error) {
-        finishingPayments.delete(uid);
-        if (error.status === 401) setStatus('guest');
-        const reason = error instanceof Error ? error.message : '서버에 연결하지 못했습니다.';
-        const paidId = response?.imp_uid || uid;
-        setMessage(paymentAccepted(response) ? `결제는 완료되었습니다. ${reason} 결제번호 ${paidId}` : reason);
-      } finally {
-        setPending(false);
+    try {
+      const prepareResponse = await fetch(`${API_BASE}/api/payments/prepare`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: `Bearer ${auth}` },
+        body: JSON.stringify({ merchant_uid: uid, amount }),
+      });
+      const prepareBody = await prepareResponse.json().catch(() => ({}));
+      if (!prepareResponse.ok) {
+        throw new Error(prepareBody.message || '결제 준비에 실패했습니다.');
       }
-    });
+      const channelKey = prepareBody.portone?.channelKey || portone.channelKey;
+      const impCode = prepareBody.portone?.impCode || portone.impCode;
+
+      rememberPendingPay(uid, payload);
+      window.IMP.init(impCode);
+      window.IMP.request_pay(
+        {
+          channelKey,
+          pay_method: PORTONE_PAY_METHOD[nextPayment],
+          merchant_uid: uid,
+          name: orderName(items),
+          amount,
+          buyer_email: payload.buyer.email,
+          buyer_name: payload.buyer.name,
+          buyer_tel: payload.buyer.phone,
+          m_redirect_url: `${window.location.origin}/order`,
+        },
+        async (response) => {
+          try {
+            if (!paymentAccepted(response)) {
+              sessionStorage.removeItem(PENDING_PAY_KEY);
+              setMessage(response?.error_msg || '결제가 취소되었습니다.');
+              return;
+            }
+            if (finishingPayments.has(uid)) return;
+            finishingPayments.add(uid);
+            const paidImp = response.imp_uid || '';
+            const paidMerchant = response.merchant_uid || uid;
+            const body = await postOrder(auth, orderPayloadWithPayment(payload, paidImp, paidMerchant));
+            sessionStorage.removeItem(PENDING_PAY_KEY);
+            window.dispatchEvent(new Event('cart-updated'));
+            setImpUid(paidImp || body.imp_uid || '');
+            setOrder(body);
+            setStatus('done');
+            if (body.status === '결제확인필요') {
+              setMessage(`결제는 확인됐지만 주문 확정에 문제가 있습니다. 관리자 확인이 필요합니다. 결제번호 ${paidImp || uid}`);
+            }
+          } catch (error) {
+            finishingPayments.delete(uid);
+            if (error.status === 401) setStatus('guest');
+            const reason = error instanceof Error ? error.message : '서버에 연결하지 못했습니다.';
+            const paidId = response?.imp_uid || uid;
+            setMessage(paymentAccepted(response) ? `결제는 완료되었습니다. ${reason} 결제번호 ${paidId}` : reason);
+          } finally {
+            setPending(false);
+          }
+        },
+      );
+    } catch (error) {
+      setPending(false);
+      setMessage(error instanceof Error ? error.message : '결제 준비에 실패했습니다.');
+    }
   }
 
   useEffect(() => {
     if (!autoPay || status !== 'ready' || items.length === 0 || pending || order) return;
-    if (paymentsEnabled !== true) return;
+    if (paymentsEnabled !== true || !portone?.channelKey) return;
     if (autoPayStarted.current) return;
     if (!buyer.name.trim() || !buyer.phone.trim() || !buyer.email.trim()) return;
     if (!Number.isFinite(total) || total <= 0) return;
@@ -334,7 +357,7 @@ function OrderPage() {
     startPayment(payment);
     // 장바구니에서 넘어온 직후 한 번만 결제창을 엽니다.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPay, status, items, buyer, total, payment, pending, order, paymentsEnabled]);
+  }, [autoPay, status, items, buyer, total, payment, pending, order, paymentsEnabled, portone]);
 
   function submit(event) {
     event.preventDefault();

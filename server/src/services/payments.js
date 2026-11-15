@@ -1,11 +1,11 @@
 /**
- * 결제·도전권 구매 킬 스위치.
- * - PAYMENTS_ENABLED=0|false|off → 차단
- * - PAYMENTS_ENABLED=1|true|on → 허용(단, PORTONE_MODE=off 이면 차단)
- * - 미설정: NODE_ENV=production 이면 차단, 그 외(로컬)는 허용
+ * 결제·도전권 구매 킬 스위치 + 클라이언트 공개 설정.
+ * - PAYMENTS_ENABLED=0 → 차단
+ * - PORTONE_MODE=off → 차단
+ * - PORTONE_MODE=test + ALLOW_TEST_PAY=1 → 테스트 결제 허용 (실결제 live 아님)
  * 테스트: test/payments-gate.test.mjs
  */
-import { portoneMode } from './portone.js';
+import { portoneClientConfig, portoneMode } from './portone.js';
 
 function httpError(status, message) {
   const error = new Error(message);
@@ -36,8 +36,20 @@ export function assertPaymentsEnabled(env = process.env) {
 
 export function paymentStatus(env = process.env) {
   const enabled = paymentsEnabled(env);
+  const mode = (() => {
+    try {
+      return portoneMode(env);
+    } catch {
+      return 'off';
+    }
+  })();
+  const client = enabled ? portoneClientConfig(env) : null;
   return {
     enabled,
-    message: enabled ? '결제를 이용할 수 있습니다.' : PAYMENTS_DISABLED_MESSAGE,
+    mode,
+    message: enabled
+      ? (mode === 'test' ? '포트원 테스트 결제를 이용할 수 있습니다.' : '결제를 이용할 수 있습니다.')
+      : PAYMENTS_DISABLED_MESSAGE,
+    portone: client,
   };
 }
