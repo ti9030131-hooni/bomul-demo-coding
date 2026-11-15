@@ -91,8 +91,8 @@ export function sumPrizePoints(prizes) {
   return (prizes || []).reduce((total, prize) => total + Math.max(0, Math.round(Number(prize?.points) || 0)), 0);
 }
 
-export const SHORT_COURSE_REWARD = 5000;
-export const LONG_COURSE_REWARD = 10000;
+export const SHORT_COURSE_REWARD = 500;
+export const LONG_COURSE_REWARD = 500;
 
 function durationMinutes(value) {
   const text = String(value || '');

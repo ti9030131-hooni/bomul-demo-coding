@@ -74,7 +74,7 @@ function withCourseReward(prizes, course) {
   const won = points.toLocaleString('ko-KR');
   return prizes.map((prize) => (
     prize?.icon === 'point'
-      ? { ...prize, points, desc: `현장 완주 적립금 ${won}원입니다. 짧은 코스는 5,000원, 긴 코스는 10,000원이에요.` }
+      ? { ...prize, points, desc: `현장 완주 적립금 ${won}P입니다. 데모 모드 완주는 적립되지 않아요.` }
       : prize
   ));
 }

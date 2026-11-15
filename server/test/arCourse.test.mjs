@@ -56,12 +56,12 @@ test('경복궁 코스는 손질한 문항·아이디·저장 키를 그대로 �
   assert.equal(ar.final.name, '진화부');
   assert.equal(ar.text.h1, '경복궁, 불을 막는<br>다섯 부적');
   assert.equal(ar.text.unit, '부적');
-  assert.equal(ar.final.prizes.find((p) => p.icon === 'point')?.points, 5000);
+  assert.equal(ar.final.prizes.find((p) => p.icon === 'point')?.points, 500);
 });
 
-test('긴 코스 완주 적립금은 1만 원으로 표시된다', () => {
+test('긴 코스 완주 적립금도 500P로 표시된다', () => {
   const ar = buildArCourse(asPublic(requireSeed('seoul'), 'seoul'), { pool, settings: defaults });
-  assert.equal(ar.final.prizes.find((p) => p.icon === 'point')?.points, 10000);
+  assert.equal(ar.final.prizes.find((p) => p.icon === 'point')?.points, 500);
 });
 
 test('관리자가 넣은 수수께끼가 자동 문항보다 우선한다', () => {

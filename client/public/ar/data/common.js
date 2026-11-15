@@ -9,8 +9,8 @@
 window.BOMUL_AR_COMMON = {
   prizes: [
     { icon: "cert",  title: "완주 증명서", desc: "코스를 완주한 탐험가 증명서입니다. 이름을 적어 A4로 인쇄할 수 있어요.", action: "증명서 보기", go: "cert" },
-    { icon: "point", title: "보물 적립금", points: 5000, desc: "현장 완주 적립금입니다. 짧은 코스는 5,000원, 긴 코스는 10,000원이에요.", action: "포인트 상품 고르기", go: "shop" },
-    { icon: "draw",  title: "완주 보상 추첨 응모", desc: "1등 300만 원, 2등 200만 원, 3등 100만 원 추첨에 자동으로 응모되었어요." },
+    { icon: "point", title: "보물 적립금", points: 500, desc: "현장 완주 적립금 500P입니다. 데모 모드 완주는 적립되지 않아요.", action: "포인트 상품 고르기", go: "shop" },
+    { icon: "draw",  title: "완주 보상 추첨 응모", desc: "시즌마다 한 사람당 한 번이라, 여러 코스를 완주해도 당첨 기회는 같아요. 1등 150만·2등 100만·3등 50만 원." },
   ],
   pointShop: [
     { id: "rank1", rank: 1, icon: "crown",   name: "80만~100만 원 상당 상품",   points: 1000000, desc: "80만~100만 원 상당의 상품 가운데 하나를 골라 받을 수 있어요." },

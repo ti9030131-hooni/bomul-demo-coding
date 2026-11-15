@@ -711,6 +711,12 @@
   .t-top em{font-style:normal;font-size:.7rem;opacity:.85;margin-top:4px}
   .t-bot{display:grid;place-items:center;padding:12px 0 14px}
   .t-bot svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .bf-draw{margin:22px auto 0;max-width:560px;padding:0 16px;text-align:center}
+  .bf-draw-paths{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 10px;padding:0;list-style:none}
+  .bf-draw-paths span{display:inline-block;padding:8px 12px;border:1px solid rgba(255,255,255,.28);border-radius:4px;font-size:.82rem;line-height:1.45;color:rgba(255,255,255,.92)}
+  .bf-draw-paths b{color:#ffd2d0;font-weight:800}
+  .bf-draw-st{margin:0;font-size:.9rem;line-height:1.55;color:rgba(255,255,255,.88)}
+  .bf-draw-st a{color:#fff;font-weight:700;text-decoration:underline}
 
   /* 한눈에 보기 */
   .glance{display:grid;grid-template-columns:repeat(3,minmax(0,212px));justify-content:center;gap:14px;margin-top:40px}
@@ -807,6 +813,9 @@
     .tickets{gap:8px}
     .ticket{width:calc((100% - 16px)/3);max-width:150px}
     .t-top{padding:14px 4px 10px}
+    .bf-draw{margin:14px auto 0;max-width:520px;padding:0 12px}
+    .bf-draw-paths{flex-direction:column;align-items:stretch}
+    .bf-draw-paths span{text-align:center}
     .bf-split{grid-template-columns:1fr}
     .steps3{grid-template-columns:1fr 1fr}
   }
@@ -891,12 +900,16 @@
     <!-- 완주 보상 (쿠폰형 카드) -->
     <section class="bf-sec bf-black" id="bf-reward">
       <h2 class="bf-h2">총 <em>완주 보상</em></h2>
-      <p class="bf-lead">코스를 완주하면 완주 증명서와 함께 추첨에 응모됩니다.</p>
+      <p class="bf-lead">시즌마다 1인 1회 추첨입니다. 도전권으로 완주하면 응모되고, 결제 없이도 무료 응모할 수 있어요.</p>
       <div class="tickets">
-        <div class="ticket"><div class="t-top"><small>완주 보상</small><b>1등</b><strong>300<span>만 원</span></strong><em>+ 완주 증명서</em></div><div class="t-bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0z M7 6H4a3 3 0 0 0 3 4 M17 6h3a3 3 0 0 1-3 4 M12 13v4 M8 20h8"/></svg></div></div>
-        <div class="ticket"><div class="t-top"><small>완주 보상</small><b>2등</b><strong>200<span>만 원</span></strong><em>+ 완주 증명서</em></div><div class="t-bot" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 7.5 21 12 18.5 16.5 21 15 13.5"/></svg></div></div>
-        <div class="ticket"><div class="t-top"><small>완주 보상</small><b>3등</b><strong>100<span>만 원</span></strong><em>+ 완주 증명서</em></div><div class="t-bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h12v14l-6-3-6 3z M9 8h6 M9 11h4"/></svg></div></div>
+        <div class="ticket"><div class="t-top"><small>완주 보상</small><b>1등</b><strong>150<span>만 원</span></strong><em>+ 완주 증명서</em></div><div class="t-bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0z M7 6H4a3 3 0 0 0 3 4 M17 6h3a3 3 0 0 1-3 4 M12 13v4 M8 20h8"/></svg></div></div>
+        <div class="ticket"><div class="t-top"><small>완주 보상</small><b>2등</b><strong>100<span>만 원</span></strong><em>+ 완주 증명서</em></div><div class="t-bot" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 7.5 21 12 18.5 16.5 21 15 13.5"/></svg></div></div>
+        <div class="ticket"><div class="t-top"><small>완주 보상</small><b>3등</b><strong>50<span>만 원</span></strong><em>+ 완주 증명서</em></div><div class="t-bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h12v14l-6-3-6 3z M9 8h6 M9 11h4"/></svg></div></div>
         </div>
+      <div class="bf-draw" id="bf-draw" aria-live="polite">
+        <p class="bf-draw-paths"><span><b>유료 도전권</b> 완주 후 응모</span><span><b>무료 응모</b> 결제 없이 1회</span></p>
+        <p class="bf-draw-st" data-home-draw-st>시즌 추첨 정보를 불러오는 중…</p>
+      </div>
       <a class="bf-wide" href="/ar/course.html?id=seoul-gyeongbok-ar">경복궁 AR 탁본으로 도전하기</a>
     </section>
 
@@ -907,7 +920,7 @@
       <div class="glance">
         <button class="g-card" type="button" data-all-courses><header>혜택 01</header><div class="g-art"><span class="num3d" aria-hidden="true">37</span></div><h3>전설 코스 37개</h3><p>서울에서 제주까지, 이야기를 따라 걷는 길</p></button>
         <article class="g-card"><header>혜택 02</header><div class="g-art"><span class="num3d" aria-hidden="true">AR</span></div><h3>AR 탁본 · 3D 보물</h3><p>휴대폰 카메라 속 비석을 문질러 탁본</p></article>
-        <article class="g-card"><header>혜택 03</header><div class="g-art"><img src="img/hero-chest.webp" alt="" loading="lazy" width="681" height="720"></div><h3>적립금 100,000P</h3><p>완주하면 1~5등 포인트 상품으로 교환</p></article>
+        <article class="g-card"><header>혜택 03</header><div class="g-art"><img src="img/hero-chest.webp" alt="" loading="lazy" width="681" height="720"></div><h3>적립금 500P · 현장 완주</h3><p>완주하면 1~5등 포인트 상품으로 교환</p></article>
       </div>
     </section>
 
@@ -1052,6 +1065,40 @@ const API_BASE = (location.hostname === "localhost" || location.hostname === "12
   ? "http://localhost:4000"
   : "";
 function storedToken(){ return localStorage.getItem("token") || sessionStorage.getItem("token"); }
+/** 홈 추첨 안내 — /api/draw 만 조회(결제·주문 API 호출 없음) */
+async function syncHomeDraw(){
+  const el=document.querySelector("[data-home-draw-st]");
+  if(!el) return;
+  const loginHref="/login?next="+encodeURIComponent("/bomul.html#bf-reward");
+  try{
+    const infoRes=await fetch(API_BASE+"/api/draw");
+    const info=await infoRes.json().catch(()=>({}));
+    if(!infoRes.ok){ el.textContent="추첨 안내를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요."; return; }
+    const prizes=(info.prizes||[]).map(p=>`${p.label} ${(p.amount/10000)}만`).join(" · ");
+    const rule=info.entryRule||"시즌마다 한 사람당 1회 응모";
+    const token=storedToken();
+    if(!token){
+      el.innerHTML=`${prizes||"1등 150만 · 2등 100만 · 3등 50만"} · ${rule}<br><a href="${loginHref}">로그인하면 응모 상태를 확인할 수 있어요</a>`;
+      return;
+    }
+    const meRes=await fetch(API_BASE+"/api/draw/me",{headers:{Authorization:`Bearer ${token}`}});
+    const me=await meRes.json().catch(()=>({}));
+    if(meRes.status===401){
+      el.innerHTML=`${prizes} · ${rule}<br><a href="${loginHref}">로그인하면 응모 상태를 확인할 수 있어요</a>`;
+      return;
+    }
+    if(me.entered){
+      const title=me.entry&&me.entry.courseTitle?`「${me.entry.courseTitle}」`:"";
+      const src=me.entry&&me.entry.source==="free"?"무료 응모":"도전권 완주 응모";
+      el.textContent=`이미 ${title} ${src}로 등록되어 있어요. 추첨은 시즌마다 1인 1회입니다.`;
+      return;
+    }
+    el.textContent=`${prizes} · 아직 이번 시즌 응모 전이에요. AR 완주(도전권) 또는 무료 응모로 참여할 수 있어요.`;
+  }catch{
+    el.textContent="추첨 안내를 불러오지 못했어요. 네트워크를 확인해 주세요.";
+  }
+}
+syncHomeDraw();
 let paymentsEnabledCache=null;
 let paymentsStatusMessage="결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.";
 let portoneClientConfig=null;
@@ -2132,7 +2179,7 @@ const _GBGAR={
   points:[
     {h:"역사 배경",d:"1395년 태조가 세운 경복궁은 임진왜란 때 불에 타 270여 년 동안 빈터로 남았다가 1860년대에 다시 지어졌습니다. 다시는 불타지 않기를 바라는 마음이 해치·드므·청동 용 같은 상징으로 궁궐 곳곳에 남았습니다."},
     {h:"체험 방법",d:"장소에서 AR 카메라를 켜고 화면을 탭해 비석을 세웁니다. 한지를 붙여 손가락으로 문지르면 탁본이 떠지고, 탁본에 드러난 수수께끼를 풀면 3D 보물을 주울 수 있습니다. 경복궁 밖에서도 데모 모드로 체험할 수 있습니다."},
-    {h:"완주 보상",d:"다섯 탁본을 모두 모으면 보물 상자가 열립니다. A4로 인쇄할 수 있는 완주 증명서와 보물 적립금 100,000P를 받고, 적립금은 1~5등 포인트 상품으로 교환할 수 있습니다."},
+    {h:"완주 보상",d:"다섯 탁본을 모두 모으면 보물 상자가 열립니다. A4로 인쇄할 수 있는 완주 증명서와 현장 완주 적립금 500P를 받고, 적립금은 1~5등 포인트 상품으로 교환할 수 있습니다. 추첨은 시즌마다 1인 1회입니다."},
     {h:"꼭 볼 것",d:"광화문 앞 해치, 근정전 월대의 드므, 경회루의 48개 돌기둥, 아미산의 육각형 굴뚝, 향원정과 취향교."},
   ],
   visit:[

@@ -86,13 +86,13 @@ test('완주 적립금은 상품의 points만 합친다', () => {
   assert.equal(sumPrizePoints([{ points: 100000 }, { title: '증명서' }, { points: 0 }]), 100000);
 });
 
-test('짧은 코스 완주 적립금은 5천 원이다', () => {
-  assert.equal(completionRewardPoints({ title: '한양 도성 반나절', stops: [{}, {}, {}] }), 5000);
-  assert.equal(completionRewardPoints({ title: '제주 신화 기행', stops: [{}, {}, {}] }), 5000);
-  assert.equal(completionRewardPoints({ title: '경복궁 AR', stops: [{}, {}, {}, {}, {}], duration: '약 90분' }), 5000);
+test('짧은 코스 완주 적립금은 500P이다', () => {
+  assert.equal(completionRewardPoints({ title: '한양 도성 반나절', stops: [{}, {}, {}] }), 500);
+  assert.equal(completionRewardPoints({ title: '제주 신화 기행', stops: [{}, {}, {}] }), 500);
+  assert.equal(completionRewardPoints({ title: '경복궁 AR', stops: [{}, {}, {}, {}, {}], duration: '약 90분' }), 500);
 });
 
-test('긴 코스 완주 적립금은 1만 원이다', () => {
-  assert.equal(completionRewardPoints({ title: '한양 도성 보물길', stops: [{}, {}, {}, {}, {}, {}] }), 10000);
-  assert.equal(completionRewardPoints({ title: '정조의 효심, 화성 보물길', stops: [{}, {}, {}, {}, {}] }), 10000);
+test('긴 코스 완주 적립금도 500P이다', () => {
+  assert.equal(completionRewardPoints({ title: '한양 도성 보물길', stops: [{}, {}, {}, {}, {}, {}] }), 500);
+  assert.equal(completionRewardPoints({ title: '정조의 효심, 화성 보물길', stops: [{}, {}, {}, {}, {}] }), 500);
 });

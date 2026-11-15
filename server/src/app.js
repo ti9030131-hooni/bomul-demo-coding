@@ -9,6 +9,7 @@ import arRouter from './routes/ar.js';
 import membershipsRouter from './routes/memberships.js';
 import ordersRouter from './routes/orders.js';
 import paymentsRouter from './routes/payments.js';
+import drawRouter from './routes/draw.js';
 import authRouter from './routes/auth.js';
 import meRouter from './routes/me.js';
 import usersRouter from './routes/users.js';
@@ -97,6 +98,7 @@ app.use('/api/courses', coursesRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/payments', paymentsRouter);
+app.use('/api/draw', drawRouter);
 app.use('/api/membership', membershipsRouter);
 app.use('/api/legend-courses', legendCoursesRouter);
 app.use('/api/ar', arRouter);
@@ -130,7 +132,9 @@ app.use((err, req, res, next) => {
 
   const status = err.status ?? 500;
   if (status >= 500) console.error(err);
-  res.status(status).json({ message: status < 500 ? err.message : '서버 오류가 발생했습니다.' });
+  const body = { message: status < 500 ? err.message : '서버 오류가 발생했습니다.' };
+  if (status < 500 && err.code) body.code = err.code;
+  res.status(status).json(body);
 });
 
 export default app;

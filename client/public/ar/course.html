@@ -381,6 +381,7 @@ img{max-width:100%;display:block}
 
 /* ───────── 적립금 · 포인트 상품 ───────── */
 .prize .pts{display:inline-block;margin-top:8px;font-family:var(--sans);font-weight:600;font-size:20px;color:#1E2233;background:#FBE3A6;border-radius:4px;padding:4px 12px}
+.prize .draw-st{margin-top:6px;font-weight:600;color:var(--gold,#FBE3A6)}.prize .draw-st .act{margin-left:6px}
 .chest-card .bal{display:inline-block;margin-top:6px;font-family:var(--sans);font-weight:600;font-size:13px;color:#FBE3A6}
 .wallet{margin:20px 0 6px;padding:20px;border-radius:6px;background:var(--ink);color:var(--bg);position:relative;overflow:hidden}
 .wallet::after{content:"P";position:absolute;right:-6px;bottom:-34px;font-family:var(--sans);font-weight:600;font-size:150px;line-height:1;opacity:.08}
@@ -1976,22 +1977,98 @@ function renderPrizes(animate, reward = save.reward){
   $("#rewardSub").textContent = block
     ? block
     : ui("chest.sub", { who: wallet.name ? ui("chest.who", { name: wallet.name }) : "", final: C.final.name });
+  const loginBlocked = reward && reward.blocked === "login";
   const prizes = block
-    ? C.final.prizes.filter(p => p.icon === "cert" || p.go === "cert")
+    ? C.final.prizes.filter(p => p.icon === "cert" || p.go === "cert" || p.icon === "draw")
     : C.final.prizes;
-  $("#prizeList").innerHTML = (block ? `<li class="prize" style="animation-delay:0s"><span class="ic">${PRIZE_IC.point}</span><div><h3>${ui("chest.blockedTitle")}</h3><p>${esc(block)}${reward && reward.blocked === "login" ? ` <a href="/login">${ui("chest.login")}</a>` : ""}</p></div></li>` : "")
+  $("#prizeList").innerHTML = (block && !loginBlocked ? `<li class="prize" style="animation-delay:0s"><span class="ic">${PRIZE_IC.point}</span><div><h3>${ui("chest.blockedTitle")}</h3><p>${esc(block)}</p></div></li>` : "")
+    + (loginBlocked ? `<li class="prize" style="animation-delay:0s"><span class="ic">${PRIZE_IC.point}</span><div><h3>${ui("chest.blockedTitle")}</h3><p>${esc(block)} <a href="/login?next=${encodeURIComponent(`/ar/course.html?id=${encodeURIComponent(C.id)}`)}">${ui("chest.login")}</a></p></div></li>` : "")
     + prizes.map((p,i) => `
     <li class="prize" style="animation-delay:${animate ? (0.15 + i*0.18).toFixed(2) : 0}s">
       <span class="ic">${PRIZE_IC[p.icon] || PRIZE_IC.draw}</span>
       <div><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p>
         ${!block && p.points ? `<span class="pts">+${fmtP(p.points)}</span>` : ""}
+        ${p.icon === "draw" ? `<p class="draw-st" data-draw-st hidden></p>` : ""}
         ${p.action ? `<button class="act" data-act="${p.go||""}">${esc(p.action)}</button>` : ""}</div>
     </li>`).join("");
   const list = $("#prizeList"); list.classList.remove("go"); void list.offsetWidth; list.classList.add("go");
+  syncDrawEntry();
 }
-$("#prizeList").addEventListener("click", e => {
+/* 완주 보상 추첨 — PortOne/이니시스와 분리된 /api/draw 만 호출 */
+const DRAW_UI = { msg: "" };
+async function syncDrawEntry(){
+  const el = document.querySelector("[data-draw-st]");
+  if (!el || window.BOMUL_PREVIEW || !location.protocol.startsWith("http")) return;
+  const set = (html) => { el.innerHTML = html; el.hidden = false; };
+  if (DRAW_UI.msg) { set(DRAW_UI.msg); return; }
+  const info = await fetchJson(`${API_BASE}/api/draw`, 4000);
+  if (!info) return;
+  const loginBtn = `<button class="act" data-act="login">로그인</button>`;
+  const token = storedToken();
+  if (!token) { set(`로그인하면 추첨에 응모돼요. ${loginBtn}`); return; }
+  try {
+    const r = await fetch(`${API_BASE}/api/draw/entries`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ courseId: C.id }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (r.status === 401) { set(`로그인하면 추첨에 응모돼요. ${loginBtn}`); return; }
+    if (r.ok) {
+      DRAW_UI.msg = d.already
+        ? `이미 「${esc(d.entry && d.entry.courseTitle || "다른 코스")}」 완주로 응모되어 있어요. 추첨은 시즌마다 한 사람당 한 번이에요.`
+        : "이번 시즌 추첨에 응모되었어요. 추첨은 시즌마다 한 사람당 한 번이에요.";
+    } else if (d.code === "NEED_TICKET") {
+      DRAW_UI.msg = `도전권이 있어야 응모할 수 있어요. <button class="act" data-act="free-draw">무료 응모하기</button>`;
+    } else {
+      DRAW_UI.msg = esc(d.message || "응모하지 못했어요. 잠시 뒤 다시 열어 주세요.");
+    }
+    set(DRAW_UI.msg);
+    if (!r.ok) DRAW_UI.msg = "";
+  } catch (e) { /* 연결 실패: 상품 설명만 유지 */ }
+}
+async function enterFreeDraw(){
+  const token = storedToken();
+  if (!token) return { login: true, msg: "로그인하면 무료로 응모할 수 있어요." };
+  try {
+    const r = await fetch(`${API_BASE}/api/draw/entries`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ courseId: C.id, source: "free" }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (r.status === 401) return { login: true, msg: "로그인하면 무료로 응모할 수 있어요." };
+    if (r.ok) return {
+      ok: true,
+      msg: d.already
+        ? `이미 「${d.entry && d.entry.courseTitle || "다른 코스"}」에서 응모되어 있어요. 추첨은 시즌마다 한 사람당 한 번이에요.`
+        : "완주 보상 추첨에 무료로 응모했어요. 추첨은 시즌마다 한 사람당 한 번이에요.",
+    };
+    return { msg: d.message || "응모하지 못했어요. 잠시 뒤 다시 시도해 주세요." };
+  } catch (e) {
+    return { msg: "연결이 원활하지 않아요. 잠시 뒤 다시 시도해 주세요." };
+  }
+}
+$("#prizeList").addEventListener("click", async e => {
   const b = e.target.closest("[data-act]"); if (!b) return;
   if (b.dataset.act === "shop") { show("v-shop"); return; }
+  if (b.dataset.act === "login") {
+    location.href = `/login?next=${encodeURIComponent(`/ar/course.html?id=${encodeURIComponent(C.id)}`)}`;
+    return;
+  }
+  if (b.dataset.act === "free-draw") {
+    b.disabled = true;
+    const r = await enterFreeDraw();
+    const el = document.querySelector("[data-draw-st]");
+    if (r.login) {
+      location.href = `/login?next=${encodeURIComponent(`/ar/course.html?id=${encodeURIComponent(C.id)}`)}`;
+      return;
+    }
+    if (el) { el.textContent = r.msg; el.hidden = false; }
+    if (r.ok) DRAW_UI.msg = esc(r.msg);
+    else b.disabled = false;
+    return;
+  }
   openCert("v-reward");
 });
 /* ── 실사 보물 상자: 3D + 빛 연출 ── */
