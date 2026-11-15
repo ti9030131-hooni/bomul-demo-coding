@@ -1,10 +1,11 @@
 /**
  * 결제·도전권 구매 킬 스위치.
  * - PAYMENTS_ENABLED=0|false|off → 차단
- * - PAYMENTS_ENABLED=1|true|on → 허용
+ * - PAYMENTS_ENABLED=1|true|on → 허용(단, PORTONE_MODE=off 이면 차단)
  * - 미설정: NODE_ENV=production 이면 차단, 그 외(로컬)는 허용
  * 테스트: test/payments-gate.test.mjs
  */
+import { portoneMode } from './portone.js';
 
 function httpError(status, message) {
   const error = new Error(message);
@@ -17,8 +18,16 @@ export const PAYMENTS_DISABLED_MESSAGE = '결제 준비 중입니다. 실연동 
 export function paymentsEnabled(env = process.env) {
   const flag = String(env.PAYMENTS_ENABLED ?? '').trim().toLowerCase();
   if (['0', 'false', 'off', 'no'].includes(flag)) return false;
-  if (['1', 'true', 'on', 'yes'].includes(flag)) return true;
-  return env.NODE_ENV !== 'production';
+  let flagOn;
+  if (['1', 'true', 'on', 'yes'].includes(flag)) flagOn = true;
+  else flagOn = env.NODE_ENV !== 'production';
+  if (!flagOn) return false;
+  try {
+    if (portoneMode(env) === 'off') return false;
+  } catch {
+    return false;
+  }
+  return true;
 }
 
 export function assertPaymentsEnabled(env = process.env) {

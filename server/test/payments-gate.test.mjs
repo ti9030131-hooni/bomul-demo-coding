@@ -15,11 +15,27 @@ test('PAYMENTS_ENABLED=0 이면 결제를 차단한다', () => {
   assert.equal(paymentsEnabled({ PAYMENTS_ENABLED: 'on' }), true);
 });
 
+test('PORTONE_MODE=off 이면 결제 플래그가 켜져도 차단한다', () => {
+  assert.equal(paymentsEnabled({ PAYMENTS_ENABLED: '1', PORTONE_MODE: 'off' }), false);
+  assert.equal(
+    paymentsEnabled({ NODE_ENV: 'production', PAYMENTS_ENABLED: '1' }),
+    false,
+  );
+  assert.equal(
+    paymentsEnabled({
+      NODE_ENV: 'production',
+      PAYMENTS_ENABLED: '1',
+      PORTONE_MODE: 'mock',
+      ALLOW_MOCK_PAY: '1',
+    }),
+    true,
+  );
+});
+
 test('미설정 시 운영은 차단, 로컬은 허용', () => {
   assert.equal(paymentsEnabled({ NODE_ENV: 'production' }), false);
   assert.equal(paymentsEnabled({}), true);
   assert.equal(paymentsEnabled({ NODE_ENV: 'development' }), true);
-  assert.equal(paymentsEnabled({ NODE_ENV: 'production', PAYMENTS_ENABLED: '1' }), true);
 });
 
 test('차단 시 assert 는 503', () => {

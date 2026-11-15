@@ -1,5 +1,7 @@
 import User from '../models/User.js';
+import { paymentIdsOf } from '../services/orderPayment.js';
 import { assertPaymentsEnabled, paymentsEnabled, PAYMENTS_DISABLED_MESSAGE } from '../services/payments.js';
+import { verifyPortOnePayment } from '../services/portone.js';
 
 const PAYMENTS = ['신용카드', '계좌이체', '네이버페이'];
 const PLANS = {
@@ -33,6 +35,14 @@ export async function buyMembership(req, res) {
   const courseId = typeof req.body.course_id === 'string' ? req.body.course_id.trim() : '';
   if (plan === 'course' && !courseId) throw httpError(400, '도전할 코스를 확인해 주세요.');
 
+  const { imp_uid: impUid, merchant_uid: merchantUid } = paymentIdsOf(req.body);
+  const expectedAmount = PLANS[plan].price;
+  const verified = await verifyPortOnePayment({
+    imp_uid: impUid,
+    merchant_uid: merchantUid,
+    expectedAmount,
+  });
+
   const user = await User.findById(req.user.id);
   if (!user) throw httpError(401, '토큰이 올바르지 않습니다.');
   const owned = Array.isArray(user.membership?.courses) ? user.membership.courses : [];
@@ -49,14 +59,16 @@ export async function buyMembership(req, res) {
     active: plan === 'all',
     plan,
     courses: plan === 'all' ? owned : owned.concat(courseId),
-    price: PLANS[plan].price,
+    price: verified.amount,
     purchased_at: new Date(),
     payment_method: payment,
   };
   await user.save();
   res.json({
     message: '결제가 완료되었습니다.',
-    price: PLANS[plan].price,
+    price: verified.amount,
     membership: user.membership,
+    imp_uid: verified.imp_uid,
+    merchant_uid: verified.merchant_uid,
   });
 }

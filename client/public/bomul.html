@@ -2679,13 +2679,13 @@ let hasMembership=false;
 let signedIn=false;
 let accountReady=false;
 let memberPromptDismissed=false;
-const MEMBERSHIP_PRICE=9900;
 const FREE_MODE=true;
 const FREE_COURSE_IDS=["seoul-gyeongbok-ar"];
 const MEMBER_COURSE_IDS=["seoul-gangdong"];
 const FEATURED_IDS=COURSES.slice(0,3).map(c=>c.id).filter(id=>!MEMBER_COURSE_IDS.includes(id));
 const COURSE_PASS_PRICE=4000;
 const ALL_PASS_PRICE=8000;
+const MEMBERSHIP_PRICE=ALL_PASS_PRICE;
 function hasCoursePass(id){
   if(FREE_COURSE_IDS.includes(id)) return true;
   if(accountUser && accountUser.user_type==="admin") return true;
@@ -2760,6 +2760,7 @@ function paymentWindowHtml(){
       <label><input type="radio" name="membershipPay" value="계좌이체"> 계좌이체</label>
       <label class="is-naver"><input type="radio" name="membershipPay" value="네이버페이"> 네이버페이</label>
     </div>
+    <label class="ms-agree"><input type="checkbox" id="membershipAgree"> 개인정보처리방침 및 이용약관에 동의합니다.</label>
     ${action}
     <p class="ms-msg" id="lockMsg" hidden></p>`;
 }
@@ -3143,6 +3144,11 @@ async function buyMembership(button){
     if(msg){ msg.hidden=false; msg.style.color="var(--accent)"; msg.textContent=paymentsStatusMessage; }
     return;
   }
+  const agree=$("#membershipAgree");
+  if(!agree || !agree.checked){
+    if(msg){ msg.hidden=false; msg.style.color="var(--accent)"; msg.textContent="약관에 동의해 주세요."; }
+    return;
+  }
   const payment=document.querySelector('input[name="membershipPay"]:checked')?.value||"신용카드";
   button.disabled=true;
   if(msg){ msg.hidden=false; msg.style.color="var(--muted)"; msg.textContent="멤버십을 구매하는 중"; }
@@ -3150,7 +3156,7 @@ async function buyMembership(button){
     const response=await fetch(API_BASE+"/api/membership",{
       method:"POST",
       headers:{"content-type":"application/json",authorization:`Bearer ${saved}`},
-      body:JSON.stringify({payment_method:payment}),
+      body:JSON.stringify({plan:"all", payment_method:payment, agree:true}),
     });
     const body=await response.json().catch(()=>({}));
     if(!response.ok){
@@ -3158,7 +3164,8 @@ async function buyMembership(button){
       if(msg){ msg.style.color="var(--accent)"; msg.textContent=body.message||"멤버십을 구매하지 못했습니다."; }
       return;
     }
-    hasMembership=true;
+    if(accountUser) accountUser.membership=body.membership||accountUser.membership;
+    hasMembership=Boolean(accountUser && (accountUser.user_type==="admin" || accountUser.membership?.active));
     closeMemberModal();
     memberPromptDismissed=true;
     refreshCourseViews();

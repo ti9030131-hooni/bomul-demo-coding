@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function NaverCallbackPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [result] = useState(() => {
     const params = new URLSearchParams(window.location.hash.slice(1));
     return {
@@ -15,6 +16,8 @@ function NaverCallbackPage() {
   useEffect(() => {
     sessionStorage.removeItem('social_remember');
     sessionStorage.removeItem('naver_remember');
+    const isGoogle = location.pathname.includes('/google');
+    const fallback = isGoogle ? '구글 로그인에 실패했습니다.' : '네이버 로그인에 실패했습니다.';
     if (result.token) {
       const storage = result.remember ? localStorage : sessionStorage;
       const other = result.remember ? sessionStorage : localStorage;
@@ -23,8 +26,8 @@ function NaverCallbackPage() {
       navigate('/', { replace: true });
       return;
     }
-    navigate('/login', { replace: true, state: { error: result.error || '네이버 로그인에 실패했습니다.' } });
-  }, [navigate, result]);
+    navigate('/login', { replace: true, state: { error: result.error || fallback } });
+  }, [navigate, result, location.pathname]);
 
   return (
     <section className="login-page">
