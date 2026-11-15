@@ -52,7 +52,25 @@ function presentWallet(wallet, extra = {}) {
 }
 
 async function loadWallet(userId) {
-  return ArWallet.findOne({ user: userId }) || new ArWallet({ user: userId, points: 0, history: [], completions: [] });
+  const existing = await ArWallet.findOne({ user: userId });
+  return existing || new ArWallet({ user: userId, points: 0, history: [], completions: [] });
+}
+
+/** 지갑 문서가 없으면 빈 지갑을 만들고, 이미 있으면 그대로 둡니다. */
+async function ensureWallet(userId) {
+  const existing = await ArWallet.findOne({ user: userId }).select('_id').lean();
+  if (existing) return;
+  try {
+    await ArWallet.updateOne(
+      { user: userId },
+      { $setOnInsert: { user: userId, points: 0, history: [], completions: [] } },
+      { upsert: true },
+    );
+  } catch (err) {
+    // 동시 요청 upsert가 unique(user)에서 충돌해도 다른 요청이 이미 만든 지갑이므로 통과
+    if (err && (err.code === 11000 || err.code === 11001)) return;
+    throw err;
+  }
 }
 
 function readSample(body) {
@@ -134,26 +152,37 @@ export async function postComplete(req, res) {
     duration: built.text?.duration,
     stops: built.stops,
   });
-  const wallet = await loadWallet(req.user._id);
-  const already = wallet.completions.find((item) => item.courseId === courseId);
-  if (already) {
-    res.json(presentWallet(wallet, { earned: 0, already: true, courseId }));
-    return;
-  }
+  const now = new Date();
+  await ensureWallet(req.user._id);
 
+  // 코스당 1회만 적립: completions에 courseId가 없을 때만 원자적으로 반영 (동시 요청 중복 방지)
+  const update = {
+    $push: {
+      completions: { courseId, earned, at: now },
+    },
+  };
   if (earned) {
-    wallet.points += earned;
-    wallet.history.push({
+    update.$inc = { points: earned };
+    update.$push.history = {
       type: 'earn',
       courseId,
       name: `${built.title} 완주 적립금`,
       points: earned,
-      at: new Date(),
-    });
+      at: now,
+    };
   }
-  wallet.completions.push({ courseId, earned, at: new Date() });
-  await wallet.save();
-  res.json(presentWallet(wallet, { earned, already: false, courseId }));
+
+  const awarded = await ArWallet.findOneAndUpdate(
+    { user: req.user._id, 'completions.courseId': { $ne: courseId } },
+    update,
+    { new: true },
+  );
+  if (!awarded) {
+    const wallet = await ArWallet.findOne({ user: req.user._id }).lean();
+    res.json(presentWallet(wallet || { points: 0, history: [], completions: [] }, { earned: 0, already: true, courseId }));
+    return;
+  }
+  res.json(presentWallet(awarded, { earned, already: false, courseId }));
 }
 
 /** GET /api/ar/leaderboard/:courseId — 이번 주 현장 완주, 소요 시간이 짧은 순 */
