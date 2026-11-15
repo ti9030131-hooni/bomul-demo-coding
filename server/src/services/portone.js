@@ -51,8 +51,11 @@ export function portoneMode(env = process.env) {
 export function portoneClientConfig(env = process.env) {
   const impCode = text(env.PORTONE_IMP_CODE);
   const channelKey = text(env.PORTONE_CHANNEL_KEY);
-  if (!impCode || !channelKey) return null;
-  return { impCode, channelKey };
+  const pg = text(env.PORTONE_PG);
+  // 테스트는 보통 pg=html5_inicis.INIpayTest, 채널키 연동은 channelKey 사용
+  if (!impCode) return null;
+  if (!channelKey && !pg) return null;
+  return { impCode, channelKey: channelKey || undefined, pg: pg || undefined };
 }
 
 export function clearMockPayments() {

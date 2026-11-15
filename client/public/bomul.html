@@ -1063,7 +1063,7 @@ async function ensurePaymentsEnabled(){
     const body=await response.json().catch(()=>({}));
     paymentsEnabledCache=body.enabled===true;
     if(typeof body.message==="string" && body.message) paymentsStatusMessage=body.message;
-    if(body.portone && body.portone.impCode && body.portone.channelKey) portoneClientConfig=body.portone;
+    if(body.portone && body.portone.impCode && (body.portone.channelKey||body.portone.pg)) portoneClientConfig=body.portone;
     else portoneClientConfig=null;
   }catch{
     paymentsEnabledCache=false;
@@ -1111,21 +1111,27 @@ async function openPortonePay({token, amount, name, payMethod, buyer}){
   });
   const prepareBody=await prepareResponse.json().catch(()=>({}));
   if(!prepareResponse.ok) throw new Error(prepareBody.message||'결제 준비에 실패했습니다.');
-  const impCode=prepareBody.portone?.impCode||portoneClientConfig.impCode;
-  const channelKey=prepareBody.portone?.channelKey||portoneClientConfig.channelKey;
+  const cfg=prepareBody.portone||portoneClientConfig;
+  const impCode=cfg.impCode||portoneClientConfig.impCode;
+  const channelKey=cfg.channelKey||portoneClientConfig.channelKey;
+  const pg=cfg.pg||portoneClientConfig.pg;
   const methodMap={신용카드:'card',계좌이체:'trans',네이버페이:'card'};
+  const payParams={
+    pay_method:methodMap[payMethod]||'card',
+    merchant_uid:uid,
+    name,
+    amount:Math.round(amount),
+    buyer_name:buyer?.name||'구매자',
+    buyer_tel:buyer?.phone||'01000000000',
+    buyer_email:buyer?.email||'buyer@example.com',
+  };
+  // 구 SDK는 잘못된 channelKey 시 pg 오류를 냅니다. 테스트는 pg(INIpayTest) 우선.
+  if(pg) payParams.pg=pg;
+  else if(channelKey) payParams.channelKey=channelKey;
+  else throw new Error('결제 채널 설정이 없습니다.');
   return new Promise((resolve,reject)=>{
     IMP.init(impCode);
-    IMP.request_pay({
-      channelKey,
-      pay_method:methodMap[payMethod]||'card',
-      merchant_uid:uid,
-      name,
-      amount:Math.round(amount),
-      buyer_name:buyer?.name||'',
-      buyer_tel:buyer?.phone||'',
-      buyer_email:buyer?.email||'',
-    }, (response)=>{
+    IMP.request_pay(payParams, (response)=>{
       if(!paymentAccepted(response)){
         reject(new Error(response?.error_msg||'결제가 취소되었습니다.'));
         return;

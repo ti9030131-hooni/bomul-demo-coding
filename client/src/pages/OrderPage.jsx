@@ -108,7 +108,9 @@ function OrderPage() {
         const body = await response.json().catch(() => ({}));
         if (ignore) return;
         const enabled = body.enabled === true;
-        const cfg = body.portone && body.portone.impCode && body.portone.channelKey ? body.portone : null;
+        const cfg = body.portone && body.portone.impCode && (body.portone.channelKey || body.portone.pg)
+          ? body.portone
+          : null;
         setPaymentsEnabled(enabled);
         setPortone(cfg);
         setPaymentsMessage(
@@ -236,7 +238,7 @@ function OrderPage() {
       setMessage(paymentsMessage || '결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.');
       return;
     }
-    if (!portone?.impCode || !portone?.channelKey) {
+    if (!portone?.impCode || !(portone.channelKey || portone.pg)) {
       setMessage('결제 설정이 없습니다. 잠시 후 다시 시도해 주세요.');
       return;
     }
@@ -292,23 +294,28 @@ function OrderPage() {
       if (!prepareResponse.ok) {
         throw new Error(prepareBody.message || '결제 준비에 실패했습니다.');
       }
-      const channelKey = prepareBody.portone?.channelKey || portone.channelKey;
-      const impCode = prepareBody.portone?.impCode || portone.impCode;
+      const cfg = prepareBody.portone || portone;
+      const impCode = cfg.impCode || portone.impCode;
+      const channelKey = cfg.channelKey || portone.channelKey;
+      const pg = cfg.pg || portone.pg;
+      const payParams = {
+        pay_method: PORTONE_PAY_METHOD[nextPayment],
+        merchant_uid: uid,
+        name: orderName(items),
+        amount,
+        buyer_email: payload.buyer.email,
+        buyer_name: payload.buyer.name,
+        buyer_tel: payload.buyer.phone || '01000000000',
+        m_redirect_url: `${window.location.origin}/order`,
+      };
+      if (pg) payParams.pg = pg;
+      else if (channelKey) payParams.channelKey = channelKey;
+      else throw new Error('결제 채널 설정이 없습니다.');
 
       rememberPendingPay(uid, payload);
       window.IMP.init(impCode);
       window.IMP.request_pay(
-        {
-          channelKey,
-          pay_method: PORTONE_PAY_METHOD[nextPayment],
-          merchant_uid: uid,
-          name: orderName(items),
-          amount,
-          buyer_email: payload.buyer.email,
-          buyer_name: payload.buyer.name,
-          buyer_tel: payload.buyer.phone,
-          m_redirect_url: `${window.location.origin}/order`,
-        },
+        payParams,
         async (response) => {
           try {
             if (!paymentAccepted(response)) {
@@ -348,7 +355,7 @@ function OrderPage() {
 
   useEffect(() => {
     if (!autoPay || status !== 'ready' || items.length === 0 || pending || order) return;
-    if (paymentsEnabled !== true || !portone?.channelKey) return;
+    if (paymentsEnabled !== true || !(portone?.channelKey || portone?.pg)) return;
     if (autoPayStarted.current) return;
     if (!buyer.name.trim() || !buyer.phone.trim() || !buyer.email.trim()) return;
     if (!Number.isFinite(total) || total <= 0) return;

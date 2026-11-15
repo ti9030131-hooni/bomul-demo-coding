@@ -20,7 +20,7 @@ export async function preparePayment(req, res) {
   assertPaymentsEnabled();
   const client = portoneClientConfig();
   if (!client) {
-    throw httpError(503, '포트원 테스트 설정이 없습니다. PORTONE_IMP_CODE·PORTONE_CHANNEL_KEY를 확인하세요.');
+    throw httpError(503, '포트원 테스트 설정이 없습니다. PORTONE_IMP_CODE와 PORTONE_PG 또는 PORTONE_CHANNEL_KEY를 확인하세요.');
   }
 
   const merchantUid = text(req.body?.merchant_uid);

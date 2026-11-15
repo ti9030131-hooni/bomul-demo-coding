@@ -47,12 +47,12 @@ test('status 에 테스트 설정(portone)을 내려준다', () => {
     ALLOW_TEST_PAY: '1',
     NODE_ENV: 'production',
     PORTONE_IMP_CODE: 'imp_test',
-    PORTONE_CHANNEL_KEY: 'channel-test',
+    PORTONE_PG: 'html5_inicis.INIpayTest',
   });
   assert.equal(status.enabled, true);
   assert.equal(status.mode, 'test');
   assert.equal(status.portone.impCode, 'imp_test');
-  assert.equal(status.portone.channelKey, 'channel-test');
+  assert.equal(status.portone.pg, 'html5_inicis.INIpayTest');
 });
 
 test('test 모드 prepare 인텐트로 금액·주문번호를 검증한다', async () => {
