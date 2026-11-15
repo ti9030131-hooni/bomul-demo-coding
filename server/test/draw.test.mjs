@@ -8,6 +8,9 @@ test('상금 합계와 세금을 회사가 낼 때의 실제 비용', () => {
   assert.equal(prizeCost(), Math.ceil(3000000 / 0.78));                   // 3,846,154원
   assert.equal(prizeCost({ ...drawConfig, taxPaidByCompany: false }), 3000000);
   assert.equal(drawConfig.freeEntry, true);                                 // 무료 응모 경로
+  assert.match(drawConfig.entryRule, /계정당 무료 응모 1회/);               // 정책 A: 전 시즌 통산 1회
+  assert.match(drawConfig.entryRule, /모든 시즌 통산/);
+  assert.equal(/무료 체험 뒤/.test(drawConfig.entryRule), false);
   assert.ok(prizeCost() <= drawConfig.budget, '기본 예산 안에 들어와야 함');
 });
 

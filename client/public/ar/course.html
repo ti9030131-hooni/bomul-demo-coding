@@ -2005,7 +2005,7 @@ async function syncDrawEntry(){
   if (!info) return;
   const loginBtn = `<button class="act" data-act="login">로그인</button>`;
   const token = storedToken();
-  if (!token) { set(`로그인하면 추첨에 응모돼요. ${loginBtn}`); return; }
+  if (!token) { set(`로그인하면 계정당 무료 응모 1회를 쓸 수 있어요. ${loginBtn}`); return; }
   try {
     const r = await fetch(`${API_BASE}/api/draw/entries`, {
       method: "POST",
@@ -2013,13 +2013,14 @@ async function syncDrawEntry(){
       body: JSON.stringify({ courseId: C.id }),
     });
     const d = await r.json().catch(() => ({}));
-    if (r.status === 401) { set(`로그인하면 추첨에 응모돼요. ${loginBtn}`); return; }
+    if (r.status === 401) { set(`로그인하면 계정당 무료 응모 1회를 쓸 수 있어요. ${loginBtn}`); return; }
     if (r.ok) {
+      const src = d.entry && d.entry.source === "free" ? "무료 응모" : "도전권 완주 응모";
       DRAW_UI.msg = d.already
-        ? `이미 「${esc(d.entry && d.entry.courseTitle || "다른 코스")}」 완주로 응모되어 있어요. 추첨은 시즌마다 한 사람당 한 번이에요.`
-        : "이번 시즌 추첨에 응모되었어요. 추첨은 시즌마다 한 사람당 한 번이에요.";
+        ? esc(d.message || `이미 「${d.entry && d.entry.courseTitle || "다른 코스"}」 ${src}로 등록되어 있어요.`)
+        : "이번 시즌 추첨에 응모되었어요.";
     } else if (d.code === "NEED_TICKET") {
-      DRAW_UI.msg = `도전권이 있어야 응모할 수 있어요. <button class="act" data-act="free-draw">무료 응모하기</button>`;
+      DRAW_UI.msg = `도전권이 없어도 로그인 회원이면 계정당 무료 응모 1회를 쓸 수 있어요. <button class="act" data-act="free-draw">무료 응모하기</button>`;
     } else {
       DRAW_UI.msg = esc(d.message || "응모하지 못했어요. 잠시 뒤 다시 열어 주세요.");
     }
@@ -2029,7 +2030,7 @@ async function syncDrawEntry(){
 }
 async function enterFreeDraw(){
   const token = storedToken();
-  if (!token) return { login: true, msg: "로그인하면 무료로 응모할 수 있어요." };
+  if (!token) return { login: true, msg: "로그인하면 계정당 무료 응모 1회를 쓸 수 있어요." };
   try {
     const r = await fetch(`${API_BASE}/api/draw/entries`, {
       method: "POST",
@@ -2037,12 +2038,12 @@ async function enterFreeDraw(){
       body: JSON.stringify({ courseId: C.id, source: "free" }),
     });
     const d = await r.json().catch(() => ({}));
-    if (r.status === 401) return { login: true, msg: "로그인하면 무료로 응모할 수 있어요." };
+    if (r.status === 401) return { login: true, msg: "로그인하면 계정당 무료 응모 1회를 쓸 수 있어요." };
     if (r.ok) return {
       ok: true,
       msg: d.already
-        ? `이미 「${d.entry && d.entry.courseTitle || "다른 코스"}」에서 응모되어 있어요. 추첨은 시즌마다 한 사람당 한 번이에요.`
-        : "완주 보상 추첨에 무료로 응모했어요. 추첨은 시즌마다 한 사람당 한 번이에요.",
+        ? (d.message || `이미 무료 응모를 사용했어요. 무료 응모는 회원 계정당 1회만 가능합니다.`)
+        : "완주 보상 추첨에 무료로 응모했어요. 계정당 1회(전 시즌 통산)이며, 결제·현장 체험은 필요하지 않아요.",
     };
     return { msg: d.message || "응모하지 못했어요. 잠시 뒤 다시 시도해 주세요." };
   } catch (e) {

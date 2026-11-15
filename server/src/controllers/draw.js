@@ -46,21 +46,51 @@ export function getDraw(req, res) {
   res.json(publicDraw());
 }
 
-/** GET /api/draw/me — 내 응모 */
+/** GET /api/draw/me — 이번 시즌 응모 + 계정당 무료 응모 사용 여부 */
 export async function getMyEntry(req, res) {
-  const entry = await DrawEntry.findOne({ season: drawConfig.season, user: req.user._id }).lean();
-  res.json({ season: drawConfig.season, entered: !!entry, entry: publicEntry(entry) });
+  const [entry, freeEntry] = await Promise.all([
+    DrawEntry.findOne({ season: drawConfig.season, user: req.user._id }).lean(),
+    DrawEntry.findOne({ user: req.user._id, source: 'free' }).lean(),
+  ]);
+  res.json({
+    season: drawConfig.season,
+    entered: !!entry,
+    entry: publicEntry(entry),
+    freeUsed: !!freeEntry,
+    freeEntry: publicEntry(freeEntry),
+  });
 }
 
-/** POST /api/draw/entries — { courseId, source: completion|free } */
+/** POST /api/draw/entries — { courseId, source: completion|free }
+ * 정책 A:
+ * - free: 로그인만 필요, 계정당 전 시즌 통산 1회 (partial unique user+free)
+ * - completion: 회원권 필요, 시즌당 1회 (unique season+user)
+ * AR/GPS 500P와 분리. 기존 응모 문서는 $setOnInsert로 보존.
+ */
 export async function enterDraw(req, res) {
   if (!isOpen()) throw httpError(409, '이번 시즌 추첨 응모가 끝났어요.', 'DRAW_CLOSED');
+  if (!req.user?._id) throw httpError(401, '로그인하면 응모할 수 있어요.');
   const source = req.body.source === 'free' ? 'free' : 'completion';
   if (source === 'free' && drawConfig.freeEntry === false) {
     throw httpError(403, '무료 응모를 받지 않는 시즌이에요.', 'FREE_ENTRY_OFF');
   }
   const courseId = typeof req.body.courseId === 'string' ? req.body.courseId.trim() : '';
   if (!validCourseId(courseId)) throw httpError(400, '코스를 찾을 수 없습니다.');
+
+  // 무료 응모: 시즌과 무관하게 계정 1회만
+  if (source === 'free') {
+    const priorFree = await DrawEntry.findOne({ user: req.user._id, source: 'free' }).lean();
+    if (priorFree) {
+      return res.json({
+        entered: true,
+        already: true,
+        entry: publicEntry(priorFree),
+        rule: drawConfig.entryRule,
+        code: 'FREE_ALREADY',
+        message: '이미 무료 응모를 사용했어요. 무료 응모는 회원 계정당 1회만 가능합니다.',
+      });
+    }
+  }
 
   const existing = await DrawEntry.findOne({ season: drawConfig.season, user: req.user._id }).lean();
   if (existing) {
@@ -69,12 +99,14 @@ export async function enterDraw(req, res) {
       already: true,
       entry: publicEntry(existing),
       rule: drawConfig.entryRule,
+      message: '이미 이번 시즌 추첨에 응모되어 있어요. 시즌당 응모는 1회입니다.',
     });
   }
 
   const title = await courseTitle(courseId);
   if (!title) throw httpError(400, '코스를 찾을 수 없습니다.');
 
+  // completion만 회원권 검사. free는 결제·회원권·현장 체험을 요구하지 않음(AR 500P와 분리).
   if (source === 'completion') {
     const user = await User.findById(req.user._id).lean();
     if (!hasMembershipAccess(user, courseId)) {
@@ -82,14 +114,35 @@ export async function enterDraw(req, res) {
     }
   }
 
+  // $setOnInsert + unique 인덱스: 동시·다기기에서도 첫 문서만 생성, 기존 이력 보존
   try {
-    const entry = await DrawEntry.create({
-      season: drawConfig.season,
-      user: req.user._id,
-      courseId,
-      courseTitle: title,
-      source,
-    });
+    const result = await DrawEntry.findOneAndUpdate(
+      { season: drawConfig.season, user: req.user._id },
+      {
+        $setOnInsert: {
+          season: drawConfig.season,
+          user: req.user._id,
+          courseId,
+          courseTitle: title,
+          source,
+        },
+      },
+      { upsert: true, new: true, includeResultMetadata: true },
+    );
+    const entry = result.value;
+    const already = Boolean(result.lastErrorObject?.updatedExisting);
+    if (already) {
+      return res.json({
+        entered: true,
+        already: true,
+        entry: publicEntry(entry),
+        rule: drawConfig.entryRule,
+        message:
+          entry?.source === 'free'
+            ? '이미 무료 응모를 사용했어요. 무료 응모는 회원 계정당 1회만 가능합니다.'
+            : '이미 이번 시즌 추첨에 응모되어 있어요. 시즌당 응모는 1회입니다.',
+      });
+    }
     return res.status(201).json({
       entered: true,
       already: false,
@@ -97,13 +150,20 @@ export async function enterDraw(req, res) {
       rule: drawConfig.entryRule,
     });
   } catch (err) {
-    if (err.code !== 11000) throw err;
-    const again = await DrawEntry.findOne({ season: drawConfig.season, user: req.user._id }).lean();
+    if (err.code !== 11000 && err.code !== 11001) throw err;
+    const againFree = source === 'free'
+      ? await DrawEntry.findOne({ user: req.user._id, source: 'free' }).lean()
+      : null;
+    const again = againFree || await DrawEntry.findOne({ season: drawConfig.season, user: req.user._id }).lean();
     return res.json({
       entered: true,
       already: true,
       entry: publicEntry(again),
       rule: drawConfig.entryRule,
+      code: againFree ? 'FREE_ALREADY' : undefined,
+      message: againFree
+        ? '이미 무료 응모를 사용했어요. 무료 응모는 회원 계정당 1회만 가능합니다.'
+        : '이미 이번 시즌 추첨에 응모되어 있어요. 시즌당 응모는 1회입니다.',
     });
   }
 }
