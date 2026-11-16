@@ -34,3 +34,12 @@ test('데모 완주(로컬 onsite 미완료)와 서버 거절을 부제로 구�
   assert.equal(rewardSubKind({ blocked: 'onsite' }, true), 'needOnsite');
   assert.equal(rewardSubKind({ blocked: 'login' }, false), 'login');
 });
+
+test('현장 인증 안내는 제목+부제 한 세트로만 쓰고 congrats는 server일 때만', () => {
+  const { rewardTitleKind, rewardSubKind } = loadUi();
+  const reward = { blocked: 'onsite' };
+  assert.equal(rewardTitleKind(reward), 'needOnsite');
+  assert.equal(rewardSubKind(reward, false), 'demoNeedOnsite');
+  assert.notEqual(rewardTitleKind(reward), 'congrats');
+  assert.equal(rewardTitleKind({ server: true }), 'congrats');
+});

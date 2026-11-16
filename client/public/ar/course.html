@@ -360,9 +360,9 @@ img{max-width:100%;display:block}
 #bigChest .glow{opacity:0;transition:opacity .5s .25s}
 .stage.open #bigChest .glow{opacity:1}
 .stage .spark{left:50%;top:48%}
-.reward-hint{font-family:var(--sans);font-size:15px;opacity:.85;margin:8px 0 0;min-height:1.5em}
-.reward-title{font-size:26px;font-weight:900;margin:18px 0 4px;line-height:1.35}
-.reward-sub{font-size:16px;opacity:.85;margin:0 0 20px}
+.reward-hint{font-family:var(--sans);font-size:15px;opacity:.85;margin:8px 0 0;min-height:1.5em;overflow-wrap:anywhere;word-break:keep-all}
+.reward-title{font-size:26px;font-weight:900;margin:18px 0 4px;line-height:1.35;overflow-wrap:anywhere;word-break:keep-all}
+.reward-sub{font-size:16px;opacity:.85;margin:0 0 20px;overflow-wrap:anywhere;word-break:keep-all}
 .prizes{list-style:none;margin:0;padding:0;display:grid;gap:12px;text-align:left}
 .prize{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:start;background:#1D2338;border-radius:6px;padding:16px;
   box-shadow:inset 0 0 0 1px #343B5C;opacity:0;transform:translateY(16px)}
@@ -1972,15 +1972,13 @@ function openReward(){
   show("v-reward");
   const opened = !!save.reward;
   $("#rewardBody").hidden = !opened;
-  const block = rewardBlockMessage(save.reward);
-  $("#rewardHint").textContent = block
-    ? block
-    : opened ? ui("chest.openedHint") : ui("chest.hint");
+  /* 현장 인증 안내는 rewardSub에만 두고, hint는 상자 조작 안내만 유지 */
+  $("#rewardHint").textContent = opened ? ui("chest.openedHint") : ui("chest.hint");
   if (opened) renderPrizes(false);
   startChest(opened);
   if (save.reward && !save.reward.server) {
     grantReward().then(() => {
-      $("#rewardHint").textContent = rewardBlockMessage(save.reward) || ui("chest.openedHint");
+      $("#rewardHint").textContent = ui("chest.openedHint");
       renderPrizes(false);
     });
   }
@@ -1988,15 +1986,17 @@ function openReward(){
 function renderPrizes(animate, reward = save.reward){
   applyRewardTitle(reward);
   const block = rewardBlockMessage(reward);
-  $("#rewardSub").textContent = block
-    ? block
-    : ui("chest.sub", { who: wallet.name ? ui("chest.who", { name: wallet.name }) : "", final: C.final.name });
   const loginBlocked = reward && reward.blocked === "login";
+  /* 현장 인증/데모 안내는 제목 아래 sub 한 곳에만 표시 (hint·상품 목록 중복 제거) */
+  $("#rewardSub").textContent = loginBlocked
+    ? ""
+    : block
+      ? block
+      : ui("chest.sub", { who: wallet.name ? ui("chest.who", { name: wallet.name }) : "", final: C.final.name });
   const prizes = block
     ? C.final.prizes.filter(p => p.icon === "cert" || p.go === "cert" || p.icon === "draw")
     : C.final.prizes;
-  $("#prizeList").innerHTML = (block && !loginBlocked ? `<li class="prize" style="animation-delay:0s"><span class="ic">${PRIZE_IC.point}</span><div><h3>${ui("chest.blockedTitle")}</h3><p>${esc(block)}</p></div></li>` : "")
-    + (loginBlocked ? `<li class="prize" style="animation-delay:0s"><span class="ic">${PRIZE_IC.point}</span><div><h3>${ui("chest.blockedTitle")}</h3><p>${esc(block)} <a href="/login?next=${encodeURIComponent(`/ar/course.html?id=${encodeURIComponent(C.id)}`)}">${ui("chest.login")}</a></p></div></li>` : "")
+  $("#prizeList").innerHTML = (loginBlocked ? `<li class="prize" style="animation-delay:0s"><span class="ic">${PRIZE_IC.point}</span><div><h3>${ui("chest.blockedTitle")}</h3><p>${esc(block)} <a href="/login?next=${encodeURIComponent(`/ar/course.html?id=${encodeURIComponent(C.id)}`)}">${ui("chest.login")}</a></p></div></li>` : "")
     + prizes.map((p,i) => `
     <li class="prize" style="animation-delay:${animate ? (0.15 + i*0.18).toFixed(2) : 0}s">
       <span class="ic">${PRIZE_IC[p.icon] || PRIZE_IC.draw}</span>
@@ -2187,10 +2187,7 @@ function openChestFx(){
     if (navigator.vibrate) navigator.vibrate([60,40,120]);
     hint.textContent = ui("chest.burst");
     const claimed = grantReward();
-    claimed.then(reward => {
-      const block = rewardBlockMessage(reward);
-      if (block) hint.textContent = block;
-    });
+    claimed.then(() => { hint.textContent = ui("chest.openedHint"); });
     setTimeout(() => { CH.state = "open"; CH.lid = LID_OPEN; CH.glow = 2.2; CH.t0 = performance.now(); st.classList.remove("burst"); }, 1500);
     setTimeout(() => {
       claimed.then(() => {
