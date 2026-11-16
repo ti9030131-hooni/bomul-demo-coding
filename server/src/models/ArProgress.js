@@ -20,6 +20,8 @@ const arProgressSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+// 문서 단위 유일: user+courseId. stopId 중복은 appendCheckinAtomic(findOneAndUpdate $ne)로 방지.
+// (선택·승인 후) 별도 Checkin 컬렉션 unique(user, courseId, stopId) 로 DB 제약을 더할 수 있음. 운영 마이그레이션은 승인 전 금지.
 arProgressSchema.index({ user: 1, courseId: 1 }, { unique: true });
 
 export default mongoose.model('ArProgress', arProgressSchema);

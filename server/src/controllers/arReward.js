@@ -7,6 +7,7 @@ import { readSettings } from './ar.js';
 import { buildArCourse } from '../services/arCourse.js';
 import { elapsedFromCheckins, rankWeekly, seoulWeekRange } from '../services/arLeaderboard.js';
 import { completionRewardPoints, couponCode, isCourseOnsiteComplete, judgeOnsiteCheckin } from '../services/arOnsite.js';
+import { appendCheckinAtomic } from '../services/arCheckin.js';
 
 function httpError(status, message) {
   const error = new Error(message);
@@ -92,9 +93,8 @@ export async function postCheckin(req, res) {
   const stop = built.stops.find((item) => item.id === stopId);
   if (!stop) throw httpError(404, '장소를 찾을 수 없습니다.');
 
-  let progress = await ArProgress.findOne({ user: req.user._id, courseId });
-  if (!progress) progress = new ArProgress({ user: req.user._id, courseId, checkins: [] });
-  if (progress.checkins.some((item) => item.stopId === stopId)) {
+  const progress = await ArProgress.findOne({ user: req.user._id, courseId });
+  if (progress?.checkins?.some((item) => item.stopId === stopId)) {
     res.json({
       onsite: true,
       already: true,
@@ -104,7 +104,7 @@ export async function postCheckin(req, res) {
     return;
   }
 
-  const previousDoc = progress.checkins.slice().sort((a, b) => new Date(a.at) - new Date(b.at)).at(-1);
+  const previousDoc = (progress?.checkins || []).slice().sort((a, b) => new Date(a.at) - new Date(b.at)).at(-1);
   const judged = judgeOnsiteCheckin({
     stop: { id: stop.id, lat: stop.lat, lng: stop.lng },
     sample: readSample(req.body),
@@ -121,19 +121,24 @@ export async function postCheckin(req, res) {
   if (!judged.ok) throw httpError(403, judged.message);
 
   const sample = readSample(req.body);
-  progress.checkins.push({
+  const entry = {
     stopId,
     lat: sample.lat,
     lng: sample.lng,
     accuracy: sample.accuracy,
     at: new Date(sample.at),
+  };
+  const saved = await appendCheckinAtomic(ArProgress, {
+    userId: req.user._id,
+    courseId,
+    stopId,
+    entry,
   });
-  await progress.save();
   res.json({
     onsite: true,
-    already: false,
+    already: saved.already,
     stopId,
-    complete: isCourseOnsiteComplete(built.stops.map((item) => item.id), progress.checkins),
+    complete: isCourseOnsiteComplete(built.stops.map((item) => item.id), saved.progress?.checkins || []),
   });
 }
 
