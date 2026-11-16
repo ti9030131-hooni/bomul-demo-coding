@@ -4,7 +4,7 @@ import legendSeed from '../data/legendCourses.json' with { type: 'json' };
 // 주의: SEED_VERSION을 올리면 해당 코스 전체가 시드 내용으로 덮어쓰여 관리자 수정분이 사라집니다.
 // AR 필드처럼 새 항목을 넣을 때는 SEED_VERSION 대신 아래 AR_SYNC_VERSION(빈 칸만 채움)을 올리세요.
 const SEED_VERSION = 2;
-const AR_SYNC_VERSION = 3;
+const AR_SYNC_VERSION = 4;
 const LEGEND_SEED = legendSeed;
 
 function httpError(status, message) {
