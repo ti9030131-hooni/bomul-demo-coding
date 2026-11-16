@@ -262,9 +262,14 @@ img{max-width:100%;display:block}
 }
 
 /* ───────── 통합본 추가 스타일 ───────── */
-.top-link{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 20px 0;font-family:var(--sans);font-size:14px}
-.top-link a{color:var(--ink-2);text-decoration:none;font-weight:600;padding:6px 0}
+.top-link{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:8px 12px;padding:12px 16px 0;font-family:var(--sans);font-size:14px}
+.top-link .top-nav{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;min-width:0;flex:1 1 auto}
+.top-link a{color:var(--ink-2);text-decoration:none;font-weight:600;padding:6px 0;white-space:nowrap;flex:0 0 auto;overflow-wrap:normal;word-break:keep-all}
 .top-link a:hover{color:var(--ink)}
+.top-link a[hidden]{display:none !important}
+.bar .back{white-space:nowrap;flex:0 0 auto}
+.tabs a.tab-home{flex:1;padding:14px 0 12px;font-size:15px;font-weight:600;color:var(--ink-2);text-decoration:none;text-align:center;display:block}
+.tabs a.tab-home:hover{color:var(--ink)}
 .lang-tabs{display:flex;flex:none;align-items:center;gap:4px}
 .lang-tab{height:28px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:700 12px var(--sans);cursor:pointer;white-space:nowrap}
 .lang-tab[aria-pressed="true"]{background:#c9a15b;color:#1a1408;border-color:#c9a15b}
@@ -542,8 +547,8 @@ html:has(body.dark-view),body.dark-view{background:#0B0E1C}
 .chest-card img{width:110px;height:auto;display:block;animation:bob 2.4s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
 
 /* ───────── 여러 코스 지원 ───────── */
-.top-link .picker{display:flex;align-items:center;gap:6px;font-weight:600;color:var(--ink-2);font-size:13px}
-.top-link select{max-width:58vw;font:600 13px var(--sans);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:6px 8px}
+.top-link .picker{display:flex;align-items:center;gap:6px;font-weight:600;color:var(--ink-2);font-size:13px;flex:1 1 160px;min-width:0;margin-left:auto}
+.top-link select{width:100%;max-width:100%;min-width:0;font:600 13px var(--sans);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:6px 8px}
 .m-paper{fill:var(--surface)}
 .m-grid{stroke:var(--line);stroke-width:.6;opacity:.55}
 .m-scale line{stroke:var(--ink-2);stroke-width:1.5}
@@ -596,8 +601,14 @@ html[data-lang="en"] .cs-bottom{letter-spacing:0}
 
 <!-- ───────── 표지 ───────── -->
 <section id="v-intro" class="view intro active" data-i18n-attr="aria-label:aria.intro" aria-label="소개">
-  <div class="top-link"><span class="lang-tabs" role="group" data-i18n-attr="aria-label:aria.lang" aria-label="언어"></span><a href="../bomul.html" id="homeLink" data-i18n="nav.home">← 보물 여행 홈</a>
-    <label class="picker"><span data-i18n="pick.course">코스</span><select id="coursePick" data-i18n-attr="aria-label:pick.change" aria-label="코스 바꾸기"></select></label></div>
+  <div class="top-link">
+    <span class="lang-tabs" role="group" data-i18n-attr="aria-label:aria.lang" aria-label="언어"></span>
+    <nav class="top-nav" aria-label="페이지 이동">
+      <a href="../bomul.html" id="mainHomeLink" data-i18n="nav.home">← 보물찾기</a>
+      <a href="../bomul.html" id="coursePageLink" data-i18n="nav.coursePage" hidden>← 코스 소개로</a>
+    </nav>
+    <label class="picker"><span data-i18n="pick.course">코스</span><select id="coursePick" data-i18n-attr="aria-label:pick.change" aria-label="코스 바꾸기"></select></label>
+  </div>
   <div class="hero" aria-hidden="true">
     <svg class="grain" preserveAspectRatio="none">
       <filter id="mottle"><feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="3" seed="7"/>
@@ -778,6 +789,7 @@ html[data-lang="en"] .cs-bottom{letter-spacing:0}
 <div class="modal" id="modal" hidden><div class="box" id="modalBox" role="dialog" aria-modal="true"></div></div>
 
 <nav class="tabs" id="tabs" hidden>
+  <a class="tab-home" href="../bomul.html" data-i18n="tab.home">홈</a>
   <button data-go="v-map" data-i18n="tab.map">지도</button>
   <button data-go="v-album" data-i18n="tab.album">탁본첩</button>
   <button data-go="v-rank" data-i18n="rank.tab">순위</button>
@@ -1404,9 +1416,23 @@ function fillIntro(){
   $("#introTitle").innerHTML = T.h1;
   $("#introStory").innerHTML = T.story.map(t => `<p>${t}</p>`).join("");
   $("#introNote").textContent = ui("intro.note", { n: countWord(N), duration: T.duration || "", place: T.place });
-  if (C.siteUrl) {
-    $("#homeLink").setAttribute("href", window.BOMUL_PREVIEW ? `https://bomul-demo-vercel.vercel.app/bomul.html#course-${C.id}` : C.siteUrl);
-    $("#homeLink").textContent = ui("nav.coursePage");
+  const mainHome = $("#mainHomeLink");
+  if (mainHome) {
+    mainHome.setAttribute("href", "../bomul.html");
+    mainHome.textContent = ui("nav.home");
+  }
+  const courseLink = $("#coursePageLink");
+  if (courseLink) {
+    if (C.siteUrl) {
+      courseLink.hidden = false;
+      courseLink.setAttribute(
+        "href",
+        window.BOMUL_PREVIEW ? `https://bomul-demo-vercel.vercel.app/bomul.html#course-${C.id}` : C.siteUrl,
+      );
+      courseLink.textContent = ui("nav.coursePage");
+    } else {
+      courseLink.hidden = true;
+    }
   }
   const map = new Map(Object.values(REG).map(c => [c.id, { id: c.id, region: BomulI18n.arText(c.region), title: BomulI18n.arText(c.title) }]));
   (SERVER_LIST || []).forEach(c => map.set(c.id, { id: c.id, region: BomulI18n.arText(c.region), title: BomulI18n.arText(c.title) }));
