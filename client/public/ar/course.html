@@ -742,7 +742,7 @@ html[data-lang="en"] .cs-bottom{letter-spacing:0}
     <canvas id="fxCv" aria-hidden="true"></canvas>
     <div id="rewardFlash" aria-hidden="true"></div>
     <div id="rewardBody" hidden>
-      <h2 class="reward-title" data-i18n="chest.congrats">완주를 축하합니다!</h2>
+      <h2 class="reward-title" id="rewardTitle">현장 인증이 필요합니다</h2>
       <p class="reward-sub" id="rewardSub"></p>
       <ul class="prizes" id="prizeList"></ul>
       <p class="reward-note" data-i18n="chest.note">프로토타입 화면입니다. 실제 상품 구성과 받는 방법은 운영 안내에 따라 달라질 수 있어요.</p>
@@ -796,6 +796,7 @@ html[data-lang="en"] .cs-bottom{letter-spacing:0}
 <script src="data/gyeongbok.js"></script>
 <script src="data/hidden.js"></script>
 <script src="js/treasure3d.js"></script>
+<script src="js/rewardChestUi.js"></script>
 <script>
 (async () => {
 "use strict";
@@ -866,11 +867,23 @@ function applyWallet(data){
   }
   persistWallet();
 }
+const localOnsiteComplete = () => STOPS.every(s => save.done[s.id] && save.done[s.id].onsite);
 function rewardBlockMessage(reward){
   if (!reward) return "";
   if (reward.blocked === "login") return ui("reward.needLogin");
-  if (reward.blocked === "onsite") return reward.message || ui("reward.needOnsite");
+  if (reward.blocked === "onsite") {
+    if (!localOnsiteComplete()) return ui("chest.demoNeedOnsite");
+    return reward.message || ui("reward.needOnsite");
+  }
   return "";
+}
+function applyRewardTitle(reward){
+  const kind = (window.BomulRewardChestUi && BomulRewardChestUi.rewardTitleKind(reward)) || "needOnsite";
+  const el = $("#rewardTitle");
+  if (!el) return;
+  el.textContent = kind === "congrats" ? ui("chest.congrats")
+    : kind === "login" ? ui("chest.needLoginTitle")
+    : ui("chest.needOnsiteTitle");
 }
 async function fetchJson(url, ms = 3500){
   const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), ms);
@@ -1318,8 +1331,8 @@ function renderAlbum(){
     <p class="album-intro">${n === 0 ? ui("album.none", { name: esc(STOPS[0].name) })
       : n < N ? ui("album.some", { unit: T.unit, n: countWord(N), count: n, final: C.final.name })
       : T.allDone}</p>
-    ${n === N ? `<button class="chest-card${save.reward ? " opened" : ""}" id="chestCard"><span class="thumb" id="chestThumb">${CHEST_MINI}</span><span><b>${save.reward ? ui("album.opened") : ui("album.appeared")}</b>
-      <small>${save.reward ? ui("album.reopen") : ui("album.openHint", { n: countWord(N) })}</small>${save.reward ? `<span class="bal">${ui("album.balance", { points: fmtP(wallet.points||0) })}</span>` : ""}</span></button>` : ""}
+    ${n === N ? `<button class="chest-card${save.reward ? " opened" : ""}" id="chestCard"><span class="thumb" id="chestThumb">${CHEST_MINI}</span><span><b>${save.reward && save.reward.server ? ui("album.opened") : save.reward && save.reward.blocked === "login" ? ui("chest.needLoginTitle") : save.reward ? ui("chest.needOnsiteTitle") : ui("album.appeared")}</b>
+      <small>${save.reward && save.reward.server ? ui("album.reopen") : save.reward ? (rewardBlockMessage(save.reward) || ui("chest.needOnsiteTitle")) : (localOnsiteComplete() ? ui("album.openHint", { n: countWord(N) }) : ui("chest.demoNeedOnsite"))}</small>${save.reward && save.reward.server ? `<span class="bal">${ui("album.balance", { points: fmtP(wallet.points||0) })}</span>` : ""}</span></button>` : ""}
     <div class="slots">${slots}</div>
     ${n === N
       ? `<div class="seal-box"><div class="final-3d" id="final3d"><canvas id="finalCv"></canvas></div><p>${ui("album.complete", { name: esc(C.final.name) })}</p></div>
@@ -1973,6 +1986,7 @@ function openReward(){
   }
 }
 function renderPrizes(animate, reward = save.reward){
+  applyRewardTitle(reward);
   const block = rewardBlockMessage(reward);
   $("#rewardSub").textContent = block
     ? block
