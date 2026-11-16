@@ -56,7 +56,8 @@ img{max-width:100%;display:block}
 
 .view{display:none;max-width:520px;margin:0 auto;min-height:100dvh;
   padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  /* 하단 탭(홈 포함)에 음성 해설 버튼이 가리지 않도록 여유를 둡니다. */
+  padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}
 .view.active{display:block}
 .pad{padding:0 20px}
 
@@ -1201,25 +1202,85 @@ let curStop = 0;
 /* ───────── 음성 해설 · 코스 미리 받기 ───────── */
 const VOICE_KEY = "bomul-voice-v1";
 let voiceOn = false;
+let voiceUnlocked = false;
+let speakTimer = 0;
 try { voiceOn = localStorage.getItem(VOICE_KEY) === "1"; } catch { voiceOn = false; }
-function koreanVoice(){
-  if (!window.speechSynthesis) return null;
-  const list = speechSynthesis.getVoices();
-  return list.find(v => (v.lang || "").toLowerCase().startsWith("ko")) || null;
+function speechOk(){ return Boolean(window.speechSynthesis); }
+function pickVoice(lang){
+  if (!speechOk()) return null;
+  const want = String(lang || "ko").slice(0, 2).toLowerCase();
+  const list = speechSynthesis.getVoices() || [];
+  return list.find(v => (v.lang || "").toLowerCase().startsWith(want))
+    || list.find(v => (v.lang || "").toLowerCase().includes(want))
+    || null;
 }
-function stopSpeak(){ if (window.speechSynthesis) speechSynthesis.cancel(); }
+function waitVoices(ms = 1200){
+  if (!speechOk()) return Promise.resolve([]);
+  const now = speechSynthesis.getVoices() || [];
+  if (now.length) return Promise.resolve(now);
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      speechSynthesis.removeEventListener("voiceschanged", onChange);
+      resolve(speechSynthesis.getVoices() || []);
+    };
+    const onChange = () => finish();
+    speechSynthesis.addEventListener("voiceschanged", onChange);
+    // iOS/Android WebView는 voiceschanged가 늦거나 한 번만 옵니다.
+    speechSynthesis.getVoices();
+    setTimeout(finish, ms);
+  });
+}
+function stopSpeak(){
+  if (speakTimer) { clearTimeout(speakTimer); speakTimer = 0; }
+  if (speechOk()) {
+    try { speechSynthesis.cancel(); } catch { /* 일부 WebView cancel 오류 무시 */ }
+  }
+}
+/** 모바일·인앱 브라우저: 사용자 제스처에서 TTS를 한 번 깨웁니다. */
+function unlockVoice(){
+  if (!speechOk() || voiceUnlocked) return;
+  voiceUnlocked = true;
+  try {
+    if (speechSynthesis.paused) speechSynthesis.resume();
+    const warm = new SpeechSynthesisUtterance(" ");
+    warm.volume = 0;
+    warm.rate = 1;
+    warm.lang = BomulI18n.locale();
+    speechSynthesis.speak(warm);
+    speechSynthesis.cancel();
+  } catch { /* 워밍업 실패해도 이후 speak를 시도합니다. */ }
+}
 function speak(text, force){
   const plain = String(text || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-  if ((!voiceOn && !force) || !plain || !window.speechSynthesis) return;
-  const utter = new SpeechSynthesisUtterance(plain);
-  utter.lang = BomulI18n.locale();
-  utter.rate = 0.95;
-  const want = utter.lang.slice(0, 2).toLowerCase();
-  const list = window.speechSynthesis ? speechSynthesis.getVoices() : [];
-  const voice = list.find(v => (v.lang || "").toLowerCase().startsWith(want));
-  if (voice) utter.voice = voice;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(utter);
+  if ((!voiceOn && !force) || !plain || !speechOk()) return;
+  const lang = BomulI18n.locale();
+  const start = () => {
+    try {
+      if (speechSynthesis.paused) speechSynthesis.resume();
+      // Chrome/Android: cancel 직후 speak가 무시되는 경우가 있어 한 틱 뒤에 재생합니다.
+      if (speakTimer) clearTimeout(speakTimer);
+      try { speechSynthesis.cancel(); } catch { /* ignore */ }
+      speakTimer = setTimeout(() => {
+        speakTimer = 0;
+        const utter = new SpeechSynthesisUtterance(plain);
+        utter.lang = lang;
+        utter.rate = 0.95;
+        const voice = pickVoice(lang);
+        if (voice) utter.voice = voice;
+        utter.onerror = () => { /* 앱 WebView에서 not-allowed 등은 조용히 무시 */ };
+        try {
+          if (speechSynthesis.paused) speechSynthesis.resume();
+          speechSynthesis.speak(utter);
+          // 일부 Android Chrome: 백그라운드 전환 후 paused 고착 → 주기 resume
+          setTimeout(() => { try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch {} }, 250);
+        } catch { /* speak 예외는 앱에서만 자주 납니다. */ }
+      }, 40);
+    } catch { /* ignore */ }
+  };
+  waitVoices().then(start);
 }
 function stopStory(s){
   return [s.name, s.story, s.look ? `${ui("look.prefix")}. ${s.look}` : ""].filter(Boolean).join(". ");
@@ -1229,10 +1290,31 @@ if ($("#voiceOn")){
   $("#voiceOn").addEventListener("change", () => {
     voiceOn = $("#voiceOn").checked;
     try { localStorage.setItem(VOICE_KEY, voiceOn ? "1" : "0"); } catch { /* 저장이 막혀도 이번 화면에서는 유지됩니다. */ }
-    if (!voiceOn) stopSpeak();
+    if (!voiceOn) {
+      stopSpeak();
+      return;
+    }
+    if (!speechOk()) {
+      voiceOn = false;
+      $("#voiceOn").checked = false;
+      try { localStorage.setItem(VOICE_KEY, "0"); } catch { /* ignore */ }
+      alert(ui("voice.unsupported"));
+      return;
+    }
+    unlockVoice();
+    // 켜자마자 짧은 안내로 앱에서도 소리가 나는지 확인합니다.
+    speak(ui("voice.onHint"), true);
   });
 }
-if (window.speechSynthesis) speechSynthesis.addEventListener("voiceschanged", () => {});
+if (speechOk()){
+  speechSynthesis.addEventListener("voiceschanged", () => { pickVoice(BomulI18n.locale()); });
+  // 페이지 복귀 시 paused 고착 해제
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && speechOk()) {
+      try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch {}
+    }
+  });
+}
 
 function courseAssetUrls(){
   const urls = new Set();
@@ -1302,8 +1384,9 @@ function openStop(i){
     <button class="btn line" data-go="v-map">${ui("stop.mapBack")}</button>`;
   renderStopGeo();
   $("#goAR").addEventListener("click", () => openAR(i));
-  $("#hearStop").addEventListener("click", () => speak(stopStory(s), true));
+  $("#hearStop").addEventListener("click", () => { unlockVoice(); speak(stopStory(s), true); });
   show("v-stop");
+  // 지도에서 장소를 탭한 직후(사용자 제스처)에만 자동 재생이 앱에서도 허용되는 경우가 많습니다.
   speak(stopStory(s));
 }
 $("#stopBody").addEventListener("click", e => { const v = e.target.closest("[data-view]"); if (v) openLightbox(+v.dataset.view); });
@@ -1445,6 +1528,7 @@ $("#coursePick").addEventListener("change", e => {
   else location.href = `course.html?id=${encodeURIComponent(id)}`;
 });
 $("#startBtn").addEventListener("click", () => {
+  if (voiceOn) unlockVoice();
   startGeo(); Treasure3D.preload();
   show(doneCount() === N ? "v-album" : "v-map");
 });
@@ -1592,6 +1676,7 @@ $("#pastDone").addEventListener("click", () => { if (AR.state === "past") setSta
 $("#pastHear").addEventListener("click", () => {
   const s = STOPS[AR.idx];
   if (!s) return;
+  unlockVoice();
   speak([s.name, s.restoreYear, s.restoreCaption, s.story].filter(Boolean).join(". "), true);
 });
 let rubTimer = 0;
