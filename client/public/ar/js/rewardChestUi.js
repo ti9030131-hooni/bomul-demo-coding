@@ -1,4 +1,4 @@
-/** 보물 상자 제목·부제: 서버 완주 성공일 때만 축하, 그 외는 현장 인증 안내 */
+/** 보물 상자 제목·부제·hint: 서버 완주 성공일 때만 축하·수령 완료 */
 (function (root) {
   function rewardTitleKind(reward) {
     if (reward && reward.server) return "congrats";
@@ -16,5 +16,17 @@
     return "";
   }
 
-  root.BomulRewardChestUi = { rewardTitleKind, rewardSubKind };
+  /**
+   * @returns {'hint'|'openedHint'|'demoOpened'|'needLogin'}
+   * openedHint(수령 완료)는 reward.server 일 때만.
+   */
+  function rewardHintKind(reward, opened) {
+    if (reward && reward.server) return "openedHint";
+    if (reward && reward.blocked === "login") return "needLogin";
+    if (reward && reward.blocked === "onsite") return "demoOpened";
+    if (opened && reward) return "demoOpened";
+    return "hint";
+  }
+
+  root.BomulRewardChestUi = { rewardTitleKind, rewardSubKind, rewardHintKind };
 })(typeof globalThis !== "undefined" ? globalThis : this);

@@ -43,3 +43,12 @@ test('현장 인증 안내는 제목+부제 한 세트로만 쓰고 congrats는 
   assert.notEqual(rewardTitleKind(reward), 'congrats');
   assert.equal(rewardTitleKind({ server: true }), 'congrats');
 });
+
+test('수령 완료 hint는 서버 보상 성공일 때만, 데모·현장 미완료는 demoOpened', () => {
+  const { rewardHintKind } = loadUi();
+  assert.equal(rewardHintKind(null, false), 'hint');
+  assert.equal(rewardHintKind({ blocked: 'onsite' }, true), 'demoOpened');
+  assert.equal(rewardHintKind({ blocked: 'login' }, true), 'needLogin');
+  assert.equal(rewardHintKind({ server: true, earned: 500 }, true), 'openedHint');
+  assert.notEqual(rewardHintKind({ blocked: 'onsite' }, true), 'openedHint');
+});

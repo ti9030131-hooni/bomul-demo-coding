@@ -885,6 +885,15 @@ function applyRewardTitle(reward){
     : kind === "login" ? ui("chest.needLoginTitle")
     : ui("chest.needOnsiteTitle");
 }
+function applyRewardHint(reward, opened){
+  const kind = (window.BomulRewardChestUi && BomulRewardChestUi.rewardHintKind(reward, opened)) || "hint";
+  const el = $("#rewardHint");
+  if (!el) return;
+  el.textContent = kind === "openedHint" ? ui("chest.openedHint")
+    : kind === "demoOpened" ? ui("chest.demoOpenedHint")
+    : kind === "needLogin" ? ui("chest.needLoginTitle")
+    : ui("chest.hint");
+}
 async function fetchJson(url, ms = 3500){
   const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), ms);
   try { const r = await fetch(url, { signal: ctl.signal }); return r.ok ? await r.json() : null; }
@@ -1972,13 +1981,13 @@ function openReward(){
   show("v-reward");
   const opened = !!save.reward;
   $("#rewardBody").hidden = !opened;
-  /* 현장 인증 안내는 rewardSub에만 두고, hint는 상자 조작 안내만 유지 */
-  $("#rewardHint").textContent = opened ? ui("chest.openedHint") : ui("chest.hint");
+  /* 수령 완료 hint는 server 성공만; 데모·현장 미완료는 demoOpened */
+  applyRewardHint(save.reward, opened);
   if (opened) renderPrizes(false);
   startChest(opened);
   if (save.reward && !save.reward.server) {
     grantReward().then(() => {
-      $("#rewardHint").textContent = ui("chest.openedHint");
+      applyRewardHint(save.reward, true);
       renderPrizes(false);
     });
   }
@@ -2187,7 +2196,7 @@ function openChestFx(){
     if (navigator.vibrate) navigator.vibrate([60,40,120]);
     hint.textContent = ui("chest.burst");
     const claimed = grantReward();
-    claimed.then(() => { hint.textContent = ui("chest.openedHint"); });
+    claimed.then((reward) => { applyRewardHint(reward, true); });
     setTimeout(() => { CH.state = "open"; CH.lid = LID_OPEN; CH.glow = 2.2; CH.t0 = performance.now(); st.classList.remove("burst"); }, 1500);
     setTimeout(() => {
       claimed.then(() => {
