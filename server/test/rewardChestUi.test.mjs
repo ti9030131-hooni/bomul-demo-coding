@@ -52,3 +52,11 @@ test('수령 완료 hint는 서버 보상 성공일 때만, 데모·현장 미�
   assert.equal(rewardHintKind({ server: true, earned: 500 }, true), 'openedHint');
   assert.notEqual(rewardHintKind({ blocked: 'onsite' }, true), 'openedHint');
 });
+
+test('적립금 표시는 서버 지급 성공일 때만 paid, 그 외는 demoUnpaid', () => {
+  const { rewardPointsStatus, expectedPrizePoints } = loadUi();
+  assert.equal(rewardPointsStatus({ server: true, earned: 500 }), 'paid');
+  assert.equal(rewardPointsStatus({ blocked: 'onsite', earned: 0 }), 'demoUnpaid');
+  assert.equal(rewardPointsStatus(null), 'demoUnpaid');
+  assert.equal(expectedPrizePoints([{ points: 500 }, { icon: 'cert' }]), 500);
+});

@@ -477,7 +477,8 @@ img{max-width:100%;display:block}
 .cs-stats div{padding:7px 6px;text-align:center;border-left:1px solid #CBBF9F}
 .cs-stats div:first-child{border-left:0}
 .cs-stats small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.14em;color:#9C7428}
-.cs-stats b{display:block;font-size:14px;font-weight:900;margin-top:2px;line-height:1.35}
+.cs-stats b{display:block;font-size:14px;font-weight:900;margin-top:2px;line-height:1.35;overflow-wrap:anywhere;word-break:keep-all}
+.cs-pay-note{margin:10px 0 0;padding:8px 10px;font-family:var(--sans);font-size:13px;line-height:1.45;font-weight:700;color:#5A3A10;background:#FFF6E0;border:1px solid #E2C48A;border-radius:6px;overflow-wrap:anywhere;word-break:keep-all;text-align:center}
 .cs-foot{margin-top:auto;padding-top:10px;display:grid;grid-template-columns:170px 1fr 200px;align-items:end;gap:10px}
 .cs-seal svg{width:108px;height:108px;display:block}
 .cs-seal p{margin:2px 0 0;width:108px;text-align:center;font-family:var(--sans);font-size:10px;color:#9C7428;letter-spacing:.1em}
@@ -2406,13 +2407,24 @@ function certNumber(){
   }
   return save.certNo;
 }
+function certPointsCopy(reward){
+  const expected = (window.BomulRewardChestUi && BomulRewardChestUi.expectedPrizePoints(C.final.prizes))
+    || C.final.prizes.reduce((t, p) => t + (p.points || 0), 0);
+  const status = (window.BomulRewardChestUi && BomulRewardChestUi.rewardPointsStatus(reward)) || "demoUnpaid";
+  if (status === "paid") {
+    const paid = fmtP(reward.earned || 0);
+    return { status, short: paid, note: ui("cert.pointsPaid", { points: paid }) };
+  }
+  const pts = fmtP(expected);
+  return { status, short: ui("cert.pointsUnpaidShort"), note: ui("cert.pointsDemo", { points: pts }) };
+}
 function renderCert(){
   const ats = STOPS.map(s => save.done[s.id].at), first = Math.min(...ats), last = Math.max(...ats);
   const mins = Math.max(0, Math.round((last - first) / 60000));
   const dur = certDur(mins);
   const sameDay = ymd(first) === ymd(last);
   const onsite = STOPS.filter(s => save.done[s.id].onsite).length;
-  const earned = (save.reward && save.reward.earned) || C.final.prizes.reduce((t,p) => t + (p.points||0), 0);
+  const pointsCopy = certPointsCopy(save.reward);
   const name = (wallet.name || "").trim();
   $("#certName2").value = wallet.name || "";
   const rows = STOPS.map((s,i) => {
@@ -2446,8 +2458,9 @@ function renderCert(){
         <div><small>${ui("cert.day")}</small><b>${ymd(last)}</b></div>
         <div><small>${ui("cert.time")}</small><b>${sameDay ? `${hm(first)} ~ ${hm(last)}<br>${dur}` : dur}</b></div>
         <div><small>${ui("cert.onsiteStat")}</small><b>${ui("cert.onsiteN", { n: onsite, total: STOPS.length })}</b></div>
-        <div><small>${ui("cert.points")}</small><b>${fmtP(earned)}</b></div>
+        <div><small>${ui("cert.points")}</small><b>${esc(pointsCopy.short)}</b></div>
       </div>
+      <p class="cs-pay-note">${esc(pointsCopy.note)}</p>
       <div class="cs-foot">
         <div class="cs-seal">${sealSVG()}<p>${ui("cert.done", { name: esc(C.final.name) })}</p></div>
         <div class="cs-date">${ymd(Date.now())}</div>

@@ -1,4 +1,4 @@
-/** 보물 상자 제목·부제·hint: 서버 완주 성공일 때만 축하·수령 완료 */
+/** 보물 상자·증명서: 서버 완주 성공일 때만 축하·수령·지급 완료 */
 (function (root) {
   function rewardTitleKind(reward) {
     if (reward && reward.server) return "congrats";
@@ -28,5 +28,20 @@
     return "hint";
   }
 
-  root.BomulRewardChestUi = { rewardTitleKind, rewardSubKind, rewardHintKind };
+  /** @returns {'paid'|'demoUnpaid'} */
+  function rewardPointsStatus(reward) {
+    return reward && reward.server ? "paid" : "demoUnpaid";
+  }
+
+  function expectedPrizePoints(prizes) {
+    return (prizes || []).reduce((total, item) => total + (Number(item && item.points) || 0), 0);
+  }
+
+  root.BomulRewardChestUi = {
+    rewardTitleKind,
+    rewardSubKind,
+    rewardHintKind,
+    rewardPointsStatus,
+    expectedPrizePoints,
+  };
 })(typeof globalThis !== "undefined" ? globalThis : this);
