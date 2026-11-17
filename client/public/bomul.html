@@ -2819,15 +2819,44 @@ const FEATURED_IDS=COURSES.slice(0,3).map(c=>c.id).filter(id=>!MEMBER_COURSE_IDS
 const COURSE_PASS_PRICE=3900;
 const ALL_PASS_PRICE=9900;
 const MEMBERSHIP_PRICE=ALL_PASS_PRICE;
+function hasFullPass(user){
+  const u=user||accountUser;
+  if(!u) return false;
+  if(u.user_type==="admin") return true;
+  const pass=u.membership;
+  if(!pass) return false;
+  // 전체 코스 도전권: active 또는 plan=all 이면 모든 코스 이용
+  return Boolean(pass.active) || pass.plan==="all";
+}
 function hasCoursePass(id){
   if(FREE_COURSE_IDS.includes(id)) return true;
-  if(accountUser && accountUser.user_type==="admin") return true;
+  if(hasFullPass()) return true;
   const pass=accountUser && accountUser.membership;
-  if(!pass) return false;
-  if(pass.active) return true;
-  return Array.isArray(pass.courses) && pass.courses.includes(id);
+  return Boolean(pass && Array.isArray(pass.courses) && pass.courses.includes(id));
 }
 function canSeeCourse(c){ return Boolean(c && hasCoursePass(c.id)); }
+function syncMembershipFlags(user){
+  if(user) accountUser=user;
+  if(accountUser && accountUser.membership && accountUser.membership.plan==="all" && !accountUser.membership.active){
+    accountUser.membership.active=true;
+  }
+  hasMembership=hasFullPass();
+  signedIn=Boolean(accountUser);
+}
+async function refreshAccountMembership(){
+  const saved=storedToken();
+  if(!saved) return false;
+  try{
+    const me=await fetch(API_BASE+"/api/me",{headers:{authorization:`Bearer ${saved}`}});
+    if(!me.ok) return false;
+    syncMembershipFlags(await me.json());
+    paintAccountLink();
+    paintSignedInNav();
+    return true;
+  }catch{
+    return false;
+  }
+}
 function loginRequiredHtml(text){
   return `<div class="member-box" style="grid-column:1/-1">
     <h2>${ui("courses.membersOnlyTitle")}</h2>
@@ -2950,7 +2979,7 @@ function addrLink(addr){
   const href="https://map.naver.com/p/search/"+encodeURIComponent(addr);
   return `<a class="addr" href="${href}" target="_blank" rel="noopener"><span class="pin" aria-hidden="true">📍</span><span>${addr} · ${ui("info.naver")}</span></a>`;
 }
-function renderDetail(id){
+async function renderDetail(id){
   const c=COURSES.find(x=>x.id===id);
   if(!c){go("courses");return;}
   const info = Object.assign({}, c.info, INFOX[c.id]||{});
@@ -2958,6 +2987,11 @@ function renderDetail(id){
   if(!accountReady){
     $("#courseDetail").innerHTML=`<p class="detail-intro">${ui("courses.loading")}</p>`;
     return;
+  }
+  // 전체 도전권 직후·상태 지연으로 결제창이 뜨지 않도록 한 번 더 확인
+  if(signedIn && !hasCoursePass(c.id)){
+    $("#courseDetail").innerHTML=`<p class="detail-intro">${ui("courses.loading")}</p>`;
+    await refreshAccountMembership();
   }
   if(!hasCoursePass(c.id)){
     if(!signedIn){
@@ -3276,7 +3310,7 @@ async function buyCourse(button){
       return;
     }
     if(accountUser) accountUser.membership=body.membership||accountUser.membership;
-    hasMembership=Boolean(accountUser && (accountUser.user_type==="admin" || accountUser.membership?.active));
+    syncMembershipFlags(accountUser);
     const id=payCourseId;
     if(msg){ msg.style.color="#0b7a45"; msg.textContent=body.message||"결제가 완료되었습니다."; }
     renderDetail(id);
@@ -3328,7 +3362,7 @@ async function buyMembership(button){
       return;
     }
     if(accountUser) accountUser.membership=body.membership||accountUser.membership;
-    hasMembership=Boolean(accountUser && (accountUser.user_type==="admin" || accountUser.membership?.active));
+    syncMembershipFlags(accountUser);
     closeMemberModal();
     memberPromptDismissed=true;
     refreshCourseViews();
@@ -3383,9 +3417,7 @@ async function loadAccount(){
     const me=await fetch(API_BASE+"/api/me",{headers:{authorization:`Bearer ${saved}`}});
     if(me.ok && link){
       const user=await me.json();
-      signedIn=true;
-      accountUser=user;
-      hasMembership=user.user_type==="admin" || Boolean(user.membership && user.membership.active);
+      syncMembershipFlags(user);
       paintAccountLink();
       paintSignedInNav();
       link.href=user.user_type==="admin"?"/admin":"/cart";

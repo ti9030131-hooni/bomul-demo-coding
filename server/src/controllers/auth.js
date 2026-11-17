@@ -11,6 +11,10 @@ function present(user) {
   const data = user.toObject();
   delete data.password;
   delete data.password_confirm;
+  // 전체 코스 도전권은 plan=all 이면 active로 통일
+  if (data.membership && data.membership.plan === 'all') {
+    data.membership.active = true;
+  }
   return data;
 }
 
