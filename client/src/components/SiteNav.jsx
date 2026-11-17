@@ -41,10 +41,30 @@ function BoardNavLink({ onClick }) {
 function SiteNav({ onToggleTheme }) {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [signedIn, setSignedIn] = useState(() => Boolean(storedToken()));
 
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const token = storedToken();
+    if (!token) {
+      setSignedIn(false);
+      return undefined;
+    }
+    let ignore = false;
+    fetch(`${API_BASE}/api/me`, { headers: { authorization: `Bearer ${token}` } })
+      .then((response) => {
+        if (!ignore) setSignedIn(response.ok);
+      })
+      .catch(() => {
+        if (!ignore) setSignedIn(false);
+      });
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -105,12 +125,16 @@ function SiteNav({ onToggleTheme }) {
         <NavLink to="/order" onClick={closeMenu}>
           주문
         </NavLink>
-        <NavLink to="/login" onClick={closeMenu}>
-          로그인
-        </NavLink>
-        <NavLink to="/signup" onClick={closeMenu}>
-          회원가입
-        </NavLink>
+        {signedIn ? null : (
+          <>
+            <NavLink to="/login" onClick={closeMenu}>
+              로그인
+            </NavLink>
+            <NavLink to="/signup" onClick={closeMenu}>
+              회원가입
+            </NavLink>
+          </>
+        )}
       </nav>
     </header>
   );

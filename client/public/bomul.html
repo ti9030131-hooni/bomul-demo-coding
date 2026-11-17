@@ -81,12 +81,16 @@
   .nav .nav-links{display:none}
   .nav nav a{font-size:1.4rem;color:var(--muted);padding:8px 14px;border-radius:4px;cursor:pointer;white-space:nowrap}
   .nav nav a:hover,.nav nav a.on{color:var(--ink);background:var(--surface-2)}
+  .nav .nav-links a[hidden],
+  .nav.is-signed-in #signupLink{display:none !important}
   @media (min-width:769px){
     .nav .wrap{gap:16px;padding-block:12px}
     .brand{flex:none;gap:14px;font-size:2.2rem}
     .brand .chest{width:62px;height:52px}
     .nav-toggle{display:none}
     .nav .nav-links{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;margin-left:auto}
+    .nav .nav-links a[hidden],
+    .nav.is-signed-in #signupLink{display:none !important}
   }
 
   /* buttons */
@@ -564,6 +568,8 @@
       font-size:1.4rem;
       white-space:nowrap;
     }
+    .nav .nav-links a[hidden],
+    .nav.is-signed-in #signupLink{display:none !important}
   }
   @media (max-width:768px){
     html,body{overflow-x:hidden;max-width:100%}
@@ -3350,13 +3356,25 @@ function paintAccountLink(){
   link.removeAttribute("data-i18n");
   link.textContent=accountUser.user_type==="admin"?ui("nav.admin"):(accountUser.nickname||accountUser.name||ui("nav.me"));
 }
+function paintSignedInNav(){
+  const header=document.querySelector("header.nav");
+  const signup=$("#signupLink");
+  if(header) header.classList.toggle("is-signed-in", signedIn);
+  if(signup){
+    signup.hidden=signedIn;
+    signup.setAttribute("aria-hidden", signedIn ? "true" : "false");
+    if(signedIn) signup.style.display="none";
+    else signup.style.removeProperty("display");
+  }
+}
 async function loadAccount(){
   const saved=storedToken();
   const link=$("#loginLink");
-  const signup=$("#signupLink");
   const count=$("#cartCount");
   const board=$("#boardLink");
   if(!saved){
+    signedIn=false;
+    paintSignedInNav();
     accountReady=true;
     refreshCourseViews();
     return;
@@ -3369,8 +3387,8 @@ async function loadAccount(){
       accountUser=user;
       hasMembership=user.user_type==="admin" || Boolean(user.membership && user.membership.active);
       paintAccountLink();
+      paintSignedInNav();
       link.href=user.user_type==="admin"?"/admin":"/cart";
-      if(signup) signup.hidden=true;
       if(board) board.hidden=false;
     }
     const cart=await fetch(API_BASE+"/api/carts",{headers:{authorization:`Bearer ${saved}`}});
