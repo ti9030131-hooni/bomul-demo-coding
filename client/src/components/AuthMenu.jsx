@@ -27,7 +27,7 @@ function AuthMenu({ onNavigate }) {
         if (ignore) return;
         if (response.ok) {
           setUser(await response.json());
-        } else {
+        } else if (response.status === 401) {
           clearToken();
         }
       })

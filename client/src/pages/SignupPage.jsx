@@ -77,6 +77,24 @@ function SignupPage() {
         setError(data.message || '회원가입에 실패했습니다.');
         return;
       }
+
+      // 가입 직후 바로 로그인해서 다시 로그인 창이 뜨지 않게 한다.
+      const loginRes = await fetch(`${API_BASE}/api/login`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          user_id: form.user_id.trim(),
+          password: form.password,
+        }),
+      });
+      const loginData = await loginRes.json().catch(() => ({}));
+      if (loginRes.ok && loginData.token) {
+        localStorage.setItem('token', loginData.token);
+        sessionStorage.removeItem('token');
+        window.location.replace('/bomul.html');
+        return;
+      }
+
       setDone(true);
     } catch {
       setError('서버에 연결하지 못했습니다. 서버가 실행 중인지 확인해 주세요.');

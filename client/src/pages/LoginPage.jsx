@@ -7,13 +7,27 @@ function storedToken() {
   return localStorage.getItem('token') || sessionStorage.getItem('token');
 }
 
+function saveToken(token, remember) {
+  const storage = remember ? localStorage : sessionStorage;
+  const other = remember ? sessionStorage : localStorage;
+  storage.setItem('token', token);
+  other.removeItem('token');
+}
+
+function postLoginPath(location) {
+  const params = new URLSearchParams(location.search);
+  const next = params.get('next') || (typeof location.state?.next === 'string' ? location.state.next : '');
+  if (next && next.startsWith('/') && !next.startsWith('//')) return next;
+  return '/bomul.html';
+}
+
 function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [form, setForm] = useState({
     user_id: typeof location.state?.user_id === 'string' ? location.state.user_id : '',
     password: '',
-    remember: false,
+    remember: true,
   });
   const [error, setError] = useState(() => location.state?.error ?? '');
   const [pending, setPending] = useState(false);
@@ -28,11 +42,14 @@ function LoginPage() {
       .then((response) => {
         if (ignore) return;
         if (response.ok) {
-          navigate('/', { replace: true });
+          window.location.replace(postLoginPath(location));
           return;
         }
-        localStorage.removeItem('token');
-        sessionStorage.removeItem('token');
+        // 만료·잘못된 토큰만 지운다. 서버 일시 오류(502/503)로 로그아웃되면 안 됨.
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
+        }
         setChecking(false);
       })
       .catch(() => {
@@ -42,7 +59,7 @@ function LoginPage() {
     return () => {
       ignore = true;
     };
-  }, [navigate]);
+  }, [location, navigate]);
 
   function update(event) {
     const { name, type, checked, value } = event.target;
@@ -54,21 +71,24 @@ function LoginPage() {
     setError('');
     setPending(true);
     try {
+      // 모바일 자동완성 등으로 React state가 비어 있어도 FormData로 실제 입력값을 읽는다.
+      const fd = new FormData(event.currentTarget);
+      const user_id = String(fd.get('user_id') || form.user_id || '').trim();
+      const password = String(fd.get('password') || form.password || '');
+      const remember = fd.get('remember') != null;
+
       const response = await fetch(`${API_BASE}/api/login`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ user_id: form.user_id.trim(), password: form.password }),
+        body: JSON.stringify({ user_id, password }),
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         setError(data.message || '로그인에 실패했습니다.');
         return;
       }
-      const storage = form.remember ? localStorage : sessionStorage;
-      const other = form.remember ? sessionStorage : localStorage;
-      storage.setItem('token', data.token);
-      other.removeItem('token');
-      window.location.replace('/bomul.html');
+      saveToken(data.token, remember);
+      window.location.replace(postLoginPath(location));
     } catch {
       setError('서버에 연결하지 못했습니다. 서버가 실행 중인지 확인해 주세요.');
     } finally {
@@ -130,7 +150,7 @@ function LoginPage() {
 
         <div className="login-footer">
           <label>
-            <input type="checkbox" name="remember" checked={form.remember} onChange={update} />
+            <input type="checkbox" name="remember" value="1" checked={form.remember} onChange={update} />
             자동로그인
           </label>
           <Link className="find-button" to="/login/find">
