@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import AuthMenu from './AuthMenu.jsx';
 import CartLink from './CartLink.jsx';
 import { API_BASE } from '../apiBase.js';
@@ -62,9 +62,9 @@ function SiteNav({ onToggleTheme }) {
   return (
     <header className="nav">
       <div className="wrap nav-bar">
-        <Link className="brand" to="/" onClick={closeMenu}>
+        <a className="brand" href="/bomul.html" onClick={closeMenu}>
           <span className="seal">寶</span>보물 여행
-        </Link>
+        </a>
         <button
           className="nav-toggle"
           type="button"
@@ -76,10 +76,8 @@ function SiteNav({ onToggleTheme }) {
           ☰
         </button>
         <nav className="nav-links" aria-label="주요 메뉴">
-          <NavLink to="/" end>
-            홈
-          </NavLink>
-          <NavLink to="/courses">전체 코스</NavLink>
+          <a href="/bomul.html">홈</a>
+          <a href="/bomul.html#courses">전체 코스</a>
           <BoardNavLink />
         </nav>
         <div className="nav-tools">
@@ -95,12 +93,12 @@ function SiteNav({ onToggleTheme }) {
         id="mobile-nav"
         aria-label="모바일 메뉴"
       >
-        <NavLink to="/" end onClick={closeMenu}>
+        <a href="/bomul.html" onClick={closeMenu}>
           홈
-        </NavLink>
-        <NavLink to="/courses" onClick={closeMenu}>
+        </a>
+        <a href="/bomul.html#courses" onClick={closeMenu}>
           전체 코스
-        </NavLink>
+        </a>
         <NavLink to="/cart" onClick={closeMenu}>
           장바구니
         </NavLink>

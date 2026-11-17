@@ -23,7 +23,7 @@ function NaverCallbackPage() {
       const other = result.remember ? sessionStorage : localStorage;
       storage.setItem('token', result.token);
       other.removeItem('token');
-      navigate('/', { replace: true });
+      window.location.replace('/bomul.html');
       return;
     }
     navigate('/login', { replace: true, state: { error: result.error || fallback } });
