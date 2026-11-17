@@ -17,6 +17,19 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (function () {
+        var path = location.pathname.replace(/\/$/, '') || '/';
+        if (path === '/courses') {
+          location.replace('/bomul.html#courses');
+          return;
+        }
+        if (path.indexOf('/courses/') === 0) {
+          var id = decodeURIComponent(path.slice('/courses/'.length));
+          if (id) location.replace('/bomul.html#course-' + encodeURIComponent(id));
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

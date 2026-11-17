@@ -1,4 +1,4 @@
-const CACHE = "bomul-mobile-v2";
+const CACHE = "bomul-mobile-v3";
 const THREE_JS = "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 const PRECACHE = [
   "/bomul.html",

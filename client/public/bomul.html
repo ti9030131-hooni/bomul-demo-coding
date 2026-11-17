@@ -3513,6 +3513,12 @@ function watchHomeTabs(){
 setNavHeight(); window.addEventListener("resize",setNavHeight);
 startCountdown(); watchHomeTabs();
 renderHome();
+(function applyGoQuery(){
+  const go=new URLSearchParams(location.search).get("go");
+  if(!go) return;
+  const next=go.startsWith("course-")||go==="courses"||go==="home"||go==="apply"?go:"courses";
+  history.replaceState(null,"",location.pathname+"#"+next);
+})();
 route();
 loadAccount();
 startStarfield();

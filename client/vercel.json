@@ -1,4 +1,16 @@
 {
+  "redirects": [
+    {
+      "source": "/courses",
+      "destination": "/bomul.html?go=courses",
+      "permanent": false
+    },
+    {
+      "source": "/courses/:id",
+      "destination": "/bomul.html?go=course-:id",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
