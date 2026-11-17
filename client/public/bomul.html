@@ -3577,8 +3577,9 @@ document.addEventListener("bomul:lang",()=>{
   if(toggle) toggle.setAttribute("aria-label", toggle.getAttribute("aria-expanded")==="true"?ui("nav.menuClose"):ui("nav.menuOpen"));
   refreshCourseViews();
   paintAccountLink();
+  paintSignedInNav();
 });
-if(window.BomulI18n) BomulI18n.ready(["content"]).then(()=>{ BomulI18n.apply(); refreshCourseViews(); });
+if(window.BomulI18n) BomulI18n.ready(["content"]).then(()=>{ BomulI18n.apply(); refreshCourseViews(); paintSignedInNav(); });
 </script>
 </body>
 </html>
