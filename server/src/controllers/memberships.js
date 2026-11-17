@@ -7,6 +7,7 @@ const PAYMENTS = ['신용카드', '계좌이체', '네이버페이'];
 const PLANS = {
   course: { id: 'course', title: '코스 1개 도전권', price: 3900, detail: '선택한 코스에 도전할 수 있습니다.' },
   all: { id: 'all', title: '전체 코스 도전권', price: 9900, detail: '모든 전설 코스에 도전할 수 있습니다.' },
+  monthly: { id: 'monthly', title: '월구독권', price: 99000, detail: '한 달간 모든 전설 코스에 도전할 수 있습니다.' },
 };
 
 function httpError(status, message) {
@@ -27,7 +28,8 @@ export function getMembership(req, res) {
 
 export async function buyMembership(req, res) {
   assertPaymentsEnabled();
-  const plan = req.body.plan === 'all' || req.body.plan === 'course' ? req.body.plan : '';
+  const plan =
+    req.body.plan === 'all' || req.body.plan === 'course' || req.body.plan === 'monthly' ? req.body.plan : '';
   if (!plan) throw httpError(400, '상품을 선택해 주세요.');
   if (req.body.agree !== true) throw httpError(400, '약관에 동의해 주세요.');
   const payment = typeof req.body.payment_method === 'string' ? req.body.payment_method.trim() : '';
@@ -55,10 +57,11 @@ export async function buyMembership(req, res) {
     return;
   }
 
+  const fullAccess = plan === 'all' || plan === 'monthly';
   user.membership = {
-    active: plan === 'all',
+    active: fullAccess,
     plan,
-    courses: plan === 'all' ? owned : owned.concat(courseId),
+    courses: fullAccess ? owned : owned.concat(courseId),
     price: verified.amount,
     purchased_at: new Date(),
     payment_method: payment,

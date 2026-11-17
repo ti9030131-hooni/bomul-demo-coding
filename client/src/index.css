@@ -63,6 +63,18 @@ a {
   flex: 1;
 }
 
+.user-plan-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #b000b9;
+  background: rgba(176, 0, 185, 0.1);
+  border: 1px solid rgba(176, 0, 185, 0.28);
+}
+
 .signup-done {
   min-height: 460px;
   display: grid;

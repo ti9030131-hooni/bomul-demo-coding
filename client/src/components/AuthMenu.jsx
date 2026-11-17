@@ -68,6 +68,17 @@ function AuthMenu({ onNavigate }) {
 
   if (checking) return null;
 
+  const planLabel = (() => {
+    if (!user || user.user_type === 'admin') return '';
+    const pass = user.membership;
+    if (!pass) return '';
+    if (pass.plan === 'monthly') return '월구독권';
+    if (pass.plan === 'course') return '코스도전권';
+    if (pass.plan === 'all' || pass.active) return '전체도전권';
+    if (Array.isArray(pass.courses) && pass.courses.length) return '코스도전권';
+    return '';
+  })();
+
   if (user) {
     return (
       <>
@@ -84,7 +95,8 @@ function AuthMenu({ onNavigate }) {
             aria-controls="user-menu-list"
             onClick={() => setMenuOpen((open) => !open)}
           >
-            {user.name} 님 반갑습니다
+            {user.nickname || user.name} 님 반갑습니다
+            {planLabel ? <span className="user-plan-badge"> {planLabel}</span> : null}
             <span className="user-menu-caret" aria-hidden="true">▾</span>
           </button>
         {menuOpen ? (

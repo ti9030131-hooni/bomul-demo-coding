@@ -36,7 +36,7 @@ async function courseTitle(slug) {
 function hasMembershipAccess(user, courseId) {
   if (!user) return false;
   if (user.user_type === 'admin') return true;
-  if (user.membership?.active || user.membership?.plan === 'all') return true;
+  if (user.membership?.active || user.membership?.plan === 'all' || user.membership?.plan === 'monthly') return true;
   const courses = Array.isArray(user.membership?.courses) ? user.membership.courses : [];
   return courses.includes(courseId);
 }

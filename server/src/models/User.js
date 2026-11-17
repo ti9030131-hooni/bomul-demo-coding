@@ -100,7 +100,7 @@ const userSchema = new mongoose.Schema(
     },
     membership: {
       active: { type: Boolean, default: false },
-      plan: { type: String, enum: ['course', 'all'], },
+      plan: { type: String, enum: ['course', 'all', 'monthly'], },
       courses: { type: [String], default: [] },
       price: { type: Number, default: 0 },
       purchased_at: { type: Date },

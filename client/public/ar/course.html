@@ -941,7 +941,7 @@ if (wantId && wantId !== FREE_AR_ID && REG[wantId]) {
     try {
       const me = await apiJson("/api/me");
       const pass = me.membership || {};
-      allowed = me.user_type === "admin" || !!pass.active || pass.plan === "all" || (Array.isArray(pass.courses) && pass.courses.includes(wantId));
+      allowed = me.user_type === "admin" || !!pass.active || pass.plan === "all" || pass.plan === "monthly" || (Array.isArray(pass.courses) && pass.courses.includes(wantId));
     } catch (e) { allowed = false; }
   }
   if (!allowed) {
