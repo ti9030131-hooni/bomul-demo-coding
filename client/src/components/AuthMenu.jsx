@@ -71,9 +71,11 @@ function AuthMenu({ onNavigate }) {
   if (user) {
     return (
       <>
-        <Link className="btn btn-ghost btn-sm" to="/admin" onClick={onNavigate}>
-          어드민
-        </Link>
+        {user.user_type === 'admin' ? (
+          <Link className="btn btn-ghost btn-sm" to="/admin" onClick={onNavigate}>
+            어드민
+          </Link>
+        ) : null}
         <div className="user-menu" ref={menuRef}>
           <button
             type="button"
