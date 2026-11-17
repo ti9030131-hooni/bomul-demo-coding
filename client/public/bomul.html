@@ -2810,8 +2810,8 @@ const FREE_MODE=true;
 const FREE_COURSE_IDS=["seoul-gyeongbok-ar"];
 const MEMBER_COURSE_IDS=["seoul-gangdong"];
 const FEATURED_IDS=COURSES.slice(0,3).map(c=>c.id).filter(id=>!MEMBER_COURSE_IDS.includes(id));
-const COURSE_PASS_PRICE=4000;
-const ALL_PASS_PRICE=8000;
+const COURSE_PASS_PRICE=3900;
+const ALL_PASS_PRICE=9900;
 const MEMBERSHIP_PRICE=ALL_PASS_PRICE;
 function hasCoursePass(id){
   if(FREE_COURSE_IDS.includes(id)) return true;

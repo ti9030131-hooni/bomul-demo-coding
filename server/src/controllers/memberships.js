@@ -5,8 +5,8 @@ import { verifyPortOnePayment } from '../services/portone.js';
 
 const PAYMENTS = ['신용카드', '계좌이체', '네이버페이'];
 const PLANS = {
-  course: { id: 'course', title: '코스 1개 도전권', price: 4000, detail: '선택한 코스에 도전할 수 있습니다.' },
-  all: { id: 'all', title: '전체 코스 도전권', price: 8000, detail: '모든 전설 코스에 도전할 수 있습니다.' },
+  course: { id: 'course', title: '코스 1개 도전권', price: 3900, detail: '선택한 코스에 도전할 수 있습니다.' },
+  all: { id: 'all', title: '전체 코스 도전권', price: 9900, detail: '모든 전설 코스에 도전할 수 있습니다.' },
 };
 
 function httpError(status, message) {
