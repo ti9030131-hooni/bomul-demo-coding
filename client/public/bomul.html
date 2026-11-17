@@ -2854,16 +2854,29 @@ function hasFullPass(user){
 }
 function hasCoursePass(id){
   if(FREE_COURSE_IDS.includes(id)) return true;
-  if(hasFullPass()) return true;
+  if(hasMembership || hasFullPass()) return true;
   const pass=accountUser && accountUser.membership;
   return Boolean(pass && Array.isArray(pass.courses) && pass.courses.includes(id));
 }
 function canSeeCourse(c){ return Boolean(c && hasCoursePass(c.id)); }
+function rememberMembership(membership){
+  try{
+    if(membership) sessionStorage.setItem("bomul_membership", JSON.stringify(membership));
+  }catch{}
+}
+function rememberedMembership(){
+  try{ return JSON.parse(sessionStorage.getItem("bomul_membership")||"null"); }catch{ return null; }
+}
 function syncMembershipFlags(user){
   if(user) accountUser=user;
+  if(accountUser && !accountUser.membership){
+    const remembered=rememberedMembership();
+    if(remembered) accountUser.membership=remembered;
+  }
   if(accountUser && accountUser.membership && (accountUser.membership.plan==="all" || accountUser.membership.plan==="monthly") && !accountUser.membership.active){
     accountUser.membership.active=true;
   }
+  if(accountUser && accountUser.membership) rememberMembership(accountUser.membership);
   hasMembership=hasFullPass();
   signedIn=Boolean(accountUser);
   paintAccountLink();
@@ -2875,7 +2888,12 @@ async function refreshAccountMembership(){
   try{
     const me=await fetch(API_BASE+"/api/me",{headers:{authorization:`Bearer ${saved}`}});
     if(!me.ok) return false;
-    syncMembershipFlags(await me.json());
+    const user=await me.json();
+    // 서버 값이 비어 있어도 방금 결제한 세션 권한은 유지
+    if((!user.membership || (!user.membership.active && user.membership.plan!=="all" && user.membership.plan!=="monthly" && !(user.membership.courses||[]).length)) && rememberedMembership()){
+      user.membership=rememberedMembership();
+    }
+    syncMembershipFlags(user);
     return true;
   }catch{
     return false;
@@ -3012,19 +3030,20 @@ async function renderDetail(id){
     $("#courseDetail").innerHTML=`<p class="detail-intro">${ui("courses.loading")}</p>`;
     return;
   }
-  // 전체 도전권 직후·상태 지연으로 결제창이 뜨지 않도록 한 번 더 확인
+  // 전체·월구독 권한은 결제창 대신 코스 상세를 연다
   if(signedIn && !hasCoursePass(c.id)){
     $("#courseDetail").innerHTML=`<p class="detail-intro">${ui("courses.loading")}</p>`;
     await refreshAccountMembership();
   }
-  if(!hasCoursePass(c.id)){
-    if(!signedIn){
-      $("#courseDetail").innerHTML=`
-        <div class="detail-head"><span class="badge">${L.region}</span><span class="theme" style="color:var(--muted);font-size:.8rem">${ui("courses.membersBadge")}</span></div>
-        <h1>${L.title}</h1>
-        ${loginRequiredHtml("회원가입 후 도전권을 결제하면 이 코스에 도전할 수 있습니다.")}`;
-      return;
-    }
+  if(hasCoursePass(c.id) || hasFullPass() || hasMembership){
+    // 권한 있음 → 아래 상세 렌더로 진행
+  }else if(!signedIn){
+    $("#courseDetail").innerHTML=`
+      <div class="detail-head"><span class="badge">${L.region}</span><span class="theme" style="color:var(--muted);font-size:.8rem">${ui("courses.membersBadge")}</span></div>
+      <h1>${L.title}</h1>
+      ${loginRequiredHtml("회원가입 후 도전권을 결제하면 이 코스에 도전할 수 있습니다.")}`;
+    return;
+  }else{
     renderPay(c);
     return;
   }
@@ -3335,7 +3354,9 @@ async function buyCourse(button){
       return;
     }
     if(accountUser) accountUser.membership=body.membership||accountUser.membership;
+    if(body.membership) rememberMembership(body.membership);
     syncMembershipFlags(accountUser);
+    await refreshAccountMembership();
     const id=payCourseId;
     if(msg){ msg.style.color="#0b7a45"; msg.textContent=body.message||"결제가 완료되었습니다."; }
     renderDetail(id);
@@ -3387,7 +3408,9 @@ async function buyMembership(button){
       return;
     }
     if(accountUser) accountUser.membership=body.membership||accountUser.membership;
+    if(body.membership) rememberMembership(body.membership);
     syncMembershipFlags(accountUser);
+    await refreshAccountMembership();
     closeMemberModal();
     memberPromptDismissed=true;
     refreshCourseViews();

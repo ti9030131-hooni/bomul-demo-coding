@@ -16,6 +16,32 @@ function httpError(status, message) {
   return error;
 }
 
+function membershipPayload(user) {
+  const membership = user.membership ? (typeof user.membership.toObject === 'function' ? user.membership.toObject() : { ...user.membership }) : null;
+  if (membership && (membership.plan === 'all' || membership.plan === 'monthly')) {
+    membership.active = true;
+  }
+  return membership;
+}
+
+function hasFullAccess(user) {
+  if (!user) return false;
+  if (user.user_type === 'admin') return true;
+  const pass = user.membership;
+  if (!pass) return false;
+  return Boolean(pass.active) || pass.plan === 'all' || pass.plan === 'monthly';
+}
+
+function writeMembership(user, data) {
+  user.set('membership.active', data.active);
+  user.set('membership.plan', data.plan);
+  user.set('membership.courses', data.courses);
+  user.set('membership.price', data.price);
+  user.set('membership.purchased_at', data.purchased_at);
+  user.set('membership.payment_method', data.payment_method);
+  user.markModified('membership');
+}
+
 export function getMembership(req, res) {
   const enabled = paymentsEnabled();
   res.json({
@@ -47,30 +73,32 @@ export async function buyMembership(req, res) {
 
   const user = await User.findById(req.user.id);
   if (!user) throw httpError(401, '토큰이 올바르지 않습니다.');
-  const owned = Array.isArray(user.membership?.courses) ? user.membership.courses : [];
-  if (user.user_type === 'admin' || user.membership?.active) {
-    res.json({ message: '이미 전체 코스를 이용할 수 있습니다.', price: 0, membership: user.membership });
+  const owned = Array.isArray(user.membership?.courses) ? [...user.membership.courses] : [];
+  if (hasFullAccess(user)) {
+    res.json({ message: '이미 전체 코스를 이용할 수 있습니다.', price: 0, membership: membershipPayload(user) });
     return;
   }
   if (plan === 'course' && owned.includes(courseId)) {
-    res.json({ message: '이미 이 코스를 구매했습니다.', price: PLANS.course.price, membership: user.membership });
+    res.json({ message: '이미 이 코스를 구매했습니다.', price: PLANS.course.price, membership: membershipPayload(user) });
     return;
   }
 
   const fullAccess = plan === 'all' || plan === 'monthly';
-  user.membership = {
+  writeMembership(user, {
     active: fullAccess,
     plan,
     courses: fullAccess ? owned : owned.concat(courseId),
     price: verified.amount,
     purchased_at: new Date(),
     payment_method: payment,
-  };
+  });
   await user.save();
+
+  const fresh = await User.findById(user._id);
   res.json({
     message: '결제가 완료되었습니다.',
     price: verified.amount,
-    membership: user.membership,
+    membership: membershipPayload(fresh || user),
     imp_uid: verified.imp_uid,
     merchant_uid: verified.merchant_uid,
   });
