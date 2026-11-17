@@ -1,8 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { API_BASE } from '../apiBase.js';
-const PAYMENT_METHODS = ['신용카드', '계좌이체', '네이버페이'];
-const PORTONE_PAY_METHOD = { 신용카드: 'card', 계좌이체: 'trans', 네이버페이: 'card' };
+// 네이버페이는 별도 포트원 채널/계약이 없어 KG이니시스 테스트에서는 제외
+const PAYMENT_METHODS = ['신용카드', '계좌이체'];
+const PORTONE_PAY_METHOD = { 신용카드: 'card', 계좌이체: 'trans' };
+const KG_INICIS_TEST_PG = 'html5_inicis.INIpayTest';
+
+function isV1ChannelKey(value) {
+  return /^channel-key-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+    typeof value === 'string' ? value.trim() : '',
+  );
+}
+
+/** V1: channelKey 와 pg 중 하나만. channelKey 우선(V2 키 혼용 금지). */
+function resolvePayChannel(cfg) {
+  const channelKey = typeof cfg?.channelKey === 'string' ? cfg.channelKey.trim() : '';
+  const pg = typeof cfg?.pg === 'string' ? cfg.pg.trim() : '';
+  if (isV1ChannelKey(channelKey)) return { channelKey };
+  if (pg === KG_INICIS_TEST_PG) return { pg: KG_INICIS_TEST_PG };
+  return null;
+}
 const PENDING_PAY_KEY = 'bomul-portone-order';
 const finishingPayments = new Set();
 
@@ -108,7 +125,7 @@ function OrderPage() {
         const body = await response.json().catch(() => ({}));
         if (ignore) return;
         const enabled = body.enabled === true;
-        const cfg = body.portone && body.portone.impCode && (body.portone.channelKey || body.portone.pg)
+        const cfg = body.portone?.impCode && resolvePayChannel(body.portone)
           ? body.portone
           : null;
         setPaymentsEnabled(enabled);
@@ -238,8 +255,12 @@ function OrderPage() {
       setMessage(paymentsMessage || '결제 준비 중입니다. 실연동 승인 후 이용할 수 있습니다.');
       return;
     }
-    if (!portone?.impCode || !(portone.channelKey || portone.pg)) {
+    if (!portone?.impCode || !resolvePayChannel(portone)) {
       setMessage('결제 설정이 없습니다. 잠시 후 다시 시도해 주세요.');
+      return;
+    }
+    if (!PORTONE_PAY_METHOD[nextPayment]) {
+      setMessage('지원하지 않는 결제수단입니다. 신용카드 또는 계좌이체를 선택해 주세요.');
       return;
     }
     if (!buyer.name.trim() || !buyer.phone.trim() || !buyer.email.trim()) {
@@ -296,10 +317,14 @@ function OrderPage() {
       }
       const cfg = prepareBody.portone || portone;
       const impCode = cfg.impCode || portone.impCode;
-      const channelKey = cfg.channelKey || portone.channelKey;
-      const pg = cfg.pg || portone.pg;
+      const channel = resolvePayChannel(cfg) || resolvePayChannel(portone);
+      if (!impCode || !channel) throw new Error('결제 채널 설정이 없습니다.');
+      const payMethod = PORTONE_PAY_METHOD[nextPayment];
+      if (!payMethod) throw new Error('지원하지 않는 결제수단입니다.');
+      // channel 은 pg(INIpayTest) 또는 channelKey 중 하나만. 하드코딩 pg 로 덮어쓰지 않음.
       const payParams = {
-        pay_method: PORTONE_PAY_METHOD[nextPayment],
+        ...channel,
+        pay_method: payMethod,
         merchant_uid: uid,
         name: orderName(items),
         amount,
@@ -308,9 +333,12 @@ function OrderPage() {
         buyer_tel: payload.buyer.phone || '01000000000',
         m_redirect_url: `${window.location.origin}/order`,
       };
-      if (pg) payParams.pg = pg;
-      else if (channelKey) payParams.channelKey = channelKey;
-      else throw new Error('결제 채널 설정이 없습니다.');
+      if (payParams.pg && payParams.channelKey) {
+        throw new Error('결제 채널 설정이 올바르지 않습니다.');
+      }
+      if (payParams.pg && payParams.pg !== KG_INICIS_TEST_PG) {
+        throw new Error('테스트 결제 채널(INIpayTest)만 사용할 수 있습니다.');
+      }
 
       rememberPendingPay(uid, payload);
       window.IMP.init(impCode);
@@ -355,7 +383,7 @@ function OrderPage() {
 
   useEffect(() => {
     if (!autoPay || status !== 'ready' || items.length === 0 || pending || order) return;
-    if (paymentsEnabled !== true || !(portone?.channelKey || portone?.pg)) return;
+    if (paymentsEnabled !== true || !resolvePayChannel(portone)) return;
     if (autoPayStarted.current) return;
     if (!buyer.name.trim() || !buyer.phone.trim() || !buyer.email.trim()) return;
     if (!Number.isFinite(total) || total <= 0) return;
@@ -392,9 +420,9 @@ function OrderPage() {
             <Link className="btn btn-primary" to="/">
               메인으로
             </Link>
-            <Link className="btn btn-ghost" to="/bomul.html#courses">
+            <a className="btn btn-ghost" href="/bomul.html#courses">
               다른 코스 보기
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -422,7 +450,7 @@ function OrderPage() {
         {status === 'loading' ? <p className="course-status">주문 정보를 불러오는 중</p> : null}
         {status === 'ready' && items.length === 0 ? (
           <p className="course-status">
-            주문할 코스가 없습니다. <Link to="/bomul.html#courses">코스 보기</Link>
+            주문할 코스가 없습니다. <a href="/bomul.html#courses">코스 보기</a>
           </p>
         ) : null}
 
@@ -511,7 +539,7 @@ function OrderPage() {
               </legend>
               <div className="order-pay-list">
                 {PAYMENT_METHODS.map((method) => (
-                  <label key={method} className={method === '네이버페이' ? 'is-naver' : undefined}>
+                  <label key={method}>
                     <input
                       type="radio"
                       name="payment"

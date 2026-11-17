@@ -90,10 +90,21 @@ function CartItem({ item, token, onUpdated, onError }) {
   );
 }
 
+function moreCoursesHref(membership) {
+  if (membership?.active) return '/bomul.html#courses';
+  const paid = Array.isArray(membership?.courses)
+    ? membership.courses.filter((id) => typeof id === 'string' && id.trim())
+    : [];
+  if (paid.length === 1) return `/bomul.html#course-${encodeURIComponent(paid[0])}`;
+  if (paid.length > 1) return `/bomul.html#course-${encodeURIComponent(paid[0])}`;
+  return '/bomul.html#courses';
+}
+
 function CartPage() {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState('loading');
   const [message, setMessage] = useState('');
+  const [membership, setMembership] = useState(null);
   const token = storedToken();
 
   useEffect(() => {
@@ -104,14 +115,22 @@ function CartPage() {
     }
 
     let ignore = false;
-    fetch(`${API_BASE}/api/carts`, { headers: { authorization: `Bearer ${saved}` } })
-      .then(async (response) => {
+    const headers = { authorization: `Bearer ${saved}` };
+    Promise.all([
+      fetch(`${API_BASE}/api/carts`, { headers }),
+      fetch(`${API_BASE}/api/me`, { headers }),
+    ])
+      .then(async ([cartResponse, meResponse]) => {
         if (ignore) return;
-        if (!response.ok) {
+        if (meResponse.ok) {
+          const me = await meResponse.json().catch(() => ({}));
+          setMembership(me.membership || null);
+        }
+        if (!cartResponse.ok) {
           setStatus('error');
           return;
         }
-        const cart = await response.json();
+        const cart = await cartResponse.json();
         setItems(Array.isArray(cart.items) ? cart.items : []);
         setStatus('ready');
       })
@@ -167,9 +186,9 @@ function CartPage() {
         {status === 'ready' ? (
           <div className="cart-pay">
             {items.length > 0 ? <strong>합계 {total.toLocaleString('ko-KR')}원</strong> : null}
-            <Link className="btn btn-ghost" to="/bomul.html#courses">
+            <a className="btn btn-ghost" href={moreCoursesHref(membership)}>
               코스 더 보기
-            </Link>
+            </a>
             {items.length > 0 ? (
               <Link className="btn btn-primary" to="/order?pay=1">
                 주문하기
